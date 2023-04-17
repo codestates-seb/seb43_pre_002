@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import HomeHeader from '../components/HomeHeader';
 import HomeFilter from '../components/HomeFilter';
 import QuestionItem from '../components/QuestionItem';
+import HomeFooter from '../components/HomeFooter';
 
 function Home() {
 	return (
@@ -14,6 +15,7 @@ function Home() {
 			<QuestionItem />
 			<QuestionItem />
 			<QuestionItem />
+			<HomeFooter />
 		</HomeContainer>
 	);
 }
