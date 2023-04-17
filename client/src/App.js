@@ -1,5 +1,11 @@
+import Home from './pages/Home';
+
 function App() {
-	return <div>프로젝트 초기세팅</div>;
+	return (
+		<div>
+			<Home />
+		</div>
+	);
 }
 
 export default App;
