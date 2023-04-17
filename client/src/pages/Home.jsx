@@ -1,12 +1,27 @@
 import styled from 'styled-components';
+import HomeHeader from '../components/HomeHeader';
+import HomeFilter from '../components/HomeFilter';
+import QuestionItem from '../components/QuestionItem';
+
+function Home() {
+	return (
+		<HomeContainer>
+			<HomeHeader />
+			<HomeFilter />
+			<QuestionItem />
+			<QuestionItem />
+			<QuestionItem />
+			<QuestionItem />
+			<QuestionItem />
+			<QuestionItem />
+		</HomeContainer>
+	);
+}
+export default Home;
 
 const HomeContainer = styled.div`
 	display: flex;
-	justify-content: center;
-	align-items: center;
+	flex-direction: column;
+	background-color: skyblue;
+	width: 80vw;
 `;
-
-function Home() {
-	return <HomeContainer>여기는 메인페이지</HomeContainer>;
-}
-export default Home;
