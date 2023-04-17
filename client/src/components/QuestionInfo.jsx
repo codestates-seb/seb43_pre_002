@@ -3,9 +3,9 @@ import styled from 'styled-components';
 function QuestionInfo() {
 	return (
 		<QuestionInfoContainer>
-			<div>votes</div>
-			<div>answers</div>
-			<div>views</div>
+			<div>0 votes</div>
+			<div>0 answers</div>
+			<div>0 views</div>
 		</QuestionInfoContainer>
 	);
 }

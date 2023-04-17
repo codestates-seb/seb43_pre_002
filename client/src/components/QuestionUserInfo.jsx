@@ -17,6 +17,7 @@ export default QuestionUserInfo;
 
 const QuestionUserInfoContainer = styled.div`
 	display: flex;
+	justify-content: center;
 	align-items: center;
 	width: 25%;
 	height: 20%;
