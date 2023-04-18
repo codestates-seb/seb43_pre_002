@@ -1,10 +1,13 @@
+import GlobalStyles from './styles/GlobalStyles.style';
 import Home from './pages/Home';
 
 function App() {
 	return (
-		<div>
+		<>
+			<GlobalStyles />
 			<Home />
-		</div>
+			<div>프로젝트 초기세팅</div>;
+		</>
 	);
 }
 
