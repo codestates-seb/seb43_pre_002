@@ -81,7 +81,7 @@ const Info = styled.div`
 const PageButtons = styled.div`
 	display: flex;
 	width: 80%;
-	margin-top: 40px;
+	margin-top: 60px;
 	margin-left: 10%;
 `;
 
