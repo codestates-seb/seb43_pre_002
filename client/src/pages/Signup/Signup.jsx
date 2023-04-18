@@ -1,49 +1,48 @@
 import styled from 'styled-components';
-import SignInput from '../../components/Input/SignInput';
-// import PasswordInput from '../../components/Input/PasswordInput';
+import OAuthButton from '../../components/Button/OAuthButton';
+import JoinDescription from './JoinDescription';
+import SignupForm from './SignupForm';
 
-const SignupWrapper = styled.div`
+const SignupContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+	width: 100vw;
+	background-color: var(--base-color);
+`;
+
+const SignupWrapper = styled.div`
+	max-width: 290px;
+`;
+
+const LoginLink = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	width: 100%;
+	padding: 16px;
+	a {
+		color: var(--main-color);
+	}
 `;
 
 function Signup() {
 	return (
-		<SignupWrapper>
-			<div>
-				<ul>
-					<h1>Join the Stack Overflow community</h1>
-					<li>Get unstuck — ask a question</li>
-					<li>Unlock new privileges like voting and commenting</li>
-					<li>Save your favorite questions, answers, watch tags, and more</li>
-					<li>Earn reputation and badges</li>
-				</ul>
-			</div>
-			<div>
-				<div>
-					<button type="button">Sign up with Google</button>
-				</div>
-				<div>
-					<SignInput
-						labelFor="display-name"
-						labelName="Display name"
-						inputType="text"
-					/>
-					<SignInput labelFor="email" labelName="Email" inputType="email" />
-					<SignInput
-						labelFor="password"
-						labelName="Password"
-						inputType="password"
-					/>
-					<p>
-						Passwords must contain at least eight characters, including at least
-						1 letter and 1 number.
-					</p>
-				</div>
-			</div>
-		</SignupWrapper>
+		<SignupContainer>
+			<JoinDescription />
+			<SignupWrapper>
+				<OAuthButton type="button" buttonText="Sign up with Google" />
+				<SignupForm />
+				<LoginLink>
+					<span>Already have an account?</span>
+					{/* 링크 컴포넌트로 수정해야 함 */}
+					<a href="/users/login?ssrc=head&returnurl=https%3a%2f%2fstackoverflow.com%2f">
+						Log in
+					</a>
+				</LoginLink>
+			</SignupWrapper>
+		</SignupContainer>
 	);
 }
 
