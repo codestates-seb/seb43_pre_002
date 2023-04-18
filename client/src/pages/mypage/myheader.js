@@ -120,8 +120,9 @@ const ButtonDelete = styled.button`
 
 const PageButtons = styled.div`
 	display: flex;
-	width: 80%;
+	width: 100%;
 	margin-top: 60px;
+	margin-bottom: 50px;
 `;
 
 const PageButton = styled.button`

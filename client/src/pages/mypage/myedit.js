@@ -57,7 +57,7 @@ const Category = styled.span`
 	border-bottom: 3px solid black;
 `;
 const ContentsColumn = styled.div`
-	margin-top: 40px;
+	margin-top: 20px;
 	display: flex;
 	width: 70vw;
 	flex-direction: column;
