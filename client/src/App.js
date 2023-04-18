@@ -1,12 +1,12 @@
 import GlobalStyles from './styles/GlobalStyles.style';
 
-import Signup from './pages/\bSignup/Signup';
+import Login from './pages/Login/Login';
 
 function App() {
 	return (
 		<>
 			<GlobalStyles />
-			<Signup />
+			<Login />
 		</>
 	);
 }
