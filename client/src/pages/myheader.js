@@ -43,7 +43,7 @@ const ProfileHeader = styled.div`
 	display: flex;
 	justify-content: space-between; /* 왼쪽 오른쪽에 요소가 붙도록 */
 	align-items: center;
-	width: 80vw;
+	width: 70vw;
 	height: 26%;
 	padding: 0 16px;
 `;
@@ -83,6 +83,7 @@ const Info = styled.div`
 	color: var(--main-color);
 	font-size: var(--font-base);
 	font-weight: bold;
+	margin-bottom: 5px;
 `;
 
 const Buttons = styled.div`
@@ -109,7 +110,7 @@ const PageButtons = styled.div`
 	display: flex;
 	width: 80%;
 	margin-top: 40px;
-	margin-left: 20px;
+	margin-left: 10%;
 `;
 
 const PageButton = styled.button`
@@ -121,6 +122,11 @@ const PageButton = styled.button`
 	border-radius: 20px;
 	font-size: var(--font--large);
 	font-weight: bold;
+	:hover {
+		background-color: #3b6fa0;
+		border: #3b6fa0;
+		color: white;
+	}
 `;
 const Span = styled.span`
 	margin-left: 3px;
