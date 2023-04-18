@@ -19,8 +19,8 @@ const HomeHeaderContainer = styled.header`
 	width: 100%;
 	height: 50px;
 	background-color: white;
-	padding: 0 1%;
-	margin-bottom: 1%;
+	padding: 0 10%;
+	margin: 1% 0;
 	.all {
 		font-size: var(--font-title-large);
 	}

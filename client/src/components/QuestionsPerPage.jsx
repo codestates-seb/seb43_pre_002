@@ -21,8 +21,11 @@ export default QuestionsPerPage;
 
 const QuestionsPerPageContainer = styled.div`
 	display: flex;
+	justify-content: right;
 	align-items: center;
 	width: 30%;
+	position: absolute;
+	right: 2%;
 	.question-counts {
 		width: 60px;
 		height: 30px;

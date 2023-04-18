@@ -18,9 +18,10 @@ export default QuestionItem;
 const QuestionItemContainer = styled.div`
 	display: flex;
 	align-items: center;
-	width: 100%;
+	width: 80%;
 	min-height: 150px;
 	background-color: white;
 	position: relative;
 	border-top: 1px solid var(--line-color);
+	padding: 0 3%;
 `;

@@ -18,7 +18,7 @@ const QuestionInfoContainer = styled.div`
 	justify-content: right;
 	width: 15%;
 	text-align: right;
-	margin-right: 3%;
+	margin-right: 5%;
 	.info {
 		font-size: var(--font-large);
 		margin-bottom: 5%;

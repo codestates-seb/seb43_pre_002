@@ -32,7 +32,7 @@ const HomeFilterContainer = styled.div`
 	height: 50px;
 	background-color: white;
 	margin-bottom: 10px;
-	padding: 0 1%;
+	padding: 0 10%;
 	.total {
 		font-size: var(--font-large);
 	}
