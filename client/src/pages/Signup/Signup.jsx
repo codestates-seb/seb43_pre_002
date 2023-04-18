@@ -22,6 +22,7 @@ const LoginLink = styled.div`
 	justify-content: space-evenly;
 	width: 100%;
 	padding: 16px;
+	font-size: var(--font-base);
 	a {
 		color: var(--main-color);
 	}
