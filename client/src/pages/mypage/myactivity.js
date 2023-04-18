@@ -83,7 +83,7 @@ const Category2 = styled.span`
 `;
 
 const Post = styled.span`
-	margin-top: 40px;
+	margin-top: 10px;
 	width: 70vw;
 	display: flex;
 	flex-direction: row;
