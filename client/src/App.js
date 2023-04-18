@@ -1,10 +1,11 @@
 import GlobalStyles from './styles/GlobalStyles.style';
+import UserHeader from './pages/user/userheader';
 
 function App() {
 	return (
 		<>
 			<GlobalStyles />
-			<div>프로젝트 초기세팅</div>;
+			<UserHeader />
 		</>
 	);
 }
