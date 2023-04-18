@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ButtonWrapper = styled.button`
+const ButtonWrapper = styled.div`
 	margin-bottom: 15px;
 	width: 100%;
 	height: 37px;
