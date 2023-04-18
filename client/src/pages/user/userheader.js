@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyles from '../../styles/GlobalStyles.style';
 
@@ -16,15 +17,18 @@ function UserHeader() {
 				</Profile>
 			</ProfileHeader>
 			<PageButtons>
-				<PageButton type="button">Profile</PageButton>
-				<PageButton type="button">Activity</PageButton>
+				<Link to="/userprofile">
+					<PageButton type="button">Profile</PageButton>
+				</Link>
+				<Link to="/useractivity">
+					<PageButton type="button">Activity</PageButton>
+				</Link>
 			</PageButtons>
 		</Wrap>
 	);
 }
 
 const Wrap = styled.div`
-	margin-top: 10px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -37,7 +41,7 @@ const ProfileHeader = styled.div`
 	align-items: center;
 	width: 70vw;
 	height: 26%;
-	padding: 0 12ßpx;
+	padding: 0 12px;
 `;
 
 const Profile = styled.div`
@@ -80,9 +84,9 @@ const Info = styled.div`
 
 const PageButtons = styled.div`
 	display: flex;
-	width: 80%;
+	width: 100%;
 	margin-top: 60px;
-	margin-left: 10%;
+	margin-bottom: 50px;
 `;
 
 const PageButton = styled.button`
@@ -99,9 +103,6 @@ const PageButton = styled.button`
 		border: #3b6fa0;
 		color: white;
 	}
-`;
-const Span = styled.span`
-	margin-left: 3px;
 `;
 
 export default UserHeader;
