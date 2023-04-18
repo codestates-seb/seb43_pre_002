@@ -1,10 +1,11 @@
+import NewQuestion from './pages/NewQuestion';
 import GlobalStyles from './styles/GlobalStyles.style';
 
 function App() {
 	return (
 		<>
 			<GlobalStyles />
-			<div>프로젝트 초기세팅</div>;
+			<NewQuestion />
 		</>
 	);
 }
