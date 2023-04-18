@@ -1,6 +1,6 @@
 import { FaPencilAlt } from 'react-icons/fa';
 import styled from 'styled-components';
-import GlobalStyles from '../styles/GlobalStyles.style';
+import GlobalStyles from '../../styles/GlobalStyles.style';
 
 function MyHeader() {
 	return (
