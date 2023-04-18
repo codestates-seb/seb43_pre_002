@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 import GlobalStyles from '../../styles/GlobalStyles.style';
@@ -18,21 +19,26 @@ function MyHeader() {
 				<Buttons>
 					<ButtonEdit type="button">
 						<FaPencilAlt size={13} />
-						<Span>Exit Profile</Span>
+						<Link to="/myedit">
+							<Span>Exit Profile</Span>
+						</Link>
 					</ButtonEdit>
 					<ButtonDelete type="button">Delete Account</ButtonDelete>
 				</Buttons>
 			</ProfileHeader>
 			<PageButtons>
-				<PageButton type="button">Profile</PageButton>
-				<PageButton type="button">Activity</PageButton>
+				<Link to="/myprofile">
+					<PageButton type="button">Profile</PageButton>
+				</Link>
+				<Link to="/myactivity">
+					<PageButton type="button">Activity</PageButton>
+				</Link>
 			</PageButtons>
 		</Wrap>
 	);
 }
 
 const Wrap = styled.div`
-	margin-top: 10px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -116,7 +122,6 @@ const PageButtons = styled.div`
 	display: flex;
 	width: 80%;
 	margin-top: 60px;
-	margin-left: 10%;
 `;
 
 const PageButton = styled.button`
