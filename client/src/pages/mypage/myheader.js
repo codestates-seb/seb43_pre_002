@@ -45,7 +45,7 @@ const ProfileHeader = styled.div`
 	align-items: center;
 	width: 70vw;
 	height: 26%;
-	padding: 0 16px;
+	padding: 0 12ßpx;
 `;
 
 const Profile = styled.div`
