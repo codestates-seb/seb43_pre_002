@@ -5,16 +5,14 @@ import QuestionItem from '../components/QuestionItem';
 import HomeFooter from '../components/HomeFooter';
 
 function Home() {
+	const mapArr = [1, 2, 3, 4, 5, 6];
 	return (
 		<HomeContainer>
 			<HomeHeader />
 			<HomeFilter />
-			<QuestionItem />
-			<QuestionItem />
-			<QuestionItem />
-			<QuestionItem />
-			<QuestionItem />
-			<QuestionItem />
+			{mapArr.map((el) => (
+				<QuestionItem key={el} />
+			))}
 			<HomeFooter />
 		</HomeContainer>
 	);
@@ -24,6 +22,6 @@ export default Home;
 const HomeContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	background-color: skyblue;
+	background-color: white;
 	width: 80vw;
 `;

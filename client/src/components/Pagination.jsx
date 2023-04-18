@@ -39,12 +39,19 @@ const PaginationContainer = styled.div`
 	align-items: center;
 	width: 40%;
 	height: 90px;
-	margin-left: 10px;
+	margin-left: 2%;
 	.prev-button,
 	.next-button,
 	.last-page {
 		width: 60px;
 		height: 30px;
+		background-color: white;
+		border-radius: 5px;
+		border-color: var(--line-color);
+		cursor: pointer;
+		&:hover {
+			background-color: var(--line-color);
+		}
 	}
 	.prev-button {
 		margin-right: 5px;
@@ -56,6 +63,13 @@ const PaginationContainer = styled.div`
 		width: 30px;
 		height: 30px;
 		margin-right: 1px;
+		background-color: white;
+		border-radius: 5px;
+		border-color: var(--line-color);
+		cursor: pointer;
+		&:hover {
+			background-color: var(--line-color);
+		}
 	}
 	.dot {
 		margin: 0 6px;

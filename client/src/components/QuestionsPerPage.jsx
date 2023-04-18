@@ -27,5 +27,12 @@ const QuestionsPerPageContainer = styled.div`
 		width: 60px;
 		height: 30px;
 		margin-right: 5px;
+		background-color: white;
+		border-radius: 5px;
+		border-color: var(--line-color);
+		cursor: pointer;
+		&:hover {
+			background-color: var(--line-color);
+		}
 	}
 `;

@@ -18,5 +18,6 @@ const HomeFooterContainer = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	height: 100px;
-	border-top: 1px solid black;
+	border-top: 1px solid var(--line-color);
+	background-color: white;
 `;

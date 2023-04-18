@@ -6,7 +6,6 @@ function App() {
 		<>
 			<GlobalStyles />
 			<Home />
-			<div>프로젝트 초기세팅</div>;
 		</>
 	);
 }

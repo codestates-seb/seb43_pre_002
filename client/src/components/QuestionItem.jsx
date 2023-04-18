@@ -19,8 +19,8 @@ const QuestionItemContainer = styled.div`
 	display: flex;
 	align-items: center;
 	width: 100%;
-	height: 150px;
-	background-color: beige;
+	min-height: 150px;
+	background-color: white;
 	position: relative;
-	border-top: 1px solid black;
+	border-top: 1px solid var(--line-color);
 `;

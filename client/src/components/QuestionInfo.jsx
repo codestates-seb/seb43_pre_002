@@ -3,9 +3,9 @@ import styled from 'styled-components';
 function QuestionInfo() {
 	return (
 		<QuestionInfoContainer>
-			<div>0 votes</div>
-			<div>0 answers</div>
-			<div>0 views</div>
+			<div className="info">0 votes</div>
+			<div className="info">0 answers</div>
+			<div className="info">0 views</div>
 		</QuestionInfoContainer>
 	);
 }
@@ -19,4 +19,8 @@ const QuestionInfoContainer = styled.div`
 	width: 15%;
 	text-align: right;
 	margin-right: 3%;
+	.info {
+		font-size: var(--font-large);
+		margin-bottom: 5%;
+	}
 `;

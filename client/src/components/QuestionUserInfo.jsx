@@ -21,13 +21,24 @@ const QuestionUserInfoContainer = styled.div`
 	align-items: center;
 	width: 25%;
 	height: 20%;
-	background-color: cyan;
+	background-color: white;
 	position: absolute;
 	bottom: 5%;
 	right: 5%;
 	.user-icon,
 	.user-profile,
+	.user-activity,
+	.user-updated {
+		margin-right: 7px;
+		font-size: var(--font-base);
+	}
+	.user-profile {
+		color: var(--main-color);
+	}
 	.user-activity {
-		margin-right: 10px;
+		font-weight: 700;
+	}
+	.user-updated {
+		color: gray;
 	}
 `;
