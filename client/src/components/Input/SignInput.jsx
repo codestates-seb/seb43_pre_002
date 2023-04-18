@@ -6,6 +6,8 @@ const InputContainer = styled.div`
 	margin: 10px 0;
 	label {
 		margin: 2px 0;
+		font-size: var(--font-large);
+		font-weight: 600;
 	}
 	input {
 		margin: 2px 0;
