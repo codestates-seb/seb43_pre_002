@@ -1,19 +1,9 @@
 import styled from 'styled-components';
 
-function AskTitleHelpler() {
+function AskTitleHelpler({ contents }) {
 	return (
-		<AskTitleHelperContainer>
-			<h5 className="title">Writing a good title</h5>
-			<div className="descriptor">
-				<div className="descriptor__icon">img자리</div>
-				<div className="descriptor__contents">
-					<p>Your title should summarize the problem.</p>
-					<p>
-						You might find that you have a better idea of your title after
-						writing out the rest of the question.
-					</p>
-				</div>
-			</div>
+		<AskTitleHelperContainer size={contents[1]}>
+			{contents[0]}
 		</AskTitleHelperContainer>
 	);
 }
@@ -24,11 +14,12 @@ const AskTitleHelperContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 30%;
+	height: ${({ size }) => `${size}px`};
 	.title {
 		display: flex;
 		align-items: center;
 		width: 100%;
-		height: 25%;
+		height: 40px;
 		background-color: var(--base-color);
 		border: 1px solid var(--line-color);
 		border-radius: 5px 5px 0 0;
@@ -51,9 +42,10 @@ const AskTitleHelperContainer = styled.div`
 		}
 	}
 	.descriptor__icon {
-		width: 30%;
+		width: 20%;
+		padding: 3% 0 0 3%;
 	}
 	.descriptor__contents {
-		width: 70%;
+		width: 80%;
 	}
 `;

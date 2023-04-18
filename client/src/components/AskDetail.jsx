@@ -1,35 +1,34 @@
 import styled from 'styled-components';
 
-function AskTitle({ setIsTitleFocus }) {
+function AskDetail({ setIsDetailFocus }) {
 	return (
-		<AskTitleContainer>
-			<h5 className="title">Title</h5>
+		<AskDetailContainer>
+			<h5 className="title">What are the details of your problem?</h5>
 			<div className="descriptor">
-				Be specific and imagine you’re asking a question to another person.
+				Introduce the problem and expand on what you put in the title. Minimum
+				20 characters.
 			</div>
 			<div className="input-container">
-				<input
-					type="text"
-					className="input-container__title-input"
-					placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
-					onFocus={() => setIsTitleFocus(true)}
-					onBlur={() => setIsTitleFocus(false)}
+				<textarea
+					className="input-container__detail-input"
+					onFocus={() => setIsDetailFocus(true)}
+					onBlur={() => setIsDetailFocus(false)}
 				/>
 			</div>
 			<button className="next" type="button">
 				Next
 			</button>
-		</AskTitleContainer>
+		</AskDetailContainer>
 	);
 }
 
-export default AskTitle;
+export default AskDetail;
 
-const AskTitleContainer = styled.div`
+const AskDetailContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 65%;
-	height: 150px;
+	height: 300px;
 	padding: 1% 1% 1% 2%;
 	background-color: white;
 	border-radius: 5px;
@@ -46,10 +45,10 @@ const AskTitleContainer = styled.div`
 	}
 	.input-container {
 		width: 100%;
-		height: 1.5em;
+		height: 200px;
 		margin-bottom: 1%;
 	}
-	.input-container__title-input {
+	.input-container__detail-input {
 		width: 100%;
 		height: 100%;
 	}

@@ -42,7 +42,7 @@ const AskDescriptionContainer = styled.div`
 	flex-direction: column;
 	background-color: var(--main-color-lighten);
 	width: 65%;
-	height: 200px;
+	min-height: 230px;
 	padding: 2% 3% 0;
 	border: 1px solid var(--main-color);
 	border-radius: 5px;
@@ -66,5 +66,6 @@ const AskDescriptionContainer = styled.div`
 	}
 	.list-container__list {
 		font-size: var(--font-base);
+		margin-bottom: 0.5%;
 	}
 `;

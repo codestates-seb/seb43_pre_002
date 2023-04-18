@@ -4,7 +4,13 @@ function NewQuestionHeader() {
 	return (
 		<NewQuestionHeaderContainer>
 			<h1 className="header-text">Ask a public question</h1>
-			<div className="img">img 자리</div>
+			<div className="img-container">
+				<img
+					className="ask-page-img"
+					src="assets/ask-page-img.png"
+					alt="robot-img"
+				/>
+			</div>
 		</NewQuestionHeaderContainer>
 	);
 }
@@ -15,17 +21,20 @@ const NewQuestionHeaderContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: skyblue;
+	background-color: var(--base-color);
 	width: 100%;
-	height: 120px;
+	min-height: 150px;
 	padding-left: 2%;
 	.header-text {
 		font-weight: 700;
 		font-size: var(--font-title-large);
 	}
-	.img {
+	.img-container {
 		width: 50%;
 		height: 100%;
-		background-color: yellow;
+		.ask-page-img {
+			width: 100%;
+			height: 100%;
+		}
 	}
 `;
