@@ -96,6 +96,9 @@ const ButtonEdit = styled.button`
 	border: 1.5px solid var(--line-color);
 	border-radius: 5px;
 	font-weight: bold;
+	:hover {
+		border: 1.5px solid black;
+	}
 `;
 const ButtonDelete = styled.button`
 	background-color: white;
@@ -104,12 +107,15 @@ const ButtonDelete = styled.button`
 	color: #cb2a2a;
 	font-weight: bold;
 	margin-top: 5px;
+	:hover {
+		border: 1.5px solid #cb2a2a;
+	}
 `;
 
 const PageButtons = styled.div`
 	display: flex;
 	width: 80%;
-	margin-top: 40px;
+	margin-top: 60px;
 	margin-left: 10%;
 `;
 
