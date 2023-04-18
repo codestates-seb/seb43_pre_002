@@ -1,5 +1,7 @@
+import Signup from './pages/\bSignup/Signup';
+
 function App() {
-	return <div>프로젝트 초기세팅</div>;
+	return <Signup />;
 }
 
 export default App;
