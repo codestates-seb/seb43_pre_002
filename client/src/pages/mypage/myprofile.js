@@ -92,15 +92,18 @@ const Ansewer = styled.div`
 	height: 25px;
 	text-align: center;
 	padding: 5px 0;
+	font-size: var(--font-base);
 `;
 const Title = styled.a`
 	margin-left: 10px;
 	padding: 5px 0;
 	color: var(--main-color);
+	font-size: var(--font-large);
 `;
 
 const CreateDate = styled.div`
 	color: #7a7a7a;
 	padding: 5px 0;
+	font-size: var(--font-base);
 `;
 export default MyProfile;
