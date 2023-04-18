@@ -1,12 +1,12 @@
 import GlobalStyles from './styles/GlobalStyles.style';
 
-import Signup from './pages/Signup/Signup';
+import SignupSuccess from './pages/SignupSuccess/SignupSuccess';
 
 function App() {
 	return (
 		<>
 			<GlobalStyles />
-			<Signup />
+			<SignupSuccess />
 		</>
 	);
 }
