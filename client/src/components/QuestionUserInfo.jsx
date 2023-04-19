@@ -7,7 +7,6 @@ function QuestionUserInfo() {
 			<a href="www.google.com" className="user-profile">
 				Kim Coding
 			</a>
-			<span className="user-activity">1,139</span>
 			<span className="user-updated">asked 56secs ago</span>
 		</QuestionUserInfoContainer>
 	);
@@ -34,9 +33,6 @@ const QuestionUserInfoContainer = styled.div`
 	}
 	.user-profile {
 		color: var(--main-color);
-	}
-	.user-activity {
-		font-weight: 700;
 	}
 	.user-updated {
 		color: gray;
