@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import GlobalStyles from './styles/GlobalStyles.style';
 import MyEdit from './pages/mypage/myedit';
 import MyProfile from './pages/mypage/myprofile';
 import MyActivity from './pages/mypage/myactivity';
@@ -18,12 +18,5 @@ function App() {
 		</div>
 	);
 }
-
-const GlobalStyles = createGlobalStyle`
-	#root{
-		display: flex;
-		justify-content: center;
-	}
-`;
 
 export default App;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import MyHeader from '../../components/MyHeader';
 import MyList from '../../components/MyList';
 
@@ -11,6 +11,7 @@ const lists1 = Array(5).fill({
 function MyActivity() {
 	return (
 		<Wrap>
+			<GlobalStyles />
 			<MyHeader />
 			<ListColumn>
 				<Post>
@@ -65,4 +66,12 @@ const ListColumn = styled.div`
 	display: flex;
 	flex-direction: column;
 `;
+
+const GlobalStyles = createGlobalStyle`
+	#root{
+		display: flex;
+		justify-content: center;
+	}
+`;
+
 export default MyActivity;

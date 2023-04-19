@@ -1,9 +1,10 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import MyHeader from '../../components/MyHeader';
 
 function MyEdit() {
 	return (
 		<Wrap>
+			<GlobalStyles />
 			<MyHeader />
 			<ContentsColumn>
 				<Category>Edit your profile</Category>
@@ -130,6 +131,12 @@ const PageButton = styled.button`
 		background-color: #3b6fa0;
 		border: #3b6fa0;
 		color: white;
+	}
+`;
+const GlobalStyles = createGlobalStyle`
+	#root{
+		display: flex;
+		justify-content: center;
 	}
 `;
 

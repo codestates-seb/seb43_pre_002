@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import MyHeader from '../../components/MyHeader';
 import MyList from '../../components/MyList';
 
@@ -11,6 +11,7 @@ const lists2 = Array(10).fill({
 function MyProfile() {
 	return (
 		<Wrap>
+			<GlobalStyles />
 			<MyHeader />
 			<div>
 				<Category>About</Category>
@@ -52,6 +53,13 @@ const Category = styled.span`
 const Post = styled.span`
 	margin-top: 40px;
 	width: 70vw;
+`;
+
+const GlobalStyles = createGlobalStyle`
+	#root{
+		display: flex;
+		justify-content: center;
+	}
 `;
 
 export default MyProfile;
