@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
 import { useState } from 'react';
 import styled from 'styled-components';
-import GlobalStyles from '../../styles/GlobalStyles.style';
-import DeleteModal from '../../components/DeleteModal';
+import GlobalStyles from '../styles/GlobalStyles.style';
+import DeleteModal from './DeleteModal';
 
 function MyHeader() {
 	const [isOpen2, setIsOpen2] = useState(false);

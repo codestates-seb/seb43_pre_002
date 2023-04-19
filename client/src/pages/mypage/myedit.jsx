@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MyHeader from './myheader';
+import MyHeader from '../../components/MyHeader';
 
 function MyEdit() {
 	return (

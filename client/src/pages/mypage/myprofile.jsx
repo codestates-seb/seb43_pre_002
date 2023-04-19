@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MyHeader from './myheader';
+import MyHeader from '../../components/MyHeader';
 
 const lists = Array(10).fill({
 	answerCount: 0,
