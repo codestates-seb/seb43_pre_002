@@ -12,22 +12,26 @@ import pro.stackOverFlow.answer.service.AnswerService;
 import pro.stackOverFlow.dto.SingleResponseDto;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 
 @RestController
-@RequestMapping("/answers")
 public class AnswerController {
 
     private AnswerService answerService;
     private AnswerMapper answerMapper;
 
 
-    @PostMapping
+    public AnswerController(AnswerService answerService, AnswerMapper answerMapper) {
+        this.answerService = answerService;
+        this.answerMapper = answerMapper;
+    }
+
+
+    @PostMapping("/qna-questions/{question-id}/qna-answers")
     public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
 
         Answer answer = answerMapper.answerPostDtoToAnswer(answerPostDto);
         Answer createdAnswer = answerService.createAnswer(answer);
-//        AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(createdAnswer);
+        AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(createdAnswer);
 
         return new ResponseEntity<>(new SingleResponseDto<>(createdAnswer), HttpStatus.CREATED);
     }
