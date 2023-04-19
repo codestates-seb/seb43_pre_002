@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import GlobalStyles from '../../styles/GlobalStyles.style';
+import GlobalStyles from '../styles/GlobalStyles.style';
 
 function UserHeader() {
 	return (
@@ -8,9 +8,9 @@ function UserHeader() {
 			<GlobalStyles />
 			<ProfileHeader>
 				<Profile>
-					<UserImg>2pro</UserImg>
+					<UserImg>Other</UserImg>
 					<UserInfo>
-						<Name>2Pro</Name>
+						<Name>Other</Name>
 						<Info>User Title</Info>
 						<Info>질문 수 : 0 답변 수 : 0</Info>
 					</UserInfo>

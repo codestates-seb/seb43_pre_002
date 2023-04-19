@@ -1,7 +1,8 @@
-import styled from 'styled-components';
-import UserHeader from './userheader';
+import styled, { createGlobalStyle } from 'styled-components';
+import UserHeader from '../../components/UserHeader';
+import MyList from '../../components/MyList';
 
-const lists = Array(5).fill({
+const lists1 = Array(5).fill({
 	answerCount: 0,
 	link: 'https://stackoverflow.com/',
 	date: 'YYYY.MM.DD',
@@ -10,45 +11,22 @@ const lists = Array(5).fill({
 function UserActivity() {
 	return (
 		<Wrap>
+			<GlobalStyles />
 			<UserHeader />
 			<ListColumn>
 				<Post>
 					<PostWrap>
 						<Category>Ansewer</Category>
-						<PostList>
-							{lists.map((list) => (
-								<List key={list.id}>
-									<ListTitle>
-										<Ansewer>{list.answerCount}</Ansewer>
-										<Title href={list.link}>
-											질문 링크, 질문 상세 페이지 이동
-										</Title>
-									</ListTitle>
-									<CreateDate>{list.date}</CreateDate>
-								</List>
-							))}
-						</PostList>
+						<MyList lists={lists1} />
 					</PostWrap>
 					<PostWrap>
 						<Category>Question</Category>
-						<PostList>
-							{lists.map((list) => (
-								<List key={list.id}>
-									<ListTitle>
-										<Ansewer>{list.answerCount}</Ansewer>
-										<Title href={list.link}>
-											질문 링크, 질문 상세 페이지 이동
-										</Title>
-									</ListTitle>
-									<CreateDate>{list.date}</CreateDate>
-								</List>
-							))}
-						</PostList>
+						<MyList lists={lists1} />
 					</PostWrap>
 				</Post>
 				<Category2>Account</Category2>
 				<PostList>
-					{lists.map((list) => (
+					{lists1.map((list) => (
 						<List key={list.id}>
 							<ListTitle>
 								<Title href={list.link}>
@@ -116,15 +94,6 @@ const ListTitle = styled.div`
 	flex-direction: row;
 `;
 
-const Ansewer = styled.div`
-	border: 1px solid var(--line-color);
-	border-radius: 3px;
-	width: 25px;
-	height: 25px;
-	text-align: center;
-	padding: 5px 0;
-	font-size: var(--font-base);
-`;
 const Title = styled.a`
 	margin-left: 10px;
 	padding: 5px 0;
@@ -132,14 +101,15 @@ const Title = styled.a`
 	font-size: var(--font-large);
 `;
 
-const CreateDate = styled.div`
-	color: #7a7a7a;
-	padding: 5px 0;
-	font-size: var(--font-base);
-`;
-
 const ListColumn = styled.div`
 	display: flex;
 	flex-direction: column;
+`;
+
+const GlobalStyles = createGlobalStyle`
+	#root{
+		display: flex;
+		justify-content: center;
+	}
 `;
 export default UserActivity;
