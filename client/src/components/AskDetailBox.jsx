@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import AskDetail from './AskDetail';
 import AskHelpler from './AskHelper';
-import { detailHelperContents } from './helperContents';
+import { detailHelperContents } from './askHelperContents';
 
 function AskDetailBox() {
 	const [isDetailFocus, setIsDetailFocus] = useState(false);

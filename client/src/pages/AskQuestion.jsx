@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import NewQuestionHeader from '../components/NewQuestionHeader';
+import NewQuestionHeader from '../components/AskQuestionHeader';
 import AskDescription from '../components/AskDescription';
 import AskTitleBox from '../components/AskTitleBox';
 import AskDetailBox from '../components/AskDetailBox';
-import TryAndExpectBox from '../components/TryAndExpectBox';
-import Submit from '../components/Submit';
+import TryAndExpectBox from '../components/AskTryAndExpectBox';
+import Submit from '../components/AskSubmit';
 
 function NewQuestion() {
 	return (
@@ -26,6 +26,6 @@ const NewQuestionContainer = styled.div`
 	flex-direction: column;
 	width: 100vw;
 	height: 160%;
-	background-color: var(--base-color);
+	background-color: #f8f9f9; // 전역변수로 바꾸기
 	padding: 0 8%;
 `;

@@ -21,7 +21,7 @@ const NewQuestionHeaderContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: var(--base-color);
+	background-color: #f8f9f9; // 전역변수로 바꾸기
 	width: 100%;
 	min-height: 150px;
 	padding-left: 2%;

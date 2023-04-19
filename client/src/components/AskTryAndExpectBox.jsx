@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import AskHelpler from './AskHelper';
-import { tryAndExpectContents } from './helperContents';
-import TryAndExpect from './TryAndExpect';
+import { tryAndExpectContents } from './askHelperContents';
+import TryAndExpect from './AskTryAndExpect';
 
 function TryAndExpectBox() {
 	const [isTryAndExpectFocus, setIsTryAndExpectFocus] = useState(false);

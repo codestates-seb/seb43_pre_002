@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import AskTitle from './AskTitle';
 import AskHelpler from './AskHelper';
-import { titleHelperContents } from './helperContents';
+import { titleHelperContents } from './askHelperContents';
 
 function AskTitleBox() {
 	const [isTitleFocus, setIsTitleFocus] = useState(false);
