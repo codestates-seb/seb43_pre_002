@@ -3,8 +3,12 @@ package pro.stackOverFlow.exception;
 import lombok.Getter;
 
 public enum ExceptionCode {
+
     QUESTION_NOT_FOUND(404, "Question not found"),
-    QUESTION_EXISTS(409, "Question exists");
+    QUESTION_EXISTS(409, "Question exists"),
+
+    MEMBER_NOT_FOUND(404, "Member not found"),
+    MEMBER_EXISTS(409, "Member exists");
 
     @Getter
     private int status;
