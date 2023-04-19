@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import SignInput from '../../components/Input/SignInput';
-import SignButton from '../../components/Button/SignButton';
+import SignInput from './Input/SignInput';
+import SignButton from './Button/SignButton';
 
 const FormContainer = styled.div`
 	padding: 24px;

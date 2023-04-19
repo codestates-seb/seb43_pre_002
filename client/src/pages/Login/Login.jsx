@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import OAuthButton from '../../components/Button/OAuthButton';
-import LoginForm from './LoginForm';
+import LoginForm from '../../components/LoginForm';
 
 const LoginContainer = styled.div`
 	display: flex;
