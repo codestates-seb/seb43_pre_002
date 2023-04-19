@@ -79,7 +79,7 @@ const AnswerForm = styled.form`
 		margin: 20px 0px;
 		font-size: var(--font-title-small);
 	}
-	> input {
+	> textarea {
 		height: 100px;
 	}
 	button {
@@ -162,7 +162,7 @@ function Question() {
 
 				<AnswerForm>
 					<span>Your Answer</span>
-					<input type="textarea" placeholder="hhihi" />
+					<textarea />
 					<div className="bottom__container">
 						<button type="submit">Post Your Answer</button>
 					</div>
