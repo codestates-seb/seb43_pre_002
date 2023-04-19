@@ -22,5 +22,8 @@ public class Question {
     @Column(nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    private int viewCount;
+
 
 }

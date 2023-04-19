@@ -2,6 +2,7 @@ package pro.stackOverFlow.question.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
@@ -32,6 +33,8 @@ public class QuestionDto {
         private long questionId;
         private String title;
         private String content;
+
+        private int viewCount;
     }
 
 

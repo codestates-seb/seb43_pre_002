@@ -28,9 +28,10 @@ public class QuestionService {
 
     // read
     public Question findQuestion(Long questionId) {
-        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
-        return optionalQuestion.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+        Question question = findVerifiedQuestion(questionId);
+        question.setViewCount(question.getViewCount() + 1);
+
+        return questionRepository.save(question);
     }
 
     // 전체 조회
@@ -54,4 +55,5 @@ public class QuestionService {
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         return optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
     }
+
 }
