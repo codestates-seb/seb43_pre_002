@@ -29,7 +29,10 @@ const QuestionContentsContainer = styled.div`
 		margin: 1% 0 2% 0;
 		font-size: var(--font-title-small);
 		font-weight: 700;
-		color: var(--main-color);
+		color: #3b6fa0; // 전역변수로 바꾸기
+		&:hover {
+			color: var(--main-color);
+		}
 	}
 	.question-body {
 		margin: 0;

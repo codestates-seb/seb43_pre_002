@@ -32,7 +32,10 @@ const QuestionUserInfoContainer = styled.div`
 		font-size: var(--font-base);
 	}
 	.user-profile {
-		color: var(--main-color);
+		color: #3b6fa0; // 전역변수로 바꾸기
+		:hover {
+			color: var(--main-color);
+		}
 	}
 	.user-updated {
 		color: gray;
