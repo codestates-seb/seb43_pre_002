@@ -9,7 +9,7 @@ import pro.stackOverFlow.question.entity.Question;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-18T16:43:34+0900",
+    date = "2023-04-19T09:52:15+0900",
     comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -23,6 +23,9 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         Question question = new Question();
 
+        question.setTitle( requestBody.getTitle() );
+        question.setContent( requestBody.getContent() );
+
         return question;
     }
 
@@ -34,6 +37,10 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         Question question = new Question();
 
+        question.setQuestionId( requestBody.getQuestionId() );
+        question.setTitle( requestBody.getTitle() );
+        question.setContent( requestBody.getContent() );
+
         return question;
     }
 
@@ -43,7 +50,17 @@ public class QuestionMapperImpl implements QuestionMapper {
             return null;
         }
 
-        QuestionDto.Response response = new QuestionDto.Response();
+        long questionId = 0L;
+        String title = null;
+        String content = null;
+
+        if ( question.getQuestionId() != null ) {
+            questionId = question.getQuestionId();
+        }
+        title = question.getTitle();
+        content = question.getContent();
+
+        QuestionDto.Response response = new QuestionDto.Response( questionId, title, content );
 
         return response;
     }

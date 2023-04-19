@@ -13,7 +13,6 @@ import pro.stackOverFlow.question.repository.QuestionRepository;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
