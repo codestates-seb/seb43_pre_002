@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import DividerLine from './DividerLine';
 
@@ -18,11 +19,41 @@ const CommentContainer = styled.div`
 const NewCommentContainer = styled.div`
 	font-size: var(--font-base);
 	color: var(--line-color);
+
+	.comment__form {
+		display: flex;
+		padding: 10px 20px;
+
+		.left__container {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			margin-right: 10px;
+			textarea {
+				margin-bottom: 10px;
+				height: 100px;
+			}
+		}
+		button {
+			background-color: var(--main-color);
+			font-size: var(--font-base);
+			color: white;
+			width: 100px;
+			height: 45px;
+			border: none;
+		}
+	}
 `;
 
 // Comment 출력시 사용되는 컴포넌트
 
 function CommentBox() {
+	const [isWrite, setIsWrite] = useState(false);
+
+	const isWriteHandler = () => {
+		setIsWrite(!isWrite);
+	};
+
 	return (
 		<CommentContainer>
 			<p>
@@ -35,7 +66,31 @@ function CommentBox() {
 			<DividerLine />
 
 			<NewCommentContainer>
-				<span>Add a comment</span>
+				{isWrite ? (
+					<form className="comment__form">
+						<div className="left__container">
+							<textarea />
+							<span>497 characters left</span>
+						</div>
+						<button
+							type="submit"
+							onClick={(e) => {
+								e.preventDefault();
+								isWriteHandler();
+							}}
+						>
+							Add comment
+						</button>
+					</form>
+				) : (
+					<span
+						className="create__comment"
+						onClick={isWriteHandler}
+						aria-hidden="true"
+					>
+						Add a comment
+					</span>
+				)}
 			</NewCommentContainer>
 		</CommentContainer>
 	);
