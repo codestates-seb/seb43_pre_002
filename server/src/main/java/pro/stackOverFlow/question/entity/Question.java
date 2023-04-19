@@ -23,7 +23,7 @@ public class Question {
     private String content;
 
     @Column(nullable = false)
-    private int viewCount;
+    private int viewCount; // 조회수
 
 
 }
