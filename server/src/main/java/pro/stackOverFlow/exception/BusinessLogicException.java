@@ -2,7 +2,7 @@ package pro.stackOverFlow.exception;
 
 import lombok.Getter;
 
-public class BusinessLogicException extends RuntimeException {
+public class BusinessLogicException extends RuntimeException{
     @Getter
     private ExceptionCode exceptionCode;
 
