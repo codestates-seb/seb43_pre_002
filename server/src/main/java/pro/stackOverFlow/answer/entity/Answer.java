@@ -22,12 +22,12 @@ public class Answer extends Auditable {
     @Column
     private String content;
 
-//    @Column
-//    private String answerSelectionStatus;
+    @Column
+    private String answerSelectionStatus;
 
-//    @Column
-//    @ColumnDefault("0")
-//    private int voteCount; //답변 vote
+    @Column
+    @ColumnDefault("0")
+    private int voteCount; //답변 vote
 
 
 
