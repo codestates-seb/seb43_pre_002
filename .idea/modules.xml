@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/seb43_pre_002_2.iml" filepath="$PROJECT_DIR$/.idea/seb43_pre_002_2.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/seb43_pre_002.iml" filepath="$PROJECT_DIR$/.idea/seb43_pre_002.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stackOverFlow.main.iml" filepath="$PROJECT_DIR$/.idea/modules/stackOverFlow.main.iml" />
+>>>>>>> 5d96be5be7bb9a7f1fe2bd24f9fb5eb534d7dfe7
     </modules>
   </component>
 </project>
