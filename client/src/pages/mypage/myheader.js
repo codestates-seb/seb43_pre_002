@@ -1,9 +1,17 @@
 import { Link } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
+import { useState } from 'react';
 import styled from 'styled-components';
 import GlobalStyles from '../../styles/GlobalStyles.style';
+import DeleteModal from '../../components/DeleteModal';
 
 function MyHeader() {
+	const [isOpen2, setIsOpen2] = useState(false);
+
+	const handleClick2 = () => {
+		setIsOpen2(!isOpen2);
+	};
+
 	return (
 		<Wrap>
 			<GlobalStyles />
@@ -23,7 +31,10 @@ function MyHeader() {
 							<Span>Exit Profile</Span>
 						</Link>
 					</ButtonEdit>
-					<ButtonDelete type="button">Delete Account</ButtonDelete>
+					<ButtonDelete type="button" onClick={handleClick2}>
+						Delete Account
+					</ButtonDelete>
+					<DeleteModal isOpen={isOpen2} setIsOpen={setIsOpen2} />
 				</Buttons>
 			</ProfileHeader>
 			<PageButtons>
@@ -51,7 +62,7 @@ const ProfileHeader = styled.div`
 	align-items: center;
 	width: 70vw;
 	height: 26%;
-	padding: 0 12ßpx;
+	padding: 0 12px;
 `;
 
 const Profile = styled.div`
