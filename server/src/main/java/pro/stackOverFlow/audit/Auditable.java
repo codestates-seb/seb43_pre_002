@@ -2,7 +2,6 @@ package pro.stackOverFlow.audit;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,6 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 public abstract class Auditable {
 
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "CREATED_AT", updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

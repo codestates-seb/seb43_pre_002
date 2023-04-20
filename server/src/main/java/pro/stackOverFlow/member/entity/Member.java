@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
+@Builder
 @Entity
 public class Member extends Auditable {
 
@@ -25,16 +27,34 @@ public class Member extends Auditable {
     @Column(length = 100, nullable = false)
     private String password;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String displayName;
+
+    @Column(length = 50)
+    private String title;
 
     @Column(length = 300)
     private String aboutMe;
 
+    @Column
+    private String websiteLink;
+    @Column
+    private String twitterLink;
+    @Column
+    private String githubLink;
+    @Column
+    private String notionLink;
+    @Column
+    private String blogLink;
 
 
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    private List<String> roles = new ArrayList<>();
+    public Member(String email) {
+        this.email = email;
+    }
+
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
 //    @Setter(AccessLevel.NONE)
 //    @OneToMany(mappedBy = "member")
@@ -65,18 +85,20 @@ public class Member extends Auditable {
     }
 
 
-//    public void checkIsMyself(long authenticatedMemberId) {
-//        if (this.memberId != authenticatedMemberId) {
-//            throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QNA_QUESTION);
-//        }
-//    }
+    public void checkIsMyself(long authenticatedMemberId) {
+        if (this.memberId != authenticatedMemberId) {
+            throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QNA_QUESTION);
+        }
+    }
 
-//    public boolean isMyself(long authenticatedMemberId) {
-//        return this.memberId == authenticatedMemberId;
-//    }
+    public boolean isMyself(long authenticatedMemberId) {
+        return this.memberId == authenticatedMemberId;
+    }
 
-//    public boolean isAdmin() {
-//        return this.getRoles().contains("ADMIN");
-//    }
+    public boolean isAdmin() {
+        return this.getRoles().contains("ADMIN");
+    }
 
 }
+
+

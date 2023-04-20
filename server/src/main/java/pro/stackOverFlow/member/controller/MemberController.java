@@ -14,6 +14,7 @@ import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.member.mapper.MemberMapper;
 import pro.stackOverFlow.member.service.MemberService;
 //import pro.stackOverFlow.response.SingleResponseDto;
+import pro.stackOverFlow.response.SingleResponseDto;
 import pro.stackOverFlow.utils.UriCreator;
 
 import javax.validation.Valid;
@@ -56,9 +57,11 @@ public class MemberController {
 
 
         Member createdMember = memberService.createMember(member);
-        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
-
-        return ResponseEntity.created(location).build();
+//        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
+//
+//        return ResponseEntity.created(location).build();
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(memberMapper.memberToMemberResponseDto(createdMember)), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{member-id}")
@@ -70,7 +73,7 @@ public class MemberController {
                 memberService.updateMember(memberMapper.memberPatchDtoToMember(requestBody.addMemberId(memberId)));
 
         return new ResponseEntity<>(
-                memberMapper.memberToMemberResponseDto(member),
+                new SingleResponseDto<>(memberMapper.memberToMemberResponseDto(member)),
                 HttpStatus.OK);
     }
 
@@ -80,7 +83,8 @@ public class MemberController {
             @PathVariable("member-id") @Positive long memberId) {
         Member member = memberService.findMember(memberId);
         return new ResponseEntity<>(
-                memberMapper.memberToMemberResponseDto(member)
+                new SingleResponseDto<>(
+                memberMapper.memberToMemberResponseDto(member))
                 , HttpStatus.OK);
     }
 
@@ -99,7 +103,7 @@ public class MemberController {
     public ResponseEntity getMembers() {
         List<Member> members = memberService.findMembers();
         return new ResponseEntity<>(
-                memberMapper.membersToMemberResponseDtos(members),
+                new SingleResponseDto<>( memberMapper.membersToMemberResponseDtos(members)),
                 HttpStatus.OK);
     }
 

@@ -3,6 +3,7 @@ package pro.stackOverFlow.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.util.Assert;
 import pro.stackOverFlow.member.entity.Member;
@@ -10,10 +11,12 @@ import pro.stackOverFlow.member.entity.Member;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class MemberDto {
     @Getter
-    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Post {
         @NotBlank
         @Email
@@ -27,18 +30,25 @@ public class MemberDto {
     }
 
     @Getter
-    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Patch {
         private long memberId;
 
         private String displayName;
 
+        private String title;
+
         private String aboutMe;
 
+        private String websiteLink;
 
+        private String twitterLink;
 
+        private String githubLink;
 
+        private String notionLink;
 
+        private String blogLink;
 
         public Patch addMemberId(Long memberId) {
             Assert.notNull(memberId, "member id must not be null.");
@@ -54,7 +64,17 @@ public class MemberDto {
         private long memberId;
         private String email;
         private String displayName;
+        private String title;
         private String aboutMe;
+        private String websiteLink;
+        private String twitterLink;
+        private String githubLink;
+        private String notionLink;
+        private String blogLink;
+
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
+
 
     }
 }
