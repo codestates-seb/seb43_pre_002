@@ -6,23 +6,27 @@ import styled, { createGlobalStyle } from 'styled-components';
 import MyHeader from '../../components/MyHeader';
 import MyList from '../../components/MyList';
 
-const lists2 = Array(10).fill({
-	answerCount: 0,
-	link: 'https://stackoverflow.com/',
-	date: 'YYYY.MM.DD',
-});
-
 function MyProfile() {
 	const [userData, setUserData] = useState({});
+	const [articleData, setArticleData] = useState([]);
 	const { member_id } = useParams();
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await axios.get(`http://localhost:3000/member`);
 			setUserData(result.data);
+
+			const articleResult = await axios.get(`http://localhost:3000/article`);
+			setArticleData(articleResult.data);
 		};
 		fetchData();
 	}, []);
+
+	const filteredArticles = articleData
+		? articleData.filter((a) => a.memberId === parseInt(member_id, 10))
+		: [];
+
+	const sortedArticles = filteredArticles.sort((a, b) => b.answer - a.answer);
 
 	function isEmpty(value) {
 		return value === null || value === undefined || value === '';
@@ -32,7 +36,7 @@ function MyProfile() {
 		<Wrap>
 			<GlobalStyles />
 			<MyHeader />
-			{!isEmpty(userData[`${member_id - 1}`]?.aboutMe) && (
+			{userData && !isEmpty(userData[`${member_id - 1}`]?.aboutMe) && (
 				<div>
 					<Category>About</Category>
 					<AboutBox>{userData[`${member_id - 1}`]?.aboutMe}</AboutBox>
@@ -40,7 +44,8 @@ function MyProfile() {
 			)}
 			<Post>
 				<Category>Top posts</Category>
-				<MyList lists={lists2} />
+				{console.log(filteredArticles)}
+				<MyList lists={sortedArticles.slice(0, 10)} />
 			</Post>
 		</Wrap>
 	);

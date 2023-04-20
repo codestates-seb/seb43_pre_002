@@ -6,10 +6,10 @@ function MyList({ lists }) {
 			{lists.map((list) => (
 				<List key={list.id}>
 					<ListTitle>
-						<Ansewer>{list.answerCount}</Ansewer>
-						<Title href={list.link}>질문 링크, 질문 상세 페이지 이동</Title>
+						<Ansewer>{list.answer}</Ansewer>
+						<Title href={list.title}>질문 링크, 질문 상세 페이지 이동</Title>
 					</ListTitle>
-					<CreateDate>{list.date}</CreateDate>
+					<CreateDate>{list.createdAt}</CreateDate>
 				</List>
 			))}
 		</PostList>
