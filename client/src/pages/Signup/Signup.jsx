@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import OAuthButton from '../../components/Button/OAuthButton';
-
 import JoinDescription from '../../components/JoinDescription';
 import SignupForm from '../../components/SignupForm';
-
 
 const SignupContainer = styled.div`
 	display: flex;
@@ -24,6 +22,7 @@ const LoginLink = styled.div`
 	justify-content: space-evenly;
 	width: 100%;
 	padding: 16px;
+	font-size: var(--font-base);
 	a {
 		color: var(--main-color);
 	}
