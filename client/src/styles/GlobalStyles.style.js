@@ -11,7 +11,7 @@ const GlobalStyles = createGlobalStyle`
         --font-color-gray: #BABFC3;
         --modal-color: #E5F3FF;
         --button-hover-color: #3B6FA0;
-        --font-color-gray: #BABFC3;
+        --error-message-color: #CB2A2A;
 
         --font-title-large: 27px;
         --font-title-small: 17px;
