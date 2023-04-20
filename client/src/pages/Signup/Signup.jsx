@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import OAuthButton from '../../components/Button/OAuthButton';
 import JoinDescription from '../../components/JoinDescription';
@@ -37,10 +38,7 @@ function Signup() {
 				<SignupForm />
 				<LoginLink>
 					<span>Already have an account?</span>
-					{/* 링크 컴포넌트로 수정해야 함 */}
-					<a href="/users/login?ssrc=head&returnurl=https%3a%2f%2fstackoverflow.com%2f">
-						Log in
-					</a>
+					<Link to="/login">Log In</Link>
 				</LoginLink>
 			</SignupWrapper>
 		</SignupContainer>
