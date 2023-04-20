@@ -24,6 +24,8 @@ public class AnswerService {
         return answerRepository.save(answer);
     }
 
+
+
 //    public Answer updateAnswer(Answer answer){
 //        Answer findAnswer = findAnswer(answer.getAnswerId());
 //        Optional.ofNullable(answer.getContent())
@@ -46,7 +48,7 @@ public class AnswerService {
 
     public Answer findAnswer(long questionId){
         Optional<Answer> optionalQuestion = answerRepository.findById(questionId);
-        Answer findAnswer = optionalQuestion.orElseThrow(()-> new BusinessLogicException(ExceptionCode.QNA_QUESTION_NOT_FOUND));
+        Answer findAnswer = optionalQuestion.orElseThrow(()-> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
 
         return findAnswer;
     }

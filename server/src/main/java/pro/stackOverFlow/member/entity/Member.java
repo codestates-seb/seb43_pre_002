@@ -4,6 +4,8 @@ import lombok.*;
 import pro.stackOverFlow.audit.Auditable;
 import pro.stackOverFlow.exception.BusinessLogicException;
 import pro.stackOverFlow.exception.ExceptionCode;
+import pro.stackOverFlow.question.dto.QuestionDto;
+import pro.stackOverFlow.question.entity.Question;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,27 +30,41 @@ public class Member extends Auditable {
     @Column(length = 100, nullable = false)
     private String displayName;
 
+    @Column(length = 50)
+    private String title;
+
     @Column(length = 300)
     private String aboutMe;
 
+    @Column
+    private String websiteLink;
+    @Column
+    private String twitterLink;
+    @Column
+    private String githubLink;
+    @Column
+    private String notionLink;
+    @Column
+    private String blogLink;
 
 
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    private List<String> roles = new ArrayList<>();
 
-//    @Setter(AccessLevel.NONE)
-//    @OneToMany(mappedBy = "member")
-//    private List<QnaQuestion> qnaQuestions = new ArrayList<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
+    @Setter
+    @OneToMany(mappedBy = "member")
+    private List<Question> Questions;
 
     public Member(Long memberId) {
         this.memberId = memberId;
     }
 
 
-//    public void setQnAQuestion(QnaQuestion qnaQuestion) {
-//        this.qnaQuestions.add(qnaQuestion);
-//        if (qnaQuestion.getMember() != this) {
-//            qnaQuestion.setMember(this);
+//    public void setQuestion(Question Question) {
+//        this.Questions.add(Question);
+//        if (Question.getMember() != this) {
+//            Question.setMember(this);
 //        }
 //    }
 

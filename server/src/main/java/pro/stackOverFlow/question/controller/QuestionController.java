@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import pro.stackOverFlow.dto.MultiResponseDto;
 import pro.stackOverFlow.dto.SingleResponseDto;
+import pro.stackOverFlow.member.entity.Member;
+import pro.stackOverFlow.member.service.MemberService;
 import pro.stackOverFlow.question.dto.QuestionDto;
 import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.question.mapper.QuestionMapper;
@@ -23,21 +25,26 @@ import java.util.List;
 @RequestMapping("/questions")
 public class QuestionController {
     private final QuestionService questionService;
+    private final MemberService memberService;
     private final QuestionMapper mapper;
 
-    public QuestionController(QuestionService questionService, QuestionMapper mapper) {
+    public QuestionController(QuestionService questionService, MemberService memberService, QuestionMapper mapper) {
         this.questionService = questionService;
+        this.memberService = memberService;
         this.mapper = mapper;
     }
 
-    @PostMapping
-    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody) {
+    @PostMapping("/{member-id}")
+    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody,
+                                       @PathVariable("member-id") long memberId) {
         Question question = mapper.questionPostDtoToQuestion(requestBody);
+        Member member = memberService.findMember(memberId);
+        question.addMember(member);
         Question createdQuestion = questionService.createQuestion(question);
 
 //        return ResponseEntity.created(URI.create("/questions")).build();
         return new ResponseEntity<>(
-                new SingleResponseDto<>(createdQuestion), HttpStatus.CREATED);
+                new SingleResponseDto<>(mapper.questionToQuestionResponse(createdQuestion)), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")

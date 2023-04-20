@@ -3,6 +3,8 @@ package pro.stackOverFlow.question.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pro.stackOverFlow.audit.Auditable;
+import pro.stackOverFlow.member.entity.Member;
 
 import javax.persistence.*;
 
@@ -10,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Question {
+public class Question extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +27,16 @@ public class Question {
     @Column(nullable = false)
     private int viewCount; // 조회수
 
+    @ManyToOne(targetEntity = Member.class, cascade = CascadeType.PERSIST)
+    @Setter
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+    public void addMember(Member member) {
+        this.member = member;
+        if (!member.getQuestions().contains(this)) {
+            member.getQuestions().add(this);
+        }
+    }
 
 }
