@@ -1,10 +1,12 @@
 import GlobalStyles from './styles/GlobalStyles.style';
 
+import SignupSuccess from './pages/SignupSuccess/SignupSuccess';
+
 function App() {
 	return (
 		<>
 			<GlobalStyles />
-			<div>프로젝트 초기세팅</div>;
+			<SignupSuccess />
 		</>
 	);
 }
