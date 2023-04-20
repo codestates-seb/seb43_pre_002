@@ -7,13 +7,16 @@ const GlobalStyles = createGlobalStyle`
         --main-color: #508CC3;
         --line-color: #D9D9D9;
         --base-color:#F1F2F3;
-        --main-color-lighten: #D9E9F7;
+        --main-color-lighten: #D9E9F7;   
+        --font-color-gray: #BABFC3;
         
         --font-title-large: 27px;
         --font-title-small: 17px;
         --font-large: 15px;
         --font-base: 13px;
         --font-small: 11px;
+        --font-icon-size: 21px;
+
     }
 
     ${reset}
