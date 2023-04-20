@@ -28,8 +28,7 @@ export default NewQuestion;
 const NewQuestionContainer = styled.form`
 	display: flex;
 	flex-direction: column;
-	width: 100vw;
-	height: 160%;
-	background-color: #f8f9f9; // 전역변수로 바꾸기
+	width: 99vw;
+	background-color: #f8f9f9; // 이미지 색깔
 	padding: 0 8%;
 `;
