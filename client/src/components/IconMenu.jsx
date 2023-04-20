@@ -1,10 +1,13 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import {
 	AiFillCaretUp,
 	AiFillCaretDown,
 	AiOutlineFieldTime,
 } from 'react-icons/ai';
-import { BiBookmark } from 'react-icons/bi';
+import { MdBookmarkBorder, MdBookmark } from 'react-icons/md';
+import { FaCheck } from 'react-icons/fa';
 
 const IconMenuContainer = styled.ul`
 	width: 52px;
@@ -19,13 +22,7 @@ const IconMenuContainer = styled.ul`
 
 		color: var(--font-color-gray);
 		> svg {
-			color: var(--font-color-gray);
 			font-size: var(--font-base);
-			width: 18px;
-			height: 18px;
-		}
-		.up__icon,
-		.down__icon {
 			width: 36px;
 			height: 36px;
 		}
@@ -35,8 +32,19 @@ const IconMenuContainer = styled.ul`
 			visibility: visible;
 		}
 	}
+	li:active {
+		color: orange;
+	}
+	.bookmark__icon {
+		width: 18px;
+		height: 18px;
+	}
 
 	list-style: none;
+`;
+
+const SelectedIcon = styled(FaCheck)`
+	color: ${(props) => (props.isSelected ? 'green' : `var(--font-color-gray);`)};
 `;
 
 const Tooltip = styled.div`
@@ -88,25 +96,74 @@ const Tooltip = styled.div`
 
 // QnABox의 IconMenu
 function IconMenu() {
+	const [vote, setVote] = useState(0);
+	const [isBookmark, setIsBookmark] = useState(false);
+	const [isSelected, setIsSelected] = useState(false);
+
+	const postVote = () => {
+		console.log('서버전송');
+	};
+
+	const postBookmark = () => {
+		console.log('서버 전송');
+	};
+
+	const postSelectAnswer = () => {
+		console.log('서버 전송');
+	};
+
+	const voteUpHandler = () => {
+		setVote(vote + 1);
+		postVote();
+	};
+
+	const voteDownHandler = () => {
+		setVote(vote - 1);
+		postVote();
+	};
+
+	const isBookmarkHandler = () => {
+		setIsBookmark(!isBookmark);
+		postBookmark();
+	};
+
+	const isSelectedHadler = () => {
+		setIsSelected(!isSelected);
+		postSelectAnswer();
+	};
+
 	return (
 		<IconMenuContainer>
 			<li>
-				<AiFillCaretUp className="up__icon" />
+				<AiFillCaretUp onClick={voteUpHandler} />
 				<Tooltip>
 					This question shows research effort; it is useful and clear
 				</Tooltip>
 			</li>
-			<li>0</li>
+			<li>{vote}</li>
 			<li>
-				<AiFillCaretDown className="down__icon" />
+				<AiFillCaretDown onClick={voteDownHandler} />
 				<Tooltip>Save this question.</Tooltip>
 			</li>
 			<li>
-				<BiBookmark className="bookmark__icon" />
+				<SelectedIcon isSelected={isSelected} onClick={isSelectedHadler} />
+			</li>
+			<li>
+				{isBookmark ? (
+					<MdBookmarkBorder
+						className="bookmark__icon on"
+						onClick={isBookmarkHandler}
+					/>
+				) : (
+					<MdBookmark className="bookmark__icon" onClick={isBookmarkHandler} />
+				)}
+
 				<Tooltip>Save this question.</Tooltip>
 			</li>
 			<li>
-				<AiOutlineFieldTime className="timeline__icon" />
+				<Link to="/timeline/:id">
+					<AiOutlineFieldTime className="timeline__icon" />
+				</Link>
 				<Tooltip>Show activity on this post.</Tooltip>
 			</li>
 		</IconMenuContainer>
