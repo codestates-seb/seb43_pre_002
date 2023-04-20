@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import UserProfile from './UserProfile';
 
 const UserInfoCardContainer = styled.div`
 	background-color: var(--main-color-lighten);
@@ -39,14 +41,23 @@ const UserInfoCardContainer = styled.div`
 `;
 
 // 유저의 정보가 담긴 InfoCard
-function UserInfoCard() {
+function UserInfoCard({ questionData }) {
 	return (
 		<UserInfoCardContainer>
-			<span>asked 45 mins ago</span>
+			<span>{questionData.createdAt}</span>
 			<div className="bottom__container">
-				<div className="user__img">img</div>
+				{questionData.author && (
+					<UserProfile
+						userName={questionData.author}
+						boxSize="32px"
+						fontSize="13px"
+					/>
+				)}
+
 				<div className="right__container">
-					<span className="user__name">Amr Eraky</span>
+					<Link to="/myprofile">
+						<span className="user__name">{questionData.author}</span>
+					</Link>
 					<div className="user__activity">
 						<span> 1149</span>
 						<span> 5</span>
