@@ -8,7 +8,7 @@ function HomeQuestionItem({ data }) {
 		<QuestionItemContainer>
 			<HomeQuestionInfo />
 			<HomeQuestionContents data={data} />
-			<HomeQuestionUserInfo />
+			<HomeQuestionUserInfo data={data} />
 		</QuestionItemContainer>
 	);
 }
