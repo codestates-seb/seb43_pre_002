@@ -16,7 +16,7 @@ function MyProfile() {
 			const result = await axios.get(`http://localhost:3000/member`);
 			setUserData(result.data);
 
-			const articleResult = await axios.get(`http://localhost:3000/article`);
+			const articleResult = await axios.get(`http://localhost:3000/question`);
 			setArticleData(articleResult.data);
 		};
 		fetchData();
