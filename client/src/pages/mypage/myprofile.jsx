@@ -1,3 +1,7 @@
+/* eslint-disable camelcase */
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import MyHeader from '../../components/MyHeader';
 import MyList from '../../components/MyList';
@@ -9,17 +13,31 @@ const lists2 = Array(10).fill({
 });
 
 function MyProfile() {
+	const [userData, setUserData] = useState({});
+	const { member_id } = useParams();
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await axios.get(`http://localhost:3000/member`);
+			setUserData(result.data);
+		};
+		fetchData();
+	}, []);
+
+	function isEmpty(value) {
+		return value === null || value === undefined || value === '';
+	}
+
 	return (
 		<Wrap>
 			<GlobalStyles />
 			<MyHeader />
-			<div>
-				<Category>About</Category>
-				<AboutBox>
-					유저가 작성한 Aboutme 내용이 들어갑니다.유저가 About me에 작성한
-					내용이 없을경우 hidden처리 합니다.
-				</AboutBox>
-			</div>
+			{!isEmpty(userData[`${member_id - 1}`]?.aboutMe) && (
+				<div>
+					<Category>About</Category>
+					<AboutBox>{userData[`${member_id - 1}`]?.aboutMe}</AboutBox>
+				</div>
+			)}
 			<Post>
 				<Category>Top posts</Category>
 				<MyList lists={lists2} />
@@ -27,6 +45,7 @@ function MyProfile() {
 		</Wrap>
 	);
 }
+
 const Wrap = styled.div`
 	margin-top: 40px;
 	display: flex;
@@ -42,7 +61,7 @@ const AboutBox = styled.p`
 	margin-top: 20px;
 	border-radius: 5px;
 	text-justify: center;
-	padding-top: 5px;
+	padding: 10px 5px;
 `;
 const Category = styled.span`
 	font-size: 21px;
