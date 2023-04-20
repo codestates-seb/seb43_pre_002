@@ -1,19 +1,21 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import LoginHeader from '../components/Header/LoginHeader';
 import QnABox from '../components/QnABox';
 
 const QuestionContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-
+	position: absolute;
+	top: 50px;
 	/* border: black solid 1px; */
 
 	align-items: center;
 	width: 100vw;
 
-	header {
-		width: 100%;
-		background-color: var(--main-color);
-	}
 	main {
 		padding: 24px;
 		display: flex;
@@ -59,14 +61,13 @@ const TitleContainer = styled.div`
 
 const InfoBox = styled.div`
 	margin-right: 10px;
-
+	font-size: var(--font-base);
 	span {
-		margin-right: 0.2rem;
+		margin-right: 5px;
 		color: var(--font-color-gray);
 	}
 
 	.second__span {
-		font-weight: bold;
 		color: black;
 	}
 `;
@@ -110,28 +111,44 @@ const AnswersContainer = styled.div`
 `;
 
 function Question() {
+	const [questionData, setQuestionData] = useState({});
+	const [answerList, setAnswerList] = useState([]);
+
+	const getQuestionData = () => {
+		axios.get('http://localhost:3001/datas').then((res) => {
+			setQuestionData(res.data[0]);
+			setAnswerList(res.data[0].answers);
+		});
+	};
+
+	useEffect(() => {
+		getQuestionData();
+	}, []);
+
+	console.log(answerList);
+
 	return (
 		<QuestionContainer>
-			<header>헤더</header>
+			<LoginHeader />
+
 			<main>
 				<TitleContainer>
 					<div className="top__container">
-						<span>
-							Type error pass dynamic generic type to forwardRef React
-							TypeScript
-						</span>
+						<span>{questionData && questionData.title}</span>
 
-						<button type="button">Ask Questions</button>
+						<Link to="/myprofile">
+							<button type="button">Ask Questions</button>
+						</Link>
 					</div>
 					<div className="bottom__container">
 						<div className="info__container">
 							<InfoBox>
 								<span className="first__span">Asked</span>
-								<span className="second__span">Today</span>
+								<span className="second__span">{questionData.createdAt}</span>
 							</InfoBox>
 							<InfoBox>
 								<span className="first__span">Modified</span>
-								<span className="second__span">Today</span>
+								<span className="second__span">{questionData.createdAt}</span>
 							</InfoBox>
 							<InfoBox>
 								<span className="first__span">Viewed</span>
@@ -141,11 +158,11 @@ function Question() {
 					</div>
 				</TitleContainer>
 
-				<QnABox />
+				<QnABox questionData={questionData} setQuestionData={setQuestionData} />
 
 				<AnswersContainer>
 					<div className="answers__header">
-						<span>2 Answer</span>
+						<span>{`${answerList.length} Answers`}</span>
 						<div className="filter__container">
 							<span>Sorted by:</span>
 							<select>
@@ -155,8 +172,13 @@ function Question() {
 						</div>
 					</div>
 					<div>
-						<QnABox />
-						<QnABox />
+						{answerList.map((it) => (
+							<QnABox
+								key={it.id}
+								questionData={it}
+								setQuestionData={setQuestionData}
+							/>
+						))}
 					</div>
 				</AnswersContainer>
 
