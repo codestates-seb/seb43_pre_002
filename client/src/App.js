@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyles from './styles/GlobalStyles.style';
 import MyEdit from './pages/mypage/myedit';
@@ -17,7 +16,6 @@ function App() {
 				</Routes>
 			</BrowserRouter>
 		</div>
-
 	);
 }
 
