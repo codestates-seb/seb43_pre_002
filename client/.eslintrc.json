@@ -1,23 +1,24 @@
 {
 	"env": {
-			"browser": true,
-			"es2021": true,
-			"node": true
+		"browser": true,
+		"es2021": true,
+		"node": true
 	},
 	"extends": [
-			"airbnb",
-			"plugin:react/recommended",
-			"plugin:prettier/recommended"
+		"airbnb",
+		"plugin:react/recommended",
+		"plugin:prettier/recommended"
 	],
 	"rules": {
-			"import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
-			"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-			"react/react-in-jsx-scope": 0,
-			"no-unused-vars": 1,
-			"react/prop-types": 0,
-			"react/jsx-props-no-spreading": 0
+		"import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+		"react/react-in-jsx-scope": 0,
+		"no-unused-vars": 1,
+		"react/prop-types": 0,
+		"react/jsx-props-no-spreading": 0
 	},
 	"parserOptions": {
+<<<<<<< HEAD
 			"ecmaVersion": 2020
 	},
 	
@@ -28,4 +29,15 @@
 		  }
 		}
 	  }
+=======
+		"ecmaVersion": 2020
+	},
+	"settings": {
+		"import/resolver": {
+		  "node": {
+			  "paths": ["src"]
+		  }
+		}
+  }
+>>>>>>> 101a86e761d86e39c2f1908c44a58624c513a4f4
 }
