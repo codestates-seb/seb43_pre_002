@@ -1,12 +1,15 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import OAuthButton from '../../components/Button/OAuthButton';
 import LoginForm from '../../components/LoginForm';
+import LoginHeader from '../../components/Header/LoginHeader';
 
 const LoginContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
+	min-height: 620.531px;
+	height: 100%;
 	width: 100vw;
 	background-color: var(--base-color);
 `;
@@ -37,14 +40,14 @@ const SignupLink = styled.div`
 function Login() {
 	return (
 		<LoginContainer>
+			<LoginHeader />
 			<LoginWrapper>
 				<img src={`${process.env.PUBLIC_URL}/assets/main_logo.png`} alt="" />
 				<OAuthButton type="button" buttonText="Log in with Google" />
 				<LoginForm />
 				<SignupLink>
 					<span>Already have an account?</span>
-					{/* 링크 컴포넌트로 수정해야 함 */}
-					<a href="/users/signup?ssrc=head">Sign up</a>
+					<Link to="/signup">Sign up</Link>
 				</SignupLink>
 			</LoginWrapper>
 		</LoginContainer>
