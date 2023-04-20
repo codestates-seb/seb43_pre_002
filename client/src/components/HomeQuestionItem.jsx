@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import QuestionInfo from './QuestionInfo';
-import QuestionUserInfo from './QuestionUserInfo';
-import QuestionContents from './QuestionContents';
+import QuestionInfo from './HomeQuestionInfo';
+import QuestionUserInfo from './HomeQuestionUserInfo';
+import QuestionContents from './HomeQuestionContents';
 
 function QuestionItem() {
 	return (

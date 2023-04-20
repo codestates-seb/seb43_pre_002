@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Pagination from './Pagination';
-import QuestionsPerPage from './QuestionsPerPage';
+import Pagination from './HomePagination';
+import QuestionsPerPage from './HomeQuestionsPerPage';
 
 function HomeFooter() {
 	return (

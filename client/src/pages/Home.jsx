@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import HomeHeader from '../components/HomeHeader';
 import HomeFilter from '../components/HomeFilter';
-import QuestionItem from '../components/QuestionItem';
+import QuestionItem from '../components/HomeQuestionItem';
 import HomeFooter from '../components/HomeFooter';
 
 function Home() {
