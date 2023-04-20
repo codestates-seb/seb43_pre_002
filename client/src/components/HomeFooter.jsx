@@ -2,11 +2,22 @@ import styled from 'styled-components';
 import Pagination from './HomePagination';
 import QuestionsPerPage from './HomeQuestionsPerPage';
 
-function HomeFooter() {
+function HomeFooter({
+	data,
+	currentPage,
+	setCurrentPage,
+	limitItems,
+	setLimitItems,
+}) {
 	return (
 		<HomeFooterContainer>
-			<Pagination />
-			<QuestionsPerPage />
+			<Pagination
+				data={data}
+				currentPage={currentPage}
+				setCurrentPage={setCurrentPage}
+				limitItems={limitItems}
+			/>
+			<QuestionsPerPage limitItems={limitItems} setLimitItems={setLimitItems} />
 		</HomeFooterContainer>
 	);
 }

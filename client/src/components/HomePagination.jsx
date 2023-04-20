@@ -1,31 +1,73 @@
 import styled from 'styled-components';
 
-function HomePagination() {
+function HomePagination({ data, limitItems, currentPage, setCurrentPage }) {
+	const total = data.length;
+	const maxPages = Math.ceil(total / limitItems);
+	const pageButtons = Array(5).fill();
 	return (
 		<PaginationContainer>
-			<button className="prev-button" type="button">
+			<button
+				type="button"
+				className="button prev"
+				onClick={() => {
+					setCurrentPage(currentPage - 1);
+				}}
+				disabled={currentPage <= 1}
+			>
 				Prev
 			</button>
-			<button className="page-number" type="button">
-				1
-			</button>
-			<button className="page-number" type="button">
-				2
-			</button>
-			<button className="page-number" type="button">
-				3
-			</button>
-			<button className="page-number" type="button">
-				4
-			</button>
-			<button className="page-number" type="button">
-				5
-			</button>
-			<div className="dot">...</div>
-			<button className="last-page" type="button">
-				788093
-			</button>
-			<button className="next-button" type="button">
+			{currentPage > 4 ? (
+				<div>
+					<button
+						type="button"
+						className="button"
+						onClick={() => setCurrentPage(1)}
+					>
+						{1}
+					</button>
+					<span className="dot">...</span>
+				</div>
+			) : null}
+			{pageButtons.map((_, i) => {
+				let key = i;
+				if (maxPages > 5 && currentPage >= maxPages - 2)
+					key = i + maxPages - 2 - currentPage;
+				if (currentPage > 4) key = i + currentPage - 3;
+				if (key + 1 > maxPages || key + 1 <= 0) return null;
+				return (
+					<button
+						type="button"
+						className={`button ${key + 1 === currentPage ? 'active' : ''}`}
+						key={key}
+						onClick={() => {
+							setCurrentPage(key + 1);
+						}}
+						disabled={key >= maxPages}
+					>
+						{key + 1}
+					</button>
+				);
+			})}
+			{currentPage < maxPages - 2 ? (
+				<div>
+					<span className="dot">...</span>
+					<button
+						type="button"
+						className="button"
+						onClick={() => setCurrentPage(maxPages)}
+					>
+						{maxPages}
+					</button>
+				</div>
+			) : null}
+			<button
+				type="button"
+				className="button next"
+				onClick={() => {
+					setCurrentPage(currentPage + 1);
+				}}
+				disabled={currentPage >= maxPages}
+			>
 				Next
 			</button>
 		</PaginationContainer>
@@ -37,41 +79,33 @@ export default HomePagination;
 const PaginationContainer = styled.div`
 	display: flex;
 	align-items: center;
-	width: 40%;
+	width: 60%;
 	height: 90px;
 	margin-left: 2%;
-	.prev-button,
-	.next-button,
-	.last-page {
-		width: 60px;
-		height: 30px;
-		background-color: white;
-		border-radius: 5px;
-		border-color: var(--line-color);
+	.button.active {
+		color: white;
+		background-color: #f48224;
+	}
+	div > .dot {
+		margin: 0 0.5em;
+	}
+	.button {
+		font-size: var(--font-large);
+		margin: 0 0.2em;
+		background-color: #fff;
+		border: 1px solid #d9d9d9;
+		border-radius: 3px;
+		padding: 0.2em 0.5em;
 		cursor: pointer;
 		&:hover {
-			background-color: var(--line-color);
+			background-color: #d9d9d9;
+		}
+		&:disabled {
+			cursor: not-allowed;
 		}
 	}
-	.prev-button {
-		margin-right: 5px;
-	}
-	.next-button {
-		margin-left: 5px;
-	}
-	.page-number {
-		width: 30px;
-		height: 30px;
-		margin-right: 1px;
-		background-color: white;
-		border-radius: 5px;
-		border-color: var(--line-color);
-		cursor: pointer;
-		&:hover {
-			background-color: var(--line-color);
-		}
-	}
-	.dot {
-		margin: 0 6px;
+	.prev,
+	.next {
+		width: 3.5em;
 	}
 `;
