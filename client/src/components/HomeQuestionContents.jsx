@@ -25,7 +25,7 @@ const QuestionContentsContainer = styled.div`
 		margin: -3% 0 2% 0;
 		font-size: var(--font-title-small);
 		font-weight: 700;
-		color: #3b6fa0; // 전역변수로 바꾸기
+		color: var(--button-hover-color);
 		&:hover {
 			color: var(--main-color);
 		}

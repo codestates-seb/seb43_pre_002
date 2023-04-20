@@ -29,7 +29,7 @@ const AskSubmitContainer = styled.div`
 			background-color: var(--main-color);
 			cursor: pointer;
 			&:hover {
-				background-color: #3b6fa0; // 전역변수로 바꾸기
+				background-color: var(--button-hover-color);
 			}
 		}
 	}

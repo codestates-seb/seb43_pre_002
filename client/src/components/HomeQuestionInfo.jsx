@@ -16,8 +16,9 @@ const QuestionInfoContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: right;
+	align-items: right;
 	width: 15%;
-	margin-right: 5%;
+	margin-left: 2%;
 	.info {
 		display: flex;
 		justify-content: right;

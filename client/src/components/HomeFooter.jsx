@@ -3,7 +3,7 @@ import HomePagination from './HomePagination';
 import QuestionsPerPage from './HomeQuestionsPerPage';
 
 function HomeFooter({
-	totalData,
+	totalDataCount,
 	currentPage,
 	setCurrentPage,
 	limitItems,
@@ -12,12 +12,16 @@ function HomeFooter({
 	return (
 		<HomeFooterContainer>
 			<HomePagination
-				totalData={totalData}
+				totalDataCount={totalDataCount}
 				currentPage={currentPage}
 				setCurrentPage={setCurrentPage}
 				limitItems={limitItems}
 			/>
-			<QuestionsPerPage limitItems={limitItems} setLimitItems={setLimitItems} />
+			<QuestionsPerPage
+				limitItems={limitItems}
+				setLimitItems={setLimitItems}
+				setCurrentPage={setCurrentPage}
+			/>
 		</HomeFooterContainer>
 	);
 }

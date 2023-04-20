@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-function HomeFilter() {
+function HomeFilter({ totalDataCount }) {
 	return (
 		<HomeFilterContainer>
-			<span className="total">23,642,762 questions</span>
+			<span className="total">{totalDataCount} questions</span>
 			<div>
 				<button className="sort-button newest" type="button">
 					Newest

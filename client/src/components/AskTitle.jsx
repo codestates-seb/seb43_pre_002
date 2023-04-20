@@ -59,7 +59,7 @@ const AskTitleContainer = styled.div`
 		width: 6%;
 		height: 2em;
 		&:hover {
-			background-color: #3b6fa0; // 전역변수로 바꾸기
+			background-color: var(--button-hover-color);
 		}
 		cursor: pointer;
 	}

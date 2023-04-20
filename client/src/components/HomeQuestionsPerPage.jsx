@@ -1,28 +1,33 @@
 import styled from 'styled-components';
 
-function HomeQuestionsPerPage({ limitItems, setLimitItems }) {
+function HomeQuestionsPerPage({ limitItems, setLimitItems, setCurrentPage }) {
 	const isActive = (num) => {
 		return limitItems === num ? 'active' : '';
+	};
+	const handleLimitItems = (num) => {
+		setLimitItems(num);
+		setCurrentPage(1);
+		window.scrollTo(0, 0);
 	};
 	return (
 		<QuestionsPerPageContainer>
 			<button
 				type="button"
 				className={`question-counts ${isActive(5)}`}
-				onClick={() => setLimitItems(5)}
+				onClick={() => handleLimitItems(5)}
 			>
 				5
 			</button>
 			<button
 				className={`question-counts ${isActive(10)}`}
-				onClick={() => setLimitItems(10)}
+				onClick={() => handleLimitItems(10)}
 				type="button"
 			>
 				10
 			</button>
 			<button
 				className={`question-counts ${isActive(15)}`}
-				onClick={() => setLimitItems(15)}
+				onClick={() => handleLimitItems(15)}
 				type="button"
 			>
 				15

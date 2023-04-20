@@ -10,7 +10,7 @@ function Home() {
 	const [allData, setAllData] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [limitItems, setLimitItems] = useState(5);
-	const totalData = allData.length;
+	const totalDataCount = allData.length;
 	useEffect(() => {
 		axios
 			.get('http://localhost:3001/datas')
@@ -23,12 +23,12 @@ function Home() {
 	return (
 		<HomeContainer>
 			<HomeHeader />
-			<HomeFilter />
+			<HomeFilter totalDataCount={totalDataCount} />
 			{currentPageData.map((el) => (
 				<HomeQuestionItem key={el.id} data={el} />
 			))}
 			<HomeFooter
-				totalData={totalData}
+				totalDataCount={totalDataCount}
 				currentPage={currentPage}
 				setCurrentPage={setCurrentPage}
 				limitItems={limitItems}

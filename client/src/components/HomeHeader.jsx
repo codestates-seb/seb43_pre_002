@@ -35,7 +35,7 @@ const HomeHeaderContainer = styled.header`
 		padding: 0;
 		cursor: pointer;
 		&:hover {
-			background-color: #3b6fa0; // 나중에 global 변수로 변경하기
+			background-color: var(--button-hover-color);
 		}
 	}
 `;

@@ -1,21 +1,23 @@
 import styled from 'styled-components';
 
 function HomePagination({
-	totalData,
+	totalDataCount,
 	limitItems,
 	currentPage,
 	setCurrentPage,
 }) {
-	const maxPages = Math.ceil(totalData / limitItems);
+	const maxPages = Math.ceil(totalDataCount / limitItems);
 	const pageButtons = Array(5).fill();
+	const handleButtonClick = (num) => {
+		setCurrentPage(num);
+		window.scrollTo(0, 0);
+	};
 	return (
 		<PaginationContainer>
 			<button
 				type="button"
 				className="button prev"
-				onClick={() => {
-					setCurrentPage(currentPage - 1);
-				}}
+				onClick={() => handleButtonClick(currentPage - 1)}
 				disabled={currentPage <= 1}
 			>
 				Prev
@@ -25,7 +27,7 @@ function HomePagination({
 					<button
 						type="button"
 						className="button"
-						onClick={() => setCurrentPage(1)}
+						onClick={() => handleButtonClick(1)}
 					>
 						{1}
 					</button>
@@ -43,9 +45,7 @@ function HomePagination({
 						type="button"
 						className={`button ${key + 1 === currentPage ? 'active' : ''}`}
 						key={key}
-						onClick={() => {
-							setCurrentPage(key + 1);
-						}}
+						onClick={() => handleButtonClick(key + 1)}
 						disabled={key >= maxPages}
 					>
 						{key + 1}
@@ -58,7 +58,7 @@ function HomePagination({
 					<button
 						type="button"
 						className="button"
-						onClick={() => setCurrentPage(maxPages)}
+						onClick={() => handleButtonClick(maxPages)}
 					>
 						{maxPages}
 					</button>
@@ -67,9 +67,7 @@ function HomePagination({
 			<button
 				type="button"
 				className="button next"
-				onClick={() => {
-					setCurrentPage(currentPage + 1);
-				}}
+				onClick={() => handleButtonClick(currentPage + 1)}
 				disabled={currentPage >= maxPages}
 			>
 				Next
