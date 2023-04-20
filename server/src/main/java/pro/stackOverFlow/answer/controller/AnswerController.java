@@ -9,6 +9,7 @@ import pro.stackOverFlow.answer.dto.AnswerResponseDto;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.answer.mapper.AnswerMapper;
 import pro.stackOverFlow.answer.service.AnswerService;
+import pro.stackOverFlow.answer.service.AnswerVoteService;
 import pro.stackOverFlow.dto.SingleResponseDto;
 
 import javax.validation.Valid;
@@ -18,15 +19,16 @@ public class AnswerController {
 
     private AnswerService answerService;
     private AnswerMapper answerMapper;
+    private AnswerVoteService answerVoteService;
 
 
-    public AnswerController(AnswerService answerService, AnswerMapper answerMapper) {
+    public AnswerController(AnswerService answerService, AnswerMapper answerMapper, AnswerVoteService answerVoteService) {
         this.answerService = answerService;
         this.answerMapper = answerMapper;
+        this.answerVoteService = answerVoteService;
     }
 
-
-    @PostMapping("/qna-questions/{question-id}/qna-answers")
+    @PostMapping("/questions/{question-id}/answers")
     public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
 
         Answer answer = answerMapper.answerPostDtoToAnswer(answerPostDto);
@@ -37,7 +39,7 @@ public class AnswerController {
     }
 
 
-    @GetMapping("/qna-answers/{answer-id}")
+    @GetMapping("/answers/{answer-id}")
     public ResponseEntity getAnswer(@PathVariable("answer-id") long answerId){
 
         Answer foundAnswer = answerService.findAnswer(answerId);
@@ -47,7 +49,7 @@ public class AnswerController {
     }
 
 
-    @PatchMapping("/qna-answers/{answer-id}")
+    @PatchMapping("/answers/{answer-id}")
     public ResponseEntity updateAnswer(@PathVariable("answer-id") long answerId,
                                      @Valid @RequestBody AnswerPatchDto answerPatchDto) {
 
@@ -59,7 +61,7 @@ public class AnswerController {
     }
 
 
-    @DeleteMapping("/qna-answers/{answer-id}")
+    @DeleteMapping("/answers/{answer-id}")
     public ResponseEntity deleteAnswer(@PathVariable("answer-id") long answerId) {
 
         answerService.deleteAnswer(answerId);

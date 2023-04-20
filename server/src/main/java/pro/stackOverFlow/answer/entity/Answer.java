@@ -1,12 +1,15 @@
 package pro.stackOverFlow.answer.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.hibernate.annotations.ColumnDefault;
 import pro.stackOverFlow.audit.Auditable;
+import pro.stackOverFlow.member.entity.Member;
+import pro.stackOverFlow.question.entity.Question;
 
 import javax.persistence.*;
 
@@ -23,23 +26,29 @@ public class Answer extends Auditable {
     private String content;
 
     @Column
-    private String answerSelectionStatus;
+    private String answerSelectionStatus; //답변 채택
 
     @Column
     @ColumnDefault("0")
     private int voteCount; //답변 vote
 
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+//    @JsonIgnore  // 무한 참조 순환 방지 annotation
+    private Question question;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+//    @JsonIgnore  // 무한 참조 순환 방지 annotation
+    private Member member;
 
 
-//    @ManyToOne
-//    @JoinColumn(name = "question_id")
-//    private Question question;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "member_id")
-//    private Member member;
+    public void increaseVoteCount() {
+        voteCount++;
+    }
 
-    //memberId 랑 questionId는 JoinColumn 하려면 member랑 question이 구현되어야 함
-
+    public void decreaseVoteCount() {
+        voteCount++;
+    }
 
 }
