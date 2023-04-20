@@ -4,11 +4,11 @@ import AskDetail from './AskDetail';
 import AskHelpler from './AskHelper';
 import { detailHelperContents } from './askHelperContents';
 
-function AskDetailBox() {
+function AskDetailBox({ register }) {
 	const [isDetailFocus, setIsDetailFocus] = useState(false);
 	return (
 		<AskDetailBoxContainer>
-			<AskDetail setIsDetailFocus={setIsDetailFocus} />
+			<AskDetail setIsDetailFocus={setIsDetailFocus} register={register} />
 			{isDetailFocus ? <AskHelpler contents={detailHelperContents} /> : null}
 		</AskDetailBoxContainer>
 	);

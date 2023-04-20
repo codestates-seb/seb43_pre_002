@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-function AskTitle({ setIsTitleFocus }) {
+function AskTitle({ setIsTitleFocus, register }) {
+	const onBlur = () => setIsTitleFocus(false);
 	return (
 		<AskTitleContainer>
 			<h5 className="title">Title</h5>
@@ -13,7 +14,7 @@ function AskTitle({ setIsTitleFocus }) {
 					className="input-container__title-input"
 					placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
 					onFocus={() => setIsTitleFocus(true)}
-					onBlur={() => setIsTitleFocus(false)}
+					{...register('title', { onBlur })}
 				/>
 			</div>
 			<button className="next" type="button">

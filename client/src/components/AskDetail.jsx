@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-function AskDetail({ setIsDetailFocus }) {
+function AskDetail({ setIsDetailFocus, register }) {
+	const onBlur = () => setIsDetailFocus(false);
 	return (
 		<AskDetailContainer>
 			<h5 className="title">What are the details of your problem?</h5>
@@ -12,7 +13,13 @@ function AskDetail({ setIsDetailFocus }) {
 				<textarea
 					className="input-container__detail-input"
 					onFocus={() => setIsDetailFocus(true)}
-					onBlur={() => setIsDetailFocus(false)}
+					{...register('detail', {
+						onBlur,
+						minLength: {
+							value: 8,
+							message: '20자 이상 작성하세요.',
+						},
+					})}
 				/>
 			</div>
 			<button className="next" type="button">

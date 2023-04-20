@@ -4,11 +4,14 @@ import AskHelpler from './AskHelper';
 import { tryAndExpectContents } from './askHelperContents';
 import TryAndExpect from './AskTryAndExpect';
 
-function TryAndExpectBox() {
+function TryAndExpectBox({ register }) {
 	const [isTryAndExpectFocus, setIsTryAndExpectFocus] = useState(false);
 	return (
 		<TryAndExpectBoxContainer>
-			<TryAndExpect setIsTryAndExpectFocus={setIsTryAndExpectFocus} />
+			<TryAndExpect
+				setIsTryAndExpectFocus={setIsTryAndExpectFocus}
+				register={register}
+			/>
 			{isTryAndExpectFocus ? (
 				<AskHelpler contents={tryAndExpectContents} />
 			) : null}

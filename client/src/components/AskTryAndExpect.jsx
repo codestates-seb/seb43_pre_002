@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-function TryAndExpect({ setIsTryAndExpectFocus }) {
+function TryAndExpect({ setIsTryAndExpectFocus, register }) {
+	const onBlur = () => setIsTryAndExpectFocus(false);
 	return (
 		<TryAndExpectContainer>
 			<h5 className="title">What did you try and what were you expecting?</h5>
@@ -12,7 +13,13 @@ function TryAndExpect({ setIsTryAndExpectFocus }) {
 				<textarea
 					className="input-container__detail-input"
 					onFocus={() => setIsTryAndExpectFocus(true)}
-					onBlur={() => setIsTryAndExpectFocus(false)}
+					{...register('tryAndExpect', {
+						onBlur,
+						minLength: {
+							value: 8,
+							message: '20자 이상 작성하세요.',
+						},
+					})}
 				/>
 			</div>
 			<button className="next" type="button">

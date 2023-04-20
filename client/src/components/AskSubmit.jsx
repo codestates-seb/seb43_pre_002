@@ -4,7 +4,7 @@ function Submit() {
 	return (
 		<SubmitContainer>
 			<div className="button-container">
-				<button className="submit-button" type="button">
+				<button className="submit-button" type="submit">
 					Submit
 				</button>
 			</div>
