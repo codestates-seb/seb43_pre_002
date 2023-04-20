@@ -19,7 +19,7 @@ function Agreement({
 	inputType,
 	register,
 	registerOptions,
-	errors,
+	error,
 }) {
 	return (
 		<AgreementContainer>
@@ -30,7 +30,7 @@ function Agreement({
 				{...register(labelFor, registerOptions)}
 			/>
 			<label htmlFor={labelFor}>{labelName}</label>
-			{errors && <ErrorMessage>{errors.message}</ErrorMessage>}
+			{error && <ErrorMessage>{error.message}</ErrorMessage>}
 		</AgreementContainer>
 	);
 }
