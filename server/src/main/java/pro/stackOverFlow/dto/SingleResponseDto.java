@@ -3,8 +3,8 @@ package pro.stackOverFlow.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
+@Getter
 public class SingleResponseDto<T> {
-    private T data;
+    private T Data;
 }
