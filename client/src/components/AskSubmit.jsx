@@ -1,20 +1,20 @@
 import styled from 'styled-components';
 
-function Submit() {
+function AskSubmit() {
 	return (
-		<SubmitContainer>
+		<AskSubmitContainer>
 			<div className="button-container">
 				<button className="submit-button" type="button">
 					Submit
 				</button>
 			</div>
-		</SubmitContainer>
+		</AskSubmitContainer>
 	);
 }
 
-export default Submit;
+export default AskSubmit;
 
-const SubmitContainer = styled.div`
+const AskSubmitContainer = styled.div`
 	display: flex;
 	.button-container {
 		display: flex;

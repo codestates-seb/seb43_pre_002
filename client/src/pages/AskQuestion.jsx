@@ -1,27 +1,27 @@
 import styled from 'styled-components';
-import NewQuestionHeader from '../components/AskQuestionHeader';
+import AskQuestionHeader from '../components/AskQuestionHeader';
 import AskDescription from '../components/AskDescription';
 import AskTitleBox from '../components/AskTitleBox';
 import AskDetailBox from '../components/AskDetailBox';
-import TryAndExpectBox from '../components/AskTryAndExpectBox';
-import Submit from '../components/AskSubmit';
+import AskTryAndExpectBox from '../components/AskTryAndExpectBox';
+import AskSubmit from '../components/AskSubmit';
 
-function NewQuestion() {
+function AskQuestion() {
 	return (
-		<NewQuestionContainer>
-			<NewQuestionHeader />
+		<AskQuestionContainer>
+			<AskQuestionHeader />
 			<AskDescription />
 			<AskTitleBox />
 			<AskDetailBox />
-			<TryAndExpectBox />
-			<Submit />
-		</NewQuestionContainer>
+			<AskTryAndExpectBox />
+			<AskSubmit />
+		</AskQuestionContainer>
 	);
 }
 
-export default NewQuestion;
+export default AskQuestion;
 
-const NewQuestionContainer = styled.div`
+const AskQuestionContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100vw;

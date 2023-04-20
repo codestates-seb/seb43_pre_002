@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-function QuestionInfo() {
+function HomeQuestionInfo() {
 	return (
 		<QuestionInfoContainer>
 			<div className="info">0 votes</div>
@@ -10,7 +10,7 @@ function QuestionInfo() {
 	);
 }
 
-export default QuestionInfo;
+export default HomeQuestionInfo;
 
 const QuestionInfoContainer = styled.div`
 	display: flex;

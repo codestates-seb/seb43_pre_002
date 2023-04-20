@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-function TryAndExpect({ setIsTryAndExpectFocus }) {
+function AskTryAndExpect({ setIsTryAndExpectFocus }) {
 	return (
-		<TryAndExpectContainer>
+		<AskTryAndExpectContainer>
 			<h5 className="title">What did you try and what were you expecting?</h5>
 			<div className="descriptor">
 				Describe what you tried, what you expected to happen, and what actually
@@ -18,13 +18,13 @@ function TryAndExpect({ setIsTryAndExpectFocus }) {
 			<button className="next" type="button">
 				Next
 			</button>
-		</TryAndExpectContainer>
+		</AskTryAndExpectContainer>
 	);
 }
 
-export default TryAndExpect;
+export default AskTryAndExpect;
 
-const TryAndExpectContainer = styled.div`
+const AskTryAndExpectContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 65%;

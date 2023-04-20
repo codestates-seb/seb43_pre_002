@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import HomeHeader from '../components/HomeHeader';
 import HomeFilter from '../components/HomeFilter';
-import QuestionItem from '../components/HomeQuestionItem';
+import HomeQuestionItem from '../components/HomeQuestionItem';
 import HomeFooter from '../components/HomeFooter';
 
 function Home() {
@@ -11,7 +11,7 @@ function Home() {
 			<HomeHeader />
 			<HomeFilter />
 			{mapArr.map((el) => (
-				<QuestionItem key={el} />
+				<HomeQuestionItem key={el} />
 			))}
 			<HomeFooter />
 		</HomeContainer>

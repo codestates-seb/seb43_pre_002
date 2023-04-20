@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-function Pagination() {
+function HomePagination() {
 	return (
 		<PaginationContainer>
 			<button className="prev-button" type="button">
@@ -32,7 +32,7 @@ function Pagination() {
 	);
 }
 
-export default Pagination;
+export default HomePagination;
 
 const PaginationContainer = styled.div`
 	display: flex;

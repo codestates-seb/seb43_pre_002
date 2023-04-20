@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-function QuestionsPerPage() {
+function HomeQuestionsPerPage() {
 	return (
 		<QuestionsPerPageContainer>
 			<button className="question-counts" type="button">
@@ -17,7 +17,7 @@ function QuestionsPerPage() {
 	);
 }
 
-export default QuestionsPerPage;
+export default HomeQuestionsPerPage;
 
 const QuestionsPerPageContainer = styled.div`
 	display: flex;

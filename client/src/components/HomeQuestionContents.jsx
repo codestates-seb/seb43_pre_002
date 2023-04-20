@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-function QuestionContents() {
+function HomeQuestionContents() {
 	return (
 		<QuestionContentsContainer>
 			<a href="/" className="question-header">
@@ -18,7 +18,7 @@ function QuestionContents() {
 	);
 }
 
-export default QuestionContents;
+export default HomeQuestionContents;
 
 const QuestionContentsContainer = styled.div`
 	display: flex;

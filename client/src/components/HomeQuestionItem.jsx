@@ -1,19 +1,19 @@
 import styled from 'styled-components';
-import QuestionInfo from './HomeQuestionInfo';
-import QuestionUserInfo from './HomeQuestionUserInfo';
-import QuestionContents from './HomeQuestionContents';
+import HomeQuestionInfo from './HomeQuestionInfo';
+import HomeQuestionUserInfo from './HomeQuestionUserInfo';
+import HomeQuestionContents from './HomeQuestionContents';
 
-function QuestionItem() {
+function HomeQuestionItem() {
 	return (
 		<QuestionItemContainer>
-			<QuestionInfo />
-			<QuestionContents />
-			<QuestionUserInfo />
+			<HomeQuestionInfo />
+			<HomeQuestionContents />
+			<HomeQuestionUserInfo />
 		</QuestionItemContainer>
 	);
 }
 
-export default QuestionItem;
+export default HomeQuestionItem;
 
 const QuestionItemContainer = styled.div`
 	display: flex;

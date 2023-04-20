@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-function QuestionUserInfo() {
+function HomeQuestionUserInfo() {
 	return (
 		<QuestionUserInfoContainer>
 			<span className="user-icon">😆</span>
@@ -12,7 +12,7 @@ function QuestionUserInfo() {
 	);
 }
 
-export default QuestionUserInfo;
+export default HomeQuestionUserInfo;
 
 const QuestionUserInfoContainer = styled.div`
 	display: flex;
