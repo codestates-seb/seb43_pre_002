@@ -1,33 +1,59 @@
-import { Link } from 'react-router-dom';
+/* eslint-disable camelcase */
+import axios from 'axios';
+import { Link, useParams } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GlobalStyles from '../styles/GlobalStyles.style';
 import DeleteModal from './DeleteModal';
 
 function MyHeader() {
 	const [isOpen2, setIsOpen2] = useState(false);
+	const [userData, setUserData] = useState({});
+	const { member_id } = useParams();
 
 	const handleClick2 = () => {
 		setIsOpen2(!isOpen2);
 	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await axios.get(`http://localhost:3000/member`);
+			setUserData(result.data);
+		};
+		fetchData();
+	}, []);
 
 	return (
 		<Wrap>
 			<GlobalStyles />
 			<ProfileHeader>
 				<Profile>
-					<UserImg>2pro</UserImg>
+					<UserImg>
+						{userData[`${member_id - 1}`] &&
+							userData[`${member_id - 1}`].displayName}
+					</UserImg>
 					<UserInfo>
-						<Name>2Pro</Name>
-						<Info>User Title</Info>
-						<Info>질문 수 : 0 답변 수 : 0</Info>
+						<Name>
+							{userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].displayName}
+						</Name>
+						<Info>
+							{userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].title}
+						</Info>
+						<Info>{`질문 수 : ${
+							userData[`${member_id - 1}`] && userData[`${member_id - 1}`].post
+						} 답변 수 : ${
+							userData[`${member_id - 1}`] &&
+							userData[`${member_id - 1}`].answer
+						}`}</Info>
 					</UserInfo>
 				</Profile>
 				<Buttons>
 					<ButtonEdit type="button">
 						<FaPencilAlt size={13} />
-						<Link to="/myedit">
+						<Link to={`/myedit/${member_id}`}>
 							<Span>Exit Profile</Span>
 						</Link>
 					</ButtonEdit>
@@ -38,10 +64,10 @@ function MyHeader() {
 				</Buttons>
 			</ProfileHeader>
 			<PageButtons>
-				<Link to="/myprofile">
+				<Link to={`/myprofile/${member_id}`}>
 					<PageButton type="button">Profile</PageButton>
 				</Link>
-				<Link to="/myactivity">
+				<Link to={`/myactivity/${member_id}`}>
 					<PageButton type="button">Activity</PageButton>
 				</Link>
 			</PageButtons>

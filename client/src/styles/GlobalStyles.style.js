@@ -8,16 +8,11 @@ const GlobalStyles = createGlobalStyle`
         --line-color: #D9D9D9;
         --base-color:#F1F2F3;
         --main-color-lighten: #D9E9F7;
-<<<<<<< HEAD
         --font-color-gray: #BABFC3;
         --modal-color: #E5F3FF;
         --button-hover-color: #3B6FA0;
         --font-color-gray: #BABFC3;
 
-=======
-
-        --font-color-gray: #BABFC3;
->>>>>>> c95c291536c74ddb40818dd1c365b2ac3904b366
         --font-title-large: 27px;
         --font-title-small: 17px;
         --font-large: 15px;

@@ -18,26 +18,14 @@
 		"react/jsx-props-no-spreading": 0
 	},
 	"parserOptions": {
-<<<<<<< HEAD
-			"ecmaVersion": 2020
-	},
-	
-	"settings": {
-		"import/resolver": {
-		  "node": {
-			"paths": ["src"]
-		  }
-		}
-	  }
-=======
 		"ecmaVersion": 2020
 	},
+
 	"settings": {
 		"import/resolver": {
-		  "node": {
-			  "paths": ["src"]
-		  }
+			"node": {
+				"paths": ["src"]
+			}
 		}
-  }
->>>>>>> 101a86e761d86e39c2f1908c44a58624c513a4f4
+	}
 }
