@@ -49,7 +49,68 @@ function MyActivity() {
 					</PostWrap>
 				</Post>
 				<Category2>Account</Category2>
-				<MyList lists={sortedArticles.slice(0, 5)} />
+				<List>
+					<ListTitle>
+						<Ansewer>twitterLink : </Ansewer>
+						<Title
+							href={
+								userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].twitterLink
+							}
+						>
+							{userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].twitterLink}
+						</Title>
+					</ListTitle>
+					<ListTitle>
+						<Ansewer>githubLink : </Ansewer>
+						<Title
+							href={
+								userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].githubLink
+							}
+						>
+							{userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].githubLink}
+						</Title>
+					</ListTitle>
+					<ListTitle>
+						<Ansewer>notionLink : </Ansewer>
+						<Title
+							href={
+								userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].notionLink
+							}
+						>
+							{userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].notionLink}
+						</Title>
+					</ListTitle>
+					<ListTitle>
+						<Ansewer>blogLink : </Ansewer>
+						<Title
+							href={
+								userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].blogLink
+							}
+						>
+							{userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].blogLink}
+						</Title>
+					</ListTitle>
+					<ListTitle>
+						<Ansewer>websiteLink : </Ansewer>
+						<Title
+							href={
+								userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].twitterLink
+							}
+						>
+							{userData[`${member_id - 1}`] &&
+								userData[`${member_id - 1}`].websiteLink}
+						</Title>
+					</ListTitle>
+				</List>
 			</ListColumn>
 		</Wrap>
 	);
@@ -97,5 +158,30 @@ const GlobalStyles = createGlobalStyle`
 		justify-content: center;
 	}
 `;
+const List = styled.ul`
+	margin-top: 20px;
+	padding: 0;
+	width: 100%;
+	border: 1.5px solid var(--line-color);
+	border-radius: 5px;
+	margin-bottom: 20px;
+`;
 
+const Title = styled.a`
+	margin-left: 10px;
+	padding: 5px 0;
+	color: var(--main-color);
+	font-size: var(--font-large);
+`;
+const ListTitle = styled.li`
+	border: 1px solid var(--line-color);
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+`;
+const Ansewer = styled.span`
+	margin-left: 10px;
+	padding: 5px 0;
+	font-size: var(--font-large);
+`;
 export default MyActivity;
