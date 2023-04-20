@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import OAuthButton from '../../components/Button/OAuthButton';
-
-import JoinDescription from '../../components/JoinDescription';
-import SignupForm from '../../components/SignupForm';
-
+import JoinDescription from './JoinDescription';
+import SignupForm from './SignupForm';
 
 const SignupContainer = styled.div`
 	display: flex;

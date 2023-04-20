@@ -10,15 +10,12 @@ const GlobalStyles = createGlobalStyle`
         --main-color-lighten: #D9E9F7;
         --modal-color: #E5F3FF;
         --button-hover-color: #3B6FA0;
-        --font-color-gray: #BABFC3;
-
+        
         --font-title-large: 27px;
         --font-title-small: 17px;
         --font-large: 15px;
         --font-base: 13px;
         --font-small: 11px;
-        --font-icon-size: 21px;
-
     }
 
     ${reset}
