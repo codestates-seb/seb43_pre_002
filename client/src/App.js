@@ -1,14 +1,23 @@
-import Question from './pages/Question';
-import Timeline from './pages/Timeline';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyles from './styles/GlobalStyles.style';
+import MyEdit from './pages/mypage/myedit';
+import MyProfile from './pages/mypage/myprofile';
+import MyActivity from './pages/mypage/myactivity';
 
 function App() {
 	return (
-		<>
+		<div>
 			<GlobalStyles />
-			<Timeline />
-			{/* <Question /> */}
-		</>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/myprofile" element={<MyProfile />} />
+					<Route path="/myactivity" element={<MyActivity />} />
+					<Route path="/myedit" element={<MyEdit />} />
+				</Routes>
+			</BrowserRouter>
+		</div>
+
 	);
 }
 
