@@ -17,10 +17,12 @@ const QuestionInfoContainer = styled.div`
 	flex-direction: column;
 	justify-content: right;
 	width: 15%;
-	text-align: right;
 	margin-right: 5%;
 	.info {
+		display: flex;
+		justify-content: right;
 		font-size: var(--font-large);
+		width: 100px;
 		margin-bottom: 5%;
 	}
 `;

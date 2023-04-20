@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
-function HomePagination({ data, limitItems, currentPage, setCurrentPage }) {
-	const total = data.length;
-	const maxPages = Math.ceil(total / limitItems);
+function HomePagination({
+	totalData,
+	limitItems,
+	currentPage,
+	setCurrentPage,
+}) {
+	const maxPages = Math.ceil(totalData / limitItems);
 	const pageButtons = Array(5).fill();
 	return (
 		<PaginationContainer>

@@ -28,7 +28,7 @@ const HomeHeaderContainer = styled.header`
 	.ask-question {
 		color: white;
 		background-color: var(--main-color);
-		width: 10%;
+		width: 11%;
 		height: 3em;
 		font-size: var(--font-large);
 		border-radius: 5px;
@@ -41,6 +41,7 @@ const HomeHeaderContainer = styled.header`
 `;
 const AskLink = styled(Link)`
 	display: flex;
+	justify-content: center;
 	align-items: center;
 	width: 100%;
 	height: 100%;

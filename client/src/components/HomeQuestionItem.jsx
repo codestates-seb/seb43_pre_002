@@ -3,11 +3,11 @@ import HomeQuestionInfo from './HomeQuestionInfo';
 import HomeQuestionUserInfo from './HomeQuestionUserInfo';
 import HomeQuestionContents from './HomeQuestionContents';
 
-function HomeQuestionItem() {
+function HomeQuestionItem({ data }) {
 	return (
 		<QuestionItemContainer>
 			<HomeQuestionInfo />
-			<HomeQuestionContents />
+			<HomeQuestionContents data={data} />
 			<HomeQuestionUserInfo />
 		</QuestionItemContainer>
 	);

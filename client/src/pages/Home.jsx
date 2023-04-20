@@ -7,22 +7,28 @@ import HomeQuestionItem from '../components/HomeQuestionItem';
 import HomeFooter from '../components/HomeFooter';
 
 function Home() {
-	const mapArr = [1, 2, 3, 4, 5, 6];
-	const [data, setData] = useState([]);
+	const [allData, setAllData] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [limitItems, setLimitItems] = useState(5);
+	const totalData = allData.length;
 	useEffect(() => {
-		axios.get('http://localhost:3001/datas').then((res) => setData(res.data));
+		axios
+			.get('http://localhost:3001/datas')
+			.then((res) => setAllData(res.data));
 	}, []);
+	const currentPageData = allData.slice(
+		(currentPage - 1) * limitItems,
+		currentPage * limitItems,
+	);
 	return (
 		<HomeContainer>
 			<HomeHeader />
 			<HomeFilter />
-			{mapArr.map((el) => (
-				<HomeQuestionItem key={el} />
+			{currentPageData.map((el) => (
+				<HomeQuestionItem key={el.id} data={el} />
 			))}
 			<HomeFooter
-				data={data}
+				totalData={totalData}
 				currentPage={currentPage}
 				setCurrentPage={setCurrentPage}
 				limitItems={limitItems}

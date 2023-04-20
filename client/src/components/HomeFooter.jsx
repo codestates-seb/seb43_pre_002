@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import Pagination from './HomePagination';
+import HomePagination from './HomePagination';
 import QuestionsPerPage from './HomeQuestionsPerPage';
 
 function HomeFooter({
-	data,
+	totalData,
 	currentPage,
 	setCurrentPage,
 	limitItems,
@@ -11,8 +11,8 @@ function HomeFooter({
 }) {
 	return (
 		<HomeFooterContainer>
-			<Pagination
-				data={data}
+			<HomePagination
+				totalData={totalData}
 				currentPage={currentPage}
 				setCurrentPage={setCurrentPage}
 				limitItems={limitItems}

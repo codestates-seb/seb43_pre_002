@@ -18,12 +18,12 @@ const QuestionUserInfoContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 25%;
+	width: 20%;
 	height: 20%;
-	background-color: white;
+	background-color: transparent;
 	position: absolute;
 	bottom: 5%;
-	right: 5%;
+	right: 0;
 	.user-icon,
 	.user-profile,
 	.user-activity,
