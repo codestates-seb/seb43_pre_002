@@ -18,8 +18,6 @@ const PasswordText = styled.p`
 `;
 
 function SignupForm() {
-	// const url = 'https://8fe4-118-32-224-80.jp.ngrok.io';
-
 	const onSubmit = (data) => {
 		axios
 			.post(`/members`, data)
