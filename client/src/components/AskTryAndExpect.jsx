@@ -12,6 +12,10 @@ function TryAndExpect({
 }) {
 	const onBlur = () => setIsTryAndExpectFocus(false);
 	const editorContent = watch('tryAndExpect');
+	const handleClick = () => {
+		const newObj = { ...isNext, tryAndExpect: true };
+		setIsNext(newObj);
+	};
 	const onEditorStateChange = (editorState) => {
 		setValue('tryAndExpect', editorState);
 	};
@@ -27,16 +31,18 @@ function TryAndExpect({
 			</div>
 			<div className="input-container">
 				<ReactQuill
-					style={{ height: '150px' }}
+					style={{ height: '200px' }}
 					onFocus={() => setIsTryAndExpectFocus(true)}
 					onBlur={onBlur}
 					value={editorContent}
 					onChange={onEditorStateChange}
 				/>
 			</div>
-			<button className="next" type="button">
-				Next
-			</button>
+			{!isNext.tryAndExpect ? (
+				<button className="next" type="button" onClick={handleClick}>
+					Next
+				</button>
+			) : null}
 		</TryAndExpectContainer>
 	);
 }
@@ -47,7 +53,7 @@ const TryAndExpectContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 65%;
-	height: 300px;
+	height: 350px;
 	padding: 1% 1% 1% 2%;
 	background-color: white;
 	border-radius: 5px;
@@ -64,7 +70,7 @@ const TryAndExpectContainer = styled.div`
 	}
 	.input-container {
 		width: 100%;
-		height: 200px;
+		height: 250px;
 		margin-bottom: 1%;
 	}
 	.input-container__detail-input {

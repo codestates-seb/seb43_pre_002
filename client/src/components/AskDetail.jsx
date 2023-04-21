@@ -32,7 +32,7 @@ function AskDetail({
 			</div>
 			<div className="input-container">
 				<ReactQuill
-					style={{ height: '150px' }}
+					style={{ height: '200px' }}
 					onFocus={() => setIsDetailFocus(true)}
 					onBlur={onBlur}
 					value={editorContent}
@@ -54,7 +54,7 @@ const AskDetailContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 65%;
-	height: 300px;
+	height: 350px;
 	padding: 1% 1% 1% 2%;
 	background-color: white;
 	border-radius: 5px;
@@ -71,7 +71,7 @@ const AskDetailContainer = styled.div`
 	}
 	.input-container {
 		width: 100%;
-		height: 200px;
+		height: 250px;
 		margin-bottom: 1%;
 	}
 	.input-container__detail-input {

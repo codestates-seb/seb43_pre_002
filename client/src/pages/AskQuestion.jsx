@@ -37,7 +37,7 @@ function NewQuestion() {
 				setValue={setValue}
 				watch={watch}
 			/>
-			<Submit />
+			<Submit isNext={isNext} />
 		</NewQuestionContainer>
 	);
 }

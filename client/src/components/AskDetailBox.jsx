@@ -32,7 +32,7 @@ const AskDetailBoxContainer = styled.div`
 	.disabled {
 		position: absolute;
 		width: 65%;
-		height: 300px;
+		height: 350px;
 		border-radius: 5px;
 		opacity: 0.8;
 		background-color: var(--line-color);
