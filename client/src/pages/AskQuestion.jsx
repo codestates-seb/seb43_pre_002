@@ -14,7 +14,7 @@ function NewQuestion() {
 		detail: false,
 		tryAndExpect: false,
 	};
-	const { register, handleSubmit } = useForm();
+	const { register, handleSubmit, setValue, watch } = useForm();
 	const [isNext, setIsNext] = useState(initialIsNext);
 	// 데이터 잘나오나 확인용 함수
 	const onSubmit = (data) => console.log(data);
@@ -23,7 +23,13 @@ function NewQuestion() {
 			<NewQuestionHeader />
 			<AskDescription />
 			<AskTitleBox register={register} isNext={isNext} setIsNext={setIsNext} />
-			<AskDetailBox register={register} isNext={isNext} setIsNext={setIsNext} />
+			<AskDetailBox
+				register={register}
+				isNext={isNext}
+				setIsNext={setIsNext}
+				setValue={setValue}
+				watch={watch}
+			/>
 			<TryAndExpectBox register={register} />
 			<Submit />
 		</NewQuestionContainer>

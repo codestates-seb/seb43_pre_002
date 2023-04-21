@@ -4,12 +4,17 @@ import AskDetail from './AskDetail';
 import AskHelpler from './AskHelper';
 import { detailHelperContents } from './askHelperContents';
 
-function AskDetailBox({ register, isNext, setIsNext }) {
+function AskDetailBox({ register, isNext, setIsNext, setValue, watch }) {
 	const [isDetailFocus, setIsDetailFocus] = useState(false);
 	return (
 		<AskDetailBoxContainer>
-			{!isNext.title ? <div className="disabled" /> : null}
-			<AskDetail setIsDetailFocus={setIsDetailFocus} register={register} />
+			{/* {!isNext.title ? <div className="disabled" /> : null} */}
+			<AskDetail
+				setIsDetailFocus={setIsDetailFocus}
+				register={register}
+				setValue={setValue}
+				watch={watch}
+			/>
 			{isDetailFocus ? <AskHelpler contents={detailHelperContents} /> : null}
 		</AskDetailBoxContainer>
 	);

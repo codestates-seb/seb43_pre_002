@@ -1,7 +1,17 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
-function AskDetail({ setIsDetailFocus, register }) {
+function AskDetail({ setIsDetailFocus, register, setValue, watch }) {
 	const onBlur = () => setIsDetailFocus(false);
+	const editorContent = watch('detail');
+	const onEditorStateChange = (editorState) => {
+		setValue('detail', editorState);
+	};
+	useEffect(() => {
+		register('detail', { required: true, minLength: 20 });
+	}, [register]);
 	return (
 		<AskDetailContainer>
 			<h5 className="title">What are the details of your problem?</h5>
@@ -10,16 +20,12 @@ function AskDetail({ setIsDetailFocus, register }) {
 				20 characters.
 			</div>
 			<div className="input-container">
-				<textarea
-					className="input-container__detail-input"
+				<ReactQuill
+					style={{ height: '150px' }}
 					onFocus={() => setIsDetailFocus(true)}
-					{...register('detail', {
-						onBlur,
-						minLength: {
-							value: 8,
-							message: '20자 이상 작성하세요.',
-						},
-					})}
+					onBlur={onBlur}
+					value={editorContent}
+					onChange={onEditorStateChange}
 				/>
 			</div>
 			<button className="next" type="button">
@@ -35,7 +41,7 @@ const AskDetailContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 65%;
-	height: 300px;
+	/* height: 300px; */
 	padding: 1% 1% 1% 2%;
 	background-color: white;
 	border-radius: 5px;
