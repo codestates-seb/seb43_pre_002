@@ -7,7 +7,7 @@ function MyList({ lists }) {
 	return (
 		<PostList>
 			{lists.map((list) => (
-				<List key={list.questionId}>
+				<List key={list.question}>
 					<ListTitle>
 						<Ansewer>{list.answer}</Ansewer>
 						<Link to={`/question/${question_id}`}>

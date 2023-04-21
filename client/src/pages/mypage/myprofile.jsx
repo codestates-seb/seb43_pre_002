@@ -44,7 +44,6 @@ function MyProfile() {
 			)}
 			<Post>
 				<Category>Top posts</Category>
-				{console.log(filteredArticles)}
 				<MyList lists={sortedArticles.slice(0, 10)} />
 			</Post>
 		</Wrap>

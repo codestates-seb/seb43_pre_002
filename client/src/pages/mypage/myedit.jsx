@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import MyHeader from '../../components/MyHeader';
 
@@ -10,17 +10,28 @@ const apiUrl = 'http://localhost:3000/member';
 
 function MyEdit() {
 	const [userData, setUserData] = useState(null);
-	const { register, handleSubmit, reset } = useForm();
+	const { register, handleSubmit, reset, setValue } = useForm();
 	const { member_id } = useParams();
 
 	// Define a function to handle form submission
 	const onSubmit = (data) => {
+		if (!userData) {
+			return;
+		}
 		axios
-			.patch(`${apiUrl}/${userData.id}`, data)
+			.patch(`${apiUrl}/${member_id}`, {
+				displayName: data.displayName,
+				title: data.title,
+				about: data.about,
+				twitterLink: data.twitterLink,
+				blogLink: data.blogLink,
+				websiteLink: data.websiteLink,
+				githubLink: data.githubLink,
+				notionLink: data.notionLink,
+				version: userData.version,
+			})
 			.then((response) => {
-				console.log(response.data);
-				// Reset form fields after successful submission
-				reset();
+				setUserData(response.data);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -36,7 +47,20 @@ function MyEdit() {
 			.catch((error) => {
 				console.error(error);
 			});
-	}, []);
+	}, [member_id]);
+
+	useEffect(() => {
+		if (userData) {
+			setValue('displayName', userData.displayName);
+			setValue('title', userData.title);
+			setValue('aboutMe', userData.aboutMe);
+			setValue('twitterLink', userData.twitterLink);
+			setValue('blogLink', userData.blogLink);
+			setValue('websiteLink', userData.websiteLink);
+			setValue('githubLink', userData.githubLink);
+			setValue('notionLink', userData.notionLink);
+		}
+	}, [userData, setValue]);
 
 	return (
 		<Wrap>
@@ -107,6 +131,7 @@ function MyEdit() {
 							</AccountWrap>
 							<PageButtons>
 								<PageButton type="submit">Save</PageButton>
+
 								<PageButton type="button">Cancel</PageButton>
 							</PageButtons>
 						</form>
