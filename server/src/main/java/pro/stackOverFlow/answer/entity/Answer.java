@@ -48,7 +48,7 @@ public class Answer extends Auditable {
     }
 
     public void decreaseVoteCount() {
-        voteCount++;
+        voteCount--;
     }
 
 }

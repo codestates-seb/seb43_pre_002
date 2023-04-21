@@ -51,6 +51,11 @@ public class AnswerVoteService {
         answer.decreaseVoteCount();
         answerRepository.save(answer);
     }
-
+//    upvote()와 downvote() 메소드
+//    1.member 객체를 데이터베이스에서 가져옴.
+//    2.answer 객체와 member 객체를 사용하여 answerVote 객체를 생성함.
+//    3.answerVote 객체를 데이터베이스에 저장함.
+//    4.answer 객체의 voteCount를 증가 또는 감소시킴.
+//    5.answer 객체를 데이터베이스에 저장함.
 
 }

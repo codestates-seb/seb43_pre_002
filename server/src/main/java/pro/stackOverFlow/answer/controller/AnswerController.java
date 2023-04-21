@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pro.stackOverFlow.answer.dto.AnswerPatchDto;
 import pro.stackOverFlow.answer.dto.AnswerPostDto;
 import pro.stackOverFlow.answer.dto.AnswerResponseDto;
+import pro.stackOverFlow.answer.dto.AnswerVoteDto;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.answer.mapper.AnswerMapper;
 import pro.stackOverFlow.answer.service.AnswerService;
@@ -67,6 +68,21 @@ public class AnswerController {
         answerService.deleteAnswer(answerId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+    @PostMapping("/answers/{answer-id}/upvote")
+    public ResponseEntity<Answer> upvote(@PathVariable ("answer-id") long answerId, @RequestBody AnswerVoteDto answerVoteDto) {
+        Answer answer = answerService.findById(answerId);
+        answerVoteService.upvote(answer, answerVoteDto.getMemberId());
+        return ResponseEntity.ok(answer);
+    }
+
+    @PostMapping("/answers/{answer-id}/downvote")
+    public ResponseEntity<Answer> downvote(@PathVariable ("answer-id") long answerId, @RequestBody AnswerVoteDto answerVoteDto) {
+        Answer answer = answerService.findById(answerId);
+        answerVoteService.downvote(answer, answerVoteDto.getMemberId());
+        return ResponseEntity.ok(answer);
     }
 
 }

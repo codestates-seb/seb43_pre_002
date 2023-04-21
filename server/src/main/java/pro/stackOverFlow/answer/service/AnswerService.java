@@ -64,5 +64,18 @@ public class AnswerService {
         answerRepository.delete(answer);
     }
 
+//    public Answer findById(Long answerId) {
+//        return answerRepository.findById(answerId)
+//                .orElseThrow(() -> new RuntimeException("Answer not found with id " + answerId));
+//    }
+
+    public Answer findById(Long answerId) {
+        Optional<Answer> answerOptional = answerRepository.findById(answerId);
+        if (answerOptional.isEmpty()) {
+            throw new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND);
+        }
+        return answerOptional.get();
+    }
+
 }
 
