@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-function AskDetail({ setIsDetailFocus, register }) {
+function AskDetail({ setIsDetailFocus, register, detailRef }) {
 	const onBlur = () => setIsDetailFocus(false);
 	return (
 		<AskDetailContainer>
@@ -11,6 +11,7 @@ function AskDetail({ setIsDetailFocus, register }) {
 			</div>
 			<div className="input-container">
 				<textarea
+					ref={detailRef}
 					className="input-container__detail-input"
 					onFocus={() => setIsDetailFocus(true)}
 					{...register('detail', {

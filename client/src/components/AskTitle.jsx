@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
-function AskTitle({ setIsTitleFocus, register }) {
+function AskTitle({ setIsTitleFocus, register, isNext, setIsNext, detailRef }) {
 	const onBlur = () => setIsTitleFocus(false);
+	const handleClick = () => {
+		const newObj = { ...isNext, title: false };
+		setIsNext(newObj);
+		detailRef.current.focus();
+	};
 	return (
 		<AskTitleContainer>
 			<h5 className="title">Title</h5>
@@ -17,9 +22,11 @@ function AskTitle({ setIsTitleFocus, register }) {
 					{...register('title', { onBlur })}
 				/>
 			</div>
-			<button className="next" type="button">
-				Next
-			</button>
+			{isNext.title ? (
+				<button className="next" type="button" onClick={handleClick}>
+					Next
+				</button>
+			) : null}
 		</AskTitleContainer>
 	);
 }
@@ -30,8 +37,7 @@ const AskTitleContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 65%;
-	height: 150px;
-	padding: 1% 1% 1% 2%;
+	padding: 1.5% 1% 1.5% 2%;
 	background-color: white;
 	border-radius: 5px;
 	border: 1px solid var(--line-color);
@@ -43,12 +49,12 @@ const AskTitleContainer = styled.div`
 	}
 	.descriptor {
 		font-size: var(--font-base);
-		margin-bottom: 0.5%;
+		margin-bottom: 1.5%;
 	}
 	.input-container {
 		width: 100%;
 		height: 1.5em;
-		margin-bottom: 1%;
+		margin-bottom: 1.5%;
 	}
 	.input-container__title-input {
 		width: 100%;
