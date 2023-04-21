@@ -45,7 +45,7 @@ public class MemberService {
     }
 
     public Member createMember(Member member) {
-        checkExistEmail(member);
+//        member.checkExistEmail(member);
 
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
@@ -132,10 +132,10 @@ public class MemberService {
         }
     }
 
-    public static void checkExistEmail(Member targetMember) {
-        if(targetMember != null)
-            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
-    }
+//    public static void checkExistEmail(Member targetMember) {
+//        if(targetMember != null)
+//            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+//    }
 
     public Member getLoginMember() {
         return  memberRepository.findByEmail(GetAuthUserUtils.getAuthUser().getName())
