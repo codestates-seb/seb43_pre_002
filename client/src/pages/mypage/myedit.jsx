@@ -1,7 +1,43 @@
+/* eslint-disable camelcase */
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import MyHeader from '../../components/MyHeader';
 
+const apiUrl = 'http://localhost:3000/member';
+
 function MyEdit() {
+	const [userData, setUserData] = useState(null);
+	const { register, handleSubmit, reset } = useForm();
+	const { member_id } = useParams();
+
+	// Define a function to handle form submission
+	const onSubmit = (data) => {
+		axios
+			.patch(`${apiUrl}/${userData.id}`, data)
+			.then((response) => {
+				console.log(response.data);
+				// Reset form fields after successful submission
+				reset();
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	};
+
+	useEffect(() => {
+		axios
+			.get(apiUrl)
+			.then((response) => {
+				setUserData(response.data[`${member_id - 1}`]);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}, []);
+
 	return (
 		<Wrap>
 			<GlobalStyles />
@@ -9,35 +45,73 @@ function MyEdit() {
 			<ContentsColumn>
 				<Category>Edit your profile</Category>
 				<SubTitle>Public infomation</SubTitle>
-				<EditWrap>
-					<EditCategory>Display name</EditCategory>
-					<Input type="text" />
-					<EditCategory>Title</EditCategory>
-					<Input type="text" placeholder="No title has been set" />
-					<EditCategory>About me</EditCategory>
-					<Textarea type="text" placeholder="Introduce Yourself" />
-					<EditCategory>Account link</EditCategory>
-					<AccountWrap>
-						<Section>
-							<EditCategory>Twitter link</EditCategory>
-							<AccountInput type="text" />
-							<EditCategory>Blog link</EditCategory>
-							<AccountInput type="text" />
-							<EditCategory>Website link</EditCategory>
-							<AccountInput type="text" />
-						</Section>
-						<Section>
-							<EditCategory>Github link</EditCategory>
-							<AccountInput type="text" />
-							<EditCategory>Notion link</EditCategory>
-							<AccountInput type="text" />
-						</Section>
-					</AccountWrap>
-					<PageButtons>
-						<PageButton type="button">Save</PageButton>
-						<PageButton type="button">Cancel</PageButton>
-					</PageButtons>
-				</EditWrap>
+				{userData && (
+					<EditWrap>
+						<form onSubmit={handleSubmit(onSubmit)}>
+							<EditCategory>Display name</EditCategory>
+							<Input
+								type="text"
+								{...register('displayName')}
+								defaultValue={userData.displayName}
+							/>
+							<EditCategory>Title</EditCategory>
+							<Input
+								type="text"
+								{...register('title')}
+								defaultValue={userData.title}
+								placeholder="No title has been set"
+							/>
+							<EditCategory>About me</EditCategory>
+							<Textarea
+								type="text"
+								{...register('aboutMe')}
+								defaultValue={userData.aboutMe}
+								placeholder="Introduce Yourself"
+							/>
+							<EditCategory>Account link</EditCategory>
+							<AccountWrap>
+								<Section>
+									<EditCategory>Twitter link</EditCategory>
+									<AccountInput
+										type="text"
+										{...register('twitterLink')}
+										defaultValue={userData.twitterLink}
+									/>
+									<EditCategory>Blog link</EditCategory>
+									<AccountInput
+										type="text"
+										{...register('blogLink')}
+										defaultValue={userData.blogLink}
+									/>
+									<EditCategory>Website link</EditCategory>
+									<AccountInput
+										type="text"
+										{...register('websiteLink')}
+										defaultValue={userData.websiteLink}
+									/>
+								</Section>
+								<Section>
+									<EditCategory>Github link</EditCategory>
+									<AccountInput
+										type="text"
+										{...register('githubLink')}
+										defaultValue={userData.githubLink}
+									/>
+									<EditCategory>Notion link</EditCategory>
+									<AccountInput
+										type="text"
+										{...register('notionLink')}
+										defaultValue={userData.notionLink}
+									/>
+								</Section>
+							</AccountWrap>
+							<PageButtons>
+								<PageButton type="submit">Save</PageButton>
+								<PageButton type="button">Cancel</PageButton>
+							</PageButtons>
+						</form>
+					</EditWrap>
+				)}
 			</ContentsColumn>
 		</Wrap>
 	);
@@ -134,10 +208,10 @@ const PageButton = styled.button`
 	}
 `;
 const GlobalStyles = createGlobalStyle`
-	#root{
-		display: flex;
-		justify-content: center;
-	}
+  #root{
+	  display: flex;
+	  justify-content: center;
+  }
 `;
 
 export default MyEdit;
