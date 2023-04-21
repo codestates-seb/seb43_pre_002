@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
-function AskTitle({ setIsTitleFocus, register, isNext, setIsNext, detailRef }) {
+function AskTitle({ setIsTitleFocus, register, isNext, setIsNext }) {
 	const onBlur = () => setIsTitleFocus(false);
 	const handleClick = () => {
-		const newObj = { ...isNext, title: false };
+		const newObj = { ...isNext, title: true };
 		setIsNext(newObj);
-		detailRef.current.focus();
 	};
 	return (
 		<AskTitleContainer>
@@ -22,7 +21,7 @@ function AskTitle({ setIsTitleFocus, register, isNext, setIsNext, detailRef }) {
 					{...register('title', { onBlur })}
 				/>
 			</div>
-			{isNext.title ? (
+			{!isNext.title ? (
 				<button className="next" type="button" onClick={handleClick}>
 					Next
 				</button>
