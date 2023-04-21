@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -111,21 +111,50 @@ const AnswersContainer = styled.div`
 `;
 
 function Question() {
+	// const apiUrl = 'https://caa6-183-97-142-84.ngrok-free.app/questions/1';
+	const { question_id: targetId } = useParams();
 	const [questionData, setQuestionData] = useState({});
 	const [answerList, setAnswerList] = useState([]);
 
-	const getQuestionData = () => {
-		axios.get('http://localhost:3001/datas').then((res) => {
-			setQuestionData(res.data[0]);
-			setAnswerList(res.data[0].answers);
-		});
-	};
-
+	// params에 따른 질문 찾기
 	useEffect(() => {
-		getQuestionData();
+		axios.get('http://localhost:3001/questions').then((res) => {
+			const questions = res.data;
+			const target = questions.find(
+				(it) => it.question_id === Number(targetId),
+			);
+
+			if (target) {
+				setQuestionData(target);
+
+				console.log(target.answer_id);
+			}
+		});
+		// axios.get(apiUrl).then((res) => console.log(res));
+		//	axios.get(`/questions/1`).then((res) => console.log(res));
+
+		// axios
+		// 	.get('/answers/1', {
+		// 		headers: {
+		// 			'Content-Type': `application/json`,
+		// 			'ngrok-skip-browser-warning': '69420',
+		// 		},
+		// 	})
+		// 	.then((res) => console.log(res.data));
 	}, []);
 
-	console.log(answerList);
+	// 질문 정보 받기
+	useEffect(() => {
+		axios.get('http://localhost:3001/answers').then((res) => {
+			const answers = res.data;
+			const targetAnswer = answers.filter(
+				(it) => it.question_id === Number(targetId),
+			);
+			if (targetAnswer) {
+				setAnswerList(targetAnswer);
+			}
+		});
+	}, []);
 
 	return (
 		<QuestionContainer>
@@ -144,11 +173,11 @@ function Question() {
 						<div className="info__container">
 							<InfoBox>
 								<span className="first__span">Asked</span>
-								<span className="second__span">{questionData.createdAt}</span>
+								<span className="second__span">{questionData.created_at}</span>
 							</InfoBox>
 							<InfoBox>
 								<span className="first__span">Modified</span>
-								<span className="second__span">{questionData.createdAt}</span>
+								<span className="second__span">{questionData.modified_at}</span>
 							</InfoBox>
 							<InfoBox>
 								<span className="first__span">Viewed</span>
@@ -174,7 +203,7 @@ function Question() {
 					<div>
 						{answerList.map((it) => (
 							<QnABox
-								key={it.id}
+								key={it.answer_id}
 								questionData={it}
 								setQuestionData={setQuestionData}
 							/>

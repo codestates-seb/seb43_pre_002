@@ -44,11 +44,11 @@ const UserInfoCardContainer = styled.div`
 function UserInfoCard({ questionData }) {
 	return (
 		<UserInfoCardContainer>
-			<span>{questionData.createdAt}</span>
+			<span>{questionData.created_at}</span>
 			<div className="bottom__container">
-				{questionData.author && (
+				{questionData.member_id && (
 					<UserProfile
-						userName={questionData.author}
+						userName={String(questionData.member_id)}
 						boxSize="32px"
 						fontSize="13px"
 					/>
