@@ -13,6 +13,10 @@ function AskDetail({
 }) {
 	const onBlur = () => setIsDetailFocus(false);
 	const editorContent = watch('detail');
+	const handleClick = () => {
+		const newObj = { ...isNext, detail: true };
+		setIsNext(newObj);
+	};
 	const onEditorStateChange = (editorState) => {
 		setValue('detail', editorState);
 	};
@@ -35,9 +39,11 @@ function AskDetail({
 					onChange={onEditorStateChange}
 				/>
 			</div>
-			<button className="next" type="button">
-				Next
-			</button>
+			{!isNext.detail ? (
+				<button className="next" type="button" onClick={handleClick}>
+					Next
+				</button>
+			) : null}
 		</AskDetailContainer>
 	);
 }
