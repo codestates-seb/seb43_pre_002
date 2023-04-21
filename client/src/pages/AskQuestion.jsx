@@ -30,7 +30,13 @@ function NewQuestion() {
 				setValue={setValue}
 				watch={watch}
 			/>
-			<TryAndExpectBox register={register} />
+			<TryAndExpectBox
+				register={register}
+				isNext={isNext}
+				setIsNext={setIsNext}
+				setValue={setValue}
+				watch={watch}
+			/>
 			<Submit />
 		</NewQuestionContainer>
 	);

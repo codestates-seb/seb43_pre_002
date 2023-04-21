@@ -8,12 +8,14 @@ function AskDetailBox({ register, isNext, setIsNext, setValue, watch }) {
 	const [isDetailFocus, setIsDetailFocus] = useState(false);
 	return (
 		<AskDetailBoxContainer>
-			{/* {!isNext.title ? <div className="disabled" /> : null} */}
+			{!isNext.title ? <div className="disabled" /> : null}
 			<AskDetail
 				setIsDetailFocus={setIsDetailFocus}
 				register={register}
 				setValue={setValue}
 				watch={watch}
+				isNext={isNext}
+				setIsNext={setIsNext}
 			/>
 			{isDetailFocus ? <AskHelpler contents={detailHelperContents} /> : null}
 		</AskDetailBoxContainer>
@@ -31,6 +33,7 @@ const AskDetailBoxContainer = styled.div`
 		position: absolute;
 		width: 65%;
 		height: 300px;
+		border-radius: 5px;
 		opacity: 0.8;
 		background-color: var(--line-color);
 		z-index: 1;

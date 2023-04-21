@@ -1,7 +1,23 @@
 import styled from 'styled-components';
+import ReactQuill from 'react-quill';
+import { useEffect } from 'react';
 
-function TryAndExpect({ setIsTryAndExpectFocus, register }) {
+function TryAndExpect({
+	setIsTryAndExpectFocus,
+	register,
+	isNext,
+	setIsNext,
+	setValue,
+	watch,
+}) {
 	const onBlur = () => setIsTryAndExpectFocus(false);
+	const editorContent = watch('tryAndExpect');
+	const onEditorStateChange = (editorState) => {
+		setValue('tryAndExpect', editorState);
+	};
+	useEffect(() => {
+		register('tryAndExpect', { required: true, minLength: 20 });
+	}, [register]);
 	return (
 		<TryAndExpectContainer>
 			<h5 className="title">What did you try and what were you expecting?</h5>
@@ -10,16 +26,12 @@ function TryAndExpect({ setIsTryAndExpectFocus, register }) {
 				resulted. Minimum 20 characters.
 			</div>
 			<div className="input-container">
-				<textarea
-					className="input-container__detail-input"
+				<ReactQuill
+					style={{ height: '150px' }}
 					onFocus={() => setIsTryAndExpectFocus(true)}
-					{...register('tryAndExpect', {
-						onBlur,
-						minLength: {
-							value: 8,
-							message: '20자 이상 작성하세요.',
-						},
-					})}
+					onBlur={onBlur}
+					value={editorContent}
+					onChange={onEditorStateChange}
 				/>
 			</div>
 			<button className="next" type="button">

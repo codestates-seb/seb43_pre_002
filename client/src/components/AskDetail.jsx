@@ -3,7 +3,14 @@ import { useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-function AskDetail({ setIsDetailFocus, register, setValue, watch }) {
+function AskDetail({
+	setIsDetailFocus,
+	register,
+	setValue,
+	watch,
+	isNext,
+	setIsNext,
+}) {
 	const onBlur = () => setIsDetailFocus(false);
 	const editorContent = watch('detail');
 	const onEditorStateChange = (editorState) => {
@@ -41,7 +48,7 @@ const AskDetailContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 65%;
-	/* height: 300px; */
+	height: 300px;
 	padding: 1% 1% 1% 2%;
 	background-color: white;
 	border-radius: 5px;
