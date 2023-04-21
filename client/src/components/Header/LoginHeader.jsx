@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import SignButton from '../Button/SignButton';
 import SearchBar from '../Input/SearchBar';
@@ -47,11 +48,17 @@ function LoginHeader() {
 	return (
 		<Header>
 			<HeaderContainer>
-				<Logo />
+				<Link to="/">
+					<Logo />
+				</Link>
 				<SearchBar type="text" placeholder="검색어를 입력하세요." />
 				<AuthButtons>
-					<AuthButton>Log In</AuthButton>
-					<AuthButton>Sign up</AuthButton>
+					<Link to="/login">
+						<AuthButton>Log In</AuthButton>
+					</Link>
+					<Link to="/signup">
+						<AuthButton>Sign up</AuthButton>
+					</Link>
 				</AuthButtons>
 			</HeaderContainer>
 		</Header>

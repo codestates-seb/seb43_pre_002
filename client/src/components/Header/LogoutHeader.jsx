@@ -1,3 +1,4 @@
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import SignButton from '../Button/SignButton';
 import SearchBar from '../Input/SearchBar';
@@ -42,7 +43,7 @@ const UserProfileContainer = styled.div`
 		background-color: #ccc;
 	}
 `;
-// 링크 컴포넌트로 수정해야 함 (홈으로 이동?)
+
 const LogoutButton = styled(SignButton)`
 	font-size: var(--font-base);
 	font-weight: 800;
@@ -54,6 +55,12 @@ const LogoutButton = styled(SignButton)`
 function LogoutHeader() {
 	const userDisplayName = 'abcde12345'; // 임시 데이터
 
+	const navigate = useNavigate();
+	const logoutHandler = () => {
+		navigate('/');
+		localStorage.removeItem('loginInfo');
+	};
+
 	return (
 		<Header>
 			<HeaderContainer>
@@ -61,13 +68,15 @@ function LogoutHeader() {
 				<SearchBar type="text" placeholder="검색어를 입력하세요." />
 				<UserActionsContainer>
 					<UserProfileContainer>
-						<UserProfile
-							userName={userDisplayName}
-							boxSize="35px"
-							fontSize="var(--font-base)"
-						/>
+						<Link to="/myprofile">
+							<UserProfile
+								userName={userDisplayName}
+								boxSize="35px"
+								fontSize="var(--font-base)"
+							/>
+						</Link>
 					</UserProfileContainer>
-					<LogoutButton>Log out</LogoutButton>
+					<LogoutButton onClick={logoutHandler}>Log out</LogoutButton>
 				</UserActionsContainer>
 			</HeaderContainer>
 		</Header>
