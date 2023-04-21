@@ -1,23 +1,31 @@
 package pro.stackOverFlow.answer.service;
 
+import lombok.Getter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pro.stackOverFlow.answer.dto.AnswerPatchDto;
 import pro.stackOverFlow.answer.dto.AnswerResponseDto;
 import pro.stackOverFlow.exception.BusinessLogicException;
 import pro.stackOverFlow.exception.ExceptionCode;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.answer.repository.AnswerRepository;
+import pro.stackOverFlow.member.service.MemberService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+
+
+@Transactional
 @Service
 public class AnswerService {
     private AnswerRepository answerRepository;
+    private MemberService memberService;
 
 
-    public AnswerService(AnswerRepository answerRepository) {
+    public AnswerService(AnswerRepository answerRepository, MemberService memberService) {
         this.answerRepository = answerRepository;
+        this.memberService = memberService;
     }
 
     public Answer createAnswer(Answer answer){
@@ -76,6 +84,79 @@ public class AnswerService {
         }
         return answerOptional.get();
     }
+
+
+
+    public void setUpVote(long answerId, long userId) {
+        memberService.findMember(userId);
+
+        Answer answer = findAnswer(answerId);
+        VoteStatus voteStatus = getUserVoteStatus(answer, userId);
+        long voteCount = answer.getVoteCount();
+
+        if (voteStatus == VoteStatus.NONE) {
+            answer.upVotedUserId.add(userId);
+            voteCount++;
+        } else if (voteStatus == VoteStatus.ALREADY_UP_VOTED) {
+            throw new BusinessLogicException(ExceptionCode.ALREADY_UP_VOTED);
+        } else if (voteStatus == VoteStatus.ALREADY_DOWN_VOTED) {
+            answer.downVotedUserId.remove(userId);
+            voteCount++;
+        }
+        answer.setVoteCount(voteCount);
+    }
+
+    public void setDownVote(long answerId, long userId) {
+        memberService.findMember(userId);
+
+        Answer answer = findAnswer(answerId);
+        VoteStatus voteStatus = getUserVoteStatus(answer, userId);
+        long voteCount = answer.getVoteCount();
+
+        if (voteStatus == VoteStatus.NONE) {
+            answer.downVotedUserId.add(userId);
+            voteCount--;
+        } else if (voteStatus == VoteStatus.ALREADY_UP_VOTED) {
+            answer.upVotedUserId.remove(userId);
+            voteCount--;
+        } else if (voteStatus == VoteStatus.ALREADY_DOWN_VOTED) {
+            throw new BusinessLogicException(ExceptionCode.ALREADY_DOWN_VOTED);
+        }
+        answer.setVoteCount(voteCount);
+    }
+
+    public VoteStatus getUserVoteStatus(Answer answer, long userId) {
+        if (answer.getUpVotedUserId().contains(userId)) {
+            return VoteStatus.ALREADY_UP_VOTED;
+        } else if (answer.getDownVotedUserId().contains(userId)) {
+            return VoteStatus.ALREADY_DOWN_VOTED;
+        } else {
+            return VoteStatus.NONE;
+        }
+    }
+
+    public long getVoteCount(long answerId) {
+        long voteCount = findAnswer(answerId).getVoteCount();
+        return voteCount;
+    }
+
+    public enum VoteStatus{
+        ALREADY_UP_VOTED(1, "already upVoted"),
+        NONE(2, "none"),
+        ALREADY_DOWN_VOTED(3, "already downVoted");
+
+        @Getter
+        private int status;
+
+        @Getter
+        private String message;
+
+        VoteStatus(int status, String message) {
+            this.status = status;
+            this.message = message;
+        }
+    }
+
 
 }
 

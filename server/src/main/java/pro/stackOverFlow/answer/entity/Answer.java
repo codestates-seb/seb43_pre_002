@@ -12,6 +12,8 @@ import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.question.entity.Question;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,7 +32,15 @@ public class Answer extends Auditable {
 
     @Column
     @ColumnDefault("0")
-    private int voteCount; //답변 vote
+    private Long voteCount; //답변 vote
+
+
+    @ElementCollection
+    public List<Long> upVotedUserId = new ArrayList<>();
+
+    @ElementCollection
+    public List<Long> downVotedUserId = new ArrayList<>();
+
 
     @ManyToOne
     @JoinColumn(name = "question_id")
@@ -43,12 +53,8 @@ public class Answer extends Auditable {
     private Member member;
 
 
-    public void increaseVoteCount() {
-        voteCount++;
-    }
-
-    public void decreaseVoteCount() {
-        voteCount--;
+    public void setVoteCount(long voteCount) {
+        this.voteCount = voteCount;
     }
 
 }

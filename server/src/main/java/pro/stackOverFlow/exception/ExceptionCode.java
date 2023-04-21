@@ -11,7 +11,10 @@ public enum ExceptionCode {
     MEMBER_NOT_FOUND(404, "Member not found"),
     MEMBER_EXISTS(409, "Member exists"),
 
-    ANSWER_NOT_FOUND(404, "Answer not found");
+    ANSWER_NOT_FOUND(404, "Answer not found"),
+
+    ALREADY_UP_VOTED(409, "already upVoted"),
+    ALREADY_DOWN_VOTED(409, "already downVoted");
 
 
     @Getter

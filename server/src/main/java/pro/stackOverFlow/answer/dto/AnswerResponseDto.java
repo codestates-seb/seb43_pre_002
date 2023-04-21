@@ -24,6 +24,6 @@ public class AnswerResponseDto {
 
     private String answerSelectionStatus;
 
-    private int voteCount;
+    private long voteCount;
 
 }

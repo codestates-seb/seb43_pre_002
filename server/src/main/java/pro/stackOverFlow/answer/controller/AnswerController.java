@@ -6,27 +6,24 @@ import org.springframework.web.bind.annotation.*;
 import pro.stackOverFlow.answer.dto.AnswerPatchDto;
 import pro.stackOverFlow.answer.dto.AnswerPostDto;
 import pro.stackOverFlow.answer.dto.AnswerResponseDto;
-import pro.stackOverFlow.answer.dto.AnswerVoteDto;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.answer.mapper.AnswerMapper;
 import pro.stackOverFlow.answer.service.AnswerService;
-import pro.stackOverFlow.answer.service.AnswerVoteService;
 import pro.stackOverFlow.dto.SingleResponseDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 @RestController
 public class AnswerController {
 
     private AnswerService answerService;
     private AnswerMapper answerMapper;
-    private AnswerVoteService answerVoteService;
 
 
-    public AnswerController(AnswerService answerService, AnswerMapper answerMapper, AnswerVoteService answerVoteService) {
+    public AnswerController(AnswerService answerService, AnswerMapper answerMapper) {
         this.answerService = answerService;
         this.answerMapper = answerMapper;
-        this.answerVoteService = answerVoteService;
     }
 
     @PostMapping("/questions/{question-id}/answers")
@@ -71,18 +68,25 @@ public class AnswerController {
     }
 
 
-    @PostMapping("/answers/{answer-id}/upvote")
-    public ResponseEntity<Answer> upvote(@PathVariable ("answer-id") long answerId, @RequestBody AnswerVoteDto answerVoteDto) {
-        Answer answer = answerService.findById(answerId);
-        answerVoteService.upvote(answer, answerVoteDto.getMemberId());
-        return ResponseEntity.ok(answer);
+
+    @PostMapping("/upVote/{question-id}/{answer-id}")
+    public ResponseEntity setUpVote(@PathVariable("question-id") @Positive long questionId,
+                                    @PathVariable("answer-id") @Positive long answerId,
+                                    @Positive @RequestParam long userId) {
+        answerService.setUpVote(answerId, userId);
+
+        return new ResponseEntity(new SingleResponseDto<>(answerService.getVoteCount(answerId)), HttpStatus.OK);
     }
 
-    @PostMapping("/answers/{answer-id}/downvote")
-    public ResponseEntity<Answer> downvote(@PathVariable ("answer-id") long answerId, @RequestBody AnswerVoteDto answerVoteDto) {
-        Answer answer = answerService.findById(answerId);
-        answerVoteService.downvote(answer, answerVoteDto.getMemberId());
-        return ResponseEntity.ok(answer);
+    @PostMapping("/downVote/{question-id}/{answer-id}")
+    public ResponseEntity setDownVote(@PathVariable("question-id") @Positive long questionId,
+                                      @PathVariable("answer-id") @Positive long answerId,
+                                      @Positive @RequestParam long userId) {
+
+        answerService.setDownVote(answerId, userId);
+
+        return new ResponseEntity(new SingleResponseDto<>(answerService.getVoteCount(answerId)), HttpStatus.OK);
     }
+
 
 }
