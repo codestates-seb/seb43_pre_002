@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import axios from 'axios';
 import SignInput from './Input/SignInput';
 import SignButton from './Button/SignButton';
 import Agreement from './Agreement';
@@ -17,9 +18,15 @@ const PasswordText = styled.p`
 `;
 
 function SignupForm() {
+	// const url = 'https://8fe4-118-32-224-80.jp.ngrok.io';
+
 	const onSubmit = (data) => {
-		// eslint-disable-next-line no-console
-		console.log(data);
+		axios
+			.post(`/members`, data)
+			.then((response) => {
+				console.log(response.data);
+			})
+			.catch((error) => console.log(error));
 	};
 
 	const {
@@ -32,14 +39,14 @@ function SignupForm() {
 		<FormContainer>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<SignInput
-					labelFor="displayname"
+					labelFor="displayName"
 					labelName="Display name"
 					inputType="text"
 					register={register}
 					registerOptions={{
 						required: 'Display cannot be empty',
 					}}
-					error={errors.displayname}
+					error={errors.displayName}
 				/>
 				<SignInput
 					labelFor="email"
