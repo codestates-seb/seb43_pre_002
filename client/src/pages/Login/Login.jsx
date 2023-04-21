@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import OAuthButton from '../../components/Button/OAuthButton';
@@ -38,13 +39,31 @@ const SignupLink = styled.div`
 `;
 
 function Login() {
+	const [loginError, setLoginError] = useState(null);
+	const [isLogin, setIsLogin] = useState(false);
+	const [userInfo, setUserInfo] = useState(null);
+
+	// 로그인 실패 시 alert 띄우기
+	useEffect(() => {
+		if (loginError) {
+			alert(loginError);
+			setLoginError(null);
+		}
+	}, [loginError]);
+
 	return (
 		<LoginContainer>
 			<LoginHeader />
 			<LoginWrapper>
 				<img src={`${process.env.PUBLIC_URL}/assets/main_logo.png`} alt="" />
 				<OAuthButton type="button" buttonText="Log in with Google" />
-				<LoginForm />
+				<LoginForm
+					isLogin={isLogin}
+					setIsLogin={setIsLogin}
+					userInfo={userInfo}
+					setUserInfo={setUserInfo}
+					setLoginError={setLoginError}
+				/>
 				<SignupLink>
 					<span>Already have an account?</span>
 					<Link to="/signup">Sign up</Link>

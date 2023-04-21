@@ -5,6 +5,7 @@ import MyProfile from './pages/mypage/myprofile';
 import MyActivity from './pages/mypage/myactivity';
 import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
+import Home from './pages/Home';
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 			<GlobalStyles />
 			<BrowserRouter>
 				<Routes>
+					<Route path="/" element={<Home />} />
 					<Route path="/myprofile" element={<MyProfile />} />
 					<Route path="/myactivity" element={<MyActivity />} />
 					<Route path="/myedit" element={<MyEdit />} />
