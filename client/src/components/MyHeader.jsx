@@ -10,6 +10,7 @@ import DeleteModal from './DeleteModal';
 function MyHeader() {
 	const [isOpen2, setIsOpen2] = useState(false);
 	const [userData, setUserData] = useState({});
+	const [articleData, setArticleData] = useState([]);
 	const { member_id } = useParams();
 
 	const handleClick2 = () => {
@@ -18,36 +19,33 @@ function MyHeader() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios.get(`http://localhost:3000/member`);
+			const result = await axios.get(`http://localhost:3000/data/${member_id}`);
 			setUserData(result.data);
+
+			const articleResult = await axios.get(`http://localhost:3000/question`);
+			setArticleData(articleResult.data);
 		};
 		fetchData();
 	}, []);
+
+	const filteredArticles = articleData
+		? articleData.filter((a) => a.memberId === parseInt(member_id, 10))
+		: [];
+
+	const filteredAnswerd = articleData
+		? articleData.filter((a) => a.answerId === parseInt(member_id, 10))
+		: [];
 
 	return (
 		<Wrap>
 			<GlobalStyles />
 			<ProfileHeader>
 				<Profile>
-					<UserImg>
-						{userData[`${member_id - 1}`] &&
-							userData[`${member_id - 1}`].displayName}
-					</UserImg>
+					<UserImg>{userData && userData.displayName}</UserImg>
 					<UserInfo>
-						<Name>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].displayName}
-						</Name>
-						<Info>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].title}
-						</Info>
-						<Info>{`질문 수 : ${
-							userData[`${member_id - 1}`] && userData[`${member_id - 1}`].post
-						} 답변 수 : ${
-							userData[`${member_id - 1}`] &&
-							userData[`${member_id - 1}`].answer
-						}`}</Info>
+						<Name>{userData && userData.displayName}</Name>
+						<Info>{userData && userData.title}</Info>
+						<Info>{`질문 수 : ${filteredArticles.length} 답변 수 : ${filteredAnswerd.length}`}</Info>
 					</UserInfo>
 				</Profile>
 				<Buttons>

@@ -13,7 +13,7 @@ function MyActivity() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios.get(`http://localhost:3000/member`);
+			const result = await axios.get(` http://localhost:3000/data`);
 			setUserData(result.data);
 
 			const articleResult = await axios.get(`http://localhost:3000/question`);

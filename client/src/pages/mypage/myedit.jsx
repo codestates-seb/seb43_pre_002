@@ -1,17 +1,16 @@
 /* eslint-disable camelcase */
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import styled, { createGlobalStyle } from 'styled-components';
 import MyHeader from '../../components/MyHeader';
 
-const apiUrl = 'http://localhost:3000/member';
-
 function MyEdit() {
 	const [userData, setUserData] = useState(null);
-	const { register, handleSubmit, reset, setValue } = useForm();
+	const { register, handleSubmit, setValue } = useForm();
 	const { member_id } = useParams();
+	const navigate = useNavigate();
 
 	// Define a function to handle form submission
 	const onSubmit = (data) => {
@@ -19,10 +18,10 @@ function MyEdit() {
 			return;
 		}
 		axios
-			.patch(`${apiUrl}/${member_id}`, {
+			.patch(` http://localhost:3000/data/${member_id}`, {
 				displayName: data.displayName,
 				title: data.title,
-				about: data.about,
+				aboutMe: data.aboutMe,
 				twitterLink: data.twitterLink,
 				blogLink: data.blogLink,
 				websiteLink: data.websiteLink,
@@ -32,6 +31,7 @@ function MyEdit() {
 			})
 			.then((response) => {
 				setUserData(response.data);
+				navigate(`/myprofile/${member_id}`);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -40,9 +40,9 @@ function MyEdit() {
 
 	useEffect(() => {
 		axios
-			.get(apiUrl)
+			.get(` http://localhost:3000/data/${member_id}`)
 			.then((response) => {
-				setUserData(response.data[`${member_id - 1}`]);
+				setUserData(response.data);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -131,8 +131,9 @@ function MyEdit() {
 							</AccountWrap>
 							<PageButtons>
 								<PageButton type="submit">Save</PageButton>
-
-								<PageButton type="button">Cancel</PageButton>
+								<Link to={`/myprofile/${member_id}`}>
+									<PageButton type="button">Cancel</PageButton>
+								</Link>
 							</PageButtons>
 						</form>
 					</EditWrap>
