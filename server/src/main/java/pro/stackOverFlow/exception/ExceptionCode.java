@@ -9,7 +9,9 @@ public enum ExceptionCode {
     VOTE_NOT_ALLOW(405, "Already vote"),
 
     MEMBER_NOT_FOUND(404, "Member not found"),
-    MEMBER_EXISTS(409, "Member exists");
+    MEMBER_EXISTS(409, "Member exists"),
+
+    ANSWER_NOT_FOUND(404, "Answer not found");
 
     @Getter
     private int status;
