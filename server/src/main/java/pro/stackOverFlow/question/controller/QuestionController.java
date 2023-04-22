@@ -60,6 +60,7 @@ public class QuestionController {
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
         Question question = questionService.findQuestion(questionId);
+        questionService.addViewCount(question);
 
         return new ResponseEntity(
                 new SingleResponseDto<>(questionMapper.questionToQuestionResponse(question)),

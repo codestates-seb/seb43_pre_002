@@ -30,8 +30,6 @@ public class QuestionService {
     // read
     public Question findQuestion(Long questionId) {
         Question question = findVerifiedQuestion(questionId);
-        question.setViewCount(question.getViewCount() + 1);
-
         return questionRepository.save(question);
     }
 
@@ -47,14 +45,24 @@ public class QuestionService {
     }
 
     // delete
-    public void deleteQuestion(Long questionId) {
+    public void deleteQuestion(Long memberId, Long questionId) {
         Question question = findVerifiedQuestion(questionId);
+        Long findMemberId = question.getMember().getMemberId();
+        if (!memberId.equals(findMemberId)) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+        }
         questionRepository.delete(question);
     }
 
+    // question 있는지 검증
     private Question findVerifiedQuestion(Long questionId) {
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         return optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+    }
+
+    // 조회수 카운트
+    public void addViewCount(Question question) {
+        question.setViewCount(question.getViewCount() + 1);
     }
 
 }
