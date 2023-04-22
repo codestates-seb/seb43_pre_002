@@ -4,7 +4,7 @@ import AskTitle from './AskTitle';
 import AskHelpler from './AskHelper';
 import { titleHelperContents } from './askHelperContents';
 
-function AskTitleBox({ register, isNext, setIsNext }) {
+function AskTitleBox({ register, isNext, setIsNext, watch }) {
 	const [isTitleFocus, setIsTitleFocus] = useState(false);
 	return (
 		<AskTitleBoxContainer>
@@ -13,6 +13,7 @@ function AskTitleBox({ register, isNext, setIsNext }) {
 				register={register}
 				isNext={isNext}
 				setIsNext={setIsNext}
+				watch={watch}
 			/>
 			{isTitleFocus ? <AskHelpler contents={titleHelperContents} /> : null}
 		</AskTitleBoxContainer>

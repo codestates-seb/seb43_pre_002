@@ -31,7 +31,7 @@ const SubmitContainer = styled.div`
 			border-radius: 5px;
 			cursor: pointer;
 			&:hover {
-				background-color: #3b6fa0; // 전역변수로 바꾸기
+				background-color: var(--button-hover-color);
 			}
 		}
 		.disabled {

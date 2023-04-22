@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function TryAndExpect({
 	setIsTryAndExpectFocus,
@@ -10,11 +10,18 @@ function TryAndExpect({
 	setValue,
 	watch,
 }) {
+	const [isValid, setIsValid] = useState(false);
 	const onBlur = () => setIsTryAndExpectFocus(false);
 	const editorContent = watch('tryAndExpect');
 	const handleClick = () => {
+		const leng = editorContent ? editorContent.length : 0;
+		if (leng < 27) {
+			setIsValid(true);
+			return;
+		}
 		const newObj = { ...isNext, tryAndExpect: true };
 		setIsNext(newObj);
+		setIsValid(false);
 	};
 	const onEditorStateChange = (editorState) => {
 		setValue('tryAndExpect', editorState);
@@ -43,6 +50,7 @@ function TryAndExpect({
 					Next
 				</button>
 			) : null}
+			{isValid ? <p className="invalid">20자 이상 작성해주세요!</p> : null}
 		</TryAndExpectContainer>
 	);
 }
@@ -52,6 +60,7 @@ export default TryAndExpect;
 const TryAndExpectContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	position: relative;
 	width: 65%;
 	height: 350px;
 	padding: 1% 1% 1% 2%;
@@ -83,8 +92,14 @@ const TryAndExpectContainer = styled.div`
 		width: 6%;
 		height: 2em;
 		&:hover {
-			background-color: #3b6fa0; // 전역변수로 바꾸기
+			background-color: var(--button-hover-color);
 		}
 		cursor: pointer;
+	}
+	.invalid {
+		position: absolute;
+		bottom: 4%;
+		left: 11%;
+		color: red;
 	}
 `;

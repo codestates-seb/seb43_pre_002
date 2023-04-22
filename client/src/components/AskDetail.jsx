@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -11,11 +11,18 @@ function AskDetail({
 	isNext,
 	setIsNext,
 }) {
-	const onBlur = () => setIsDetailFocus(false);
+	const [isValid, setIsValid] = useState(false);
 	const editorContent = watch('detail');
+	const onBlur = () => setIsDetailFocus(false);
 	const handleClick = () => {
+		const leng = editorContent ? editorContent.length : 0;
+		if (leng < 27) {
+			setIsValid(true);
+			return;
+		}
 		const newObj = { ...isNext, detail: true };
 		setIsNext(newObj);
+		setIsValid(false);
 	};
 	const onEditorStateChange = (editorState) => {
 		setValue('detail', editorState);
@@ -44,6 +51,7 @@ function AskDetail({
 					Next
 				</button>
 			) : null}
+			{isValid ? <p className="invalid">20자 이상 작성해주세요!</p> : null}
 		</AskDetailContainer>
 	);
 }
@@ -53,6 +61,7 @@ export default AskDetail;
 const AskDetailContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	position: relative;
 	width: 65%;
 	height: 350px;
 	padding: 1% 1% 1% 2%;
@@ -84,8 +93,14 @@ const AskDetailContainer = styled.div`
 		width: 6%;
 		height: 2em;
 		&:hover {
-			background-color: #3b6fa0; // 전역변수로 바꾸기
+			background-color: var(--button-hover-color);
 		}
 		cursor: pointer;
+	}
+	.invalid {
+		position: absolute;
+		bottom: 4%;
+		left: 11%;
+		color: red;
 	}
 `;

@@ -1,10 +1,19 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
-function AskTitle({ setIsTitleFocus, register, isNext, setIsNext }) {
+function AskTitle({ setIsTitleFocus, register, isNext, setIsNext, watch }) {
+	const [isValid, setIsValid] = useState(false);
 	const onBlur = () => setIsTitleFocus(false);
+	const editorContent = watch('title');
 	const handleClick = () => {
+		const leng = editorContent ? editorContent.length : 0;
+		if (leng < 1) {
+			setIsValid(true);
+			return;
+		}
 		const newObj = { ...isNext, title: true };
 		setIsNext(newObj);
+		setIsValid(false);
 	};
 	return (
 		<AskTitleContainer>
@@ -26,6 +35,7 @@ function AskTitle({ setIsTitleFocus, register, isNext, setIsNext }) {
 					Next
 				</button>
 			) : null}
+			{isValid ? <p className="invalid">제목을 작성해주세요!</p> : null}
 		</AskTitleContainer>
 	);
 }
@@ -35,6 +45,7 @@ export default AskTitle;
 const AskTitleContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	position: relative;
 	width: 65%;
 	padding: 1.5% 1% 1.5% 2%;
 	background-color: white;
@@ -65,8 +76,14 @@ const AskTitleContainer = styled.div`
 		width: 6%;
 		height: 2em;
 		&:hover {
-			background-color: #3b6fa0; // 전역변수로 바꾸기
+			background-color: var(--button-hover-color);
 		}
 		cursor: pointer;
+	}
+	.invalid {
+		position: absolute;
+		bottom: 14%;
+		left: 11%;
+		color: red;
 	}
 `;

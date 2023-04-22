@@ -22,7 +22,12 @@ function NewQuestion() {
 		<NewQuestionContainer onSubmit={handleSubmit(onSubmit)}>
 			<NewQuestionHeader />
 			<AskDescription />
-			<AskTitleBox register={register} isNext={isNext} setIsNext={setIsNext} />
+			<AskTitleBox
+				register={register}
+				isNext={isNext}
+				setIsNext={setIsNext}
+				watch={watch}
+			/>
 			<AskDetailBox
 				register={register}
 				isNext={isNext}
