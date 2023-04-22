@@ -1,8 +1,7 @@
 package pro.stackOverFlow.vote.mapper;
 
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
-import pro.stackOverFlow.question.dto.QuestionVoteResponseDto;
+import pro.stackOverFlow.vote.dto.QuestionVoteResponseDto;
 import pro.stackOverFlow.question.entity.Question;
 
 @Component
