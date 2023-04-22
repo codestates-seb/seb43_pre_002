@@ -8,15 +8,22 @@ const GlobalStyles = createGlobalStyle`
         --line-color: #D9D9D9;
         --base-color:#F1F2F3;
         --main-color-lighten: #D9E9F7;
+<<<<<<< HEAD
+        
+=======
         --font-color-gray: #BABFC3;
 
 
+>>>>>>> 5d96be5be7bb9a7f1fe2bd24f9fb5eb534d7dfe7
         --font-title-large: 27px;
         --font-title-small: 17px;
         --font-large: 15px;
         --font-base: 13px;
         --font-small: 11px;
+<<<<<<< HEAD
+=======
         --font-icon-size: 21px;
+>>>>>>> 5d96be5be7bb9a7f1fe2bd24f9fb5eb534d7dfe7
     }
 
     ${reset}
