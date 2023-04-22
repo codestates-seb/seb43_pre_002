@@ -27,7 +27,7 @@ import java.util.List;
 @Validated
 @RequestMapping("/questions")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", methods = RequestMethod.GET)
+//@CrossOrigin(origins = "*", methods = RequestMethod.GET)
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
@@ -36,13 +36,11 @@ public class QuestionController {
     private final VoteMapper voteMapper;
 
 
-
     @PostMapping
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody) {
         Question question = questionMapper.questionPostDtoToQuestion(requestBody);
         Question createdQuestion = questionService.createQuestion(question);
 
-//        return ResponseEntity.created(URI.create("/questions")).build();
         return new ResponseEntity<>(
                 new SingleResponseDto<>(createdQuestion), HttpStatus.CREATED);
     }
@@ -78,35 +76,36 @@ public class QuestionController {
                         questionPage), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{question-id}")
-    public ResponseEntity deleteQuestion(@PathVariable("question-id") long questionId) {
-        questionService.deleteQuestion(questionId);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-
-    @PostMapping("/{question-id}/upvote/{member-id}")
-    public ResponseEntity questionUpVote(@PathVariable("member-id") Long memberId,
+    @DeleteMapping("/{question-id}/{member-id}")
+    public ResponseEntity deleteQuestion(@PathVariable("member-id") Long memberId,
                                          @PathVariable("question-id") Long questionId) {
-        Member member = memberService.findMember(memberId);
-        Question question = questionService.findQuestion(questionId);
-        questionVoteService.upVote(member, question);
+        questionService.deleteQuestion(memberId, questionId);
 
-        return new ResponseEntity(
-                new SingleResponseDto<>(voteMapper.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>("question delete!"), HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/{question-id}/downvote/{member-id}")
-    public ResponseEntity questionDownVote(@PathVariable("member-id") Long memberId,
-                                           @PathVariable("question-id") Long questionId) {
-        Member member = memberService.findMember(memberId);
-        Question question = questionService.findQuestion(questionId);
-        questionVoteService.downVote(member, question);
 
-        return new ResponseEntity(
-                new SingleResponseDto<>(voteMapper.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
-    }
+//    @PostMapping("/{question-id}/upvote/{member-id}")
+//    public ResponseEntity questionUpVote(@PathVariable("member-id") Long memberId,
+//                                         @PathVariable("question-id") Long questionId) {
+//        Member member = memberService.findMember(memberId);
+//        Question question = questionService.findQuestion(questionId);
+//        questionVoteService.upVote(member, question);
+//
+//        return new ResponseEntity(
+//                new SingleResponseDto<>(voteMapper.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/{question-id}/downvote/{member-id}")
+//    public ResponseEntity questionDownVote(@PathVariable("member-id") Long memberId,
+//                                           @PathVariable("question-id") Long questionId) {
+//        Member member = memberService.findMember(memberId);
+//        Question question = questionService.findQuestion(questionId);
+//        questionVoteService.downVote(member, question);
+//
+//        return new ResponseEntity(
+//                new SingleResponseDto<>(voteMapper.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
+//    }
 
 
 }

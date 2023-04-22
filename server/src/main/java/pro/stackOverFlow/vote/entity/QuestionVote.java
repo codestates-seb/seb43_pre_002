@@ -15,7 +15,7 @@ public class QuestionVote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long questionVoteId;
+    private Long questionVoteId;
 
     @Enumerated(value = EnumType.STRING)
     private VoteStatus voteStatus;

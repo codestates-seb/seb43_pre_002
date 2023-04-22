@@ -1,9 +1,12 @@
 package pro.stackOverFlow.member.entity;
 
 import lombok.*;
+import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.audit.Auditable;
 import pro.stackOverFlow.exception.BusinessLogicException;
 import pro.stackOverFlow.exception.ExceptionCode;
+import pro.stackOverFlow.question.entity.Question;
+import pro.stackOverFlow.vote.entity.QuestionVote;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -79,4 +82,12 @@ public class Member extends Auditable {
 //        return this.getRoles().contains("ADMIN");
 //    }
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Question> questions;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Answer> answers;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<QuestionVote> questionVoteList;
 }

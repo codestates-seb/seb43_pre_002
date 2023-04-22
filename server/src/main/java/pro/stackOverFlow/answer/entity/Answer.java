@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.hibernate.annotations.ColumnDefault;
 import pro.stackOverFlow.audit.Auditable;
+import pro.stackOverFlow.member.entity.Member;
+import pro.stackOverFlow.question.entity.Question;
 
 import javax.persistence.*;
 
@@ -31,13 +33,13 @@ public class Answer extends Auditable {
 
 
 
-//    @ManyToOne
-//    @JoinColumn(name = "question_id")
-//    private Question question;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "member_id")
-//    private Member member;
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private Question question;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     //memberId 랑 questionId는 JoinColumn 하려면 member랑 question이 구현되어야 함
 

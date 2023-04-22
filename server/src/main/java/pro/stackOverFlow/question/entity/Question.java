@@ -1,7 +1,5 @@
 package pro.stackOverFlow.question.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +9,6 @@ import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.vote.entity.QuestionVote;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
