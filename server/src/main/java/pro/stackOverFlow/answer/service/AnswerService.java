@@ -52,10 +52,9 @@ public class AnswerService {
 
 
 
-    public Answer findAnswer(long questionId){
-        Optional<Answer> optionalQuestion = answerRepository.findById(questionId);
-        Answer findAnswer = optionalQuestion.orElseThrow(()-> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-
+    public Answer findAnswer(long answerId){
+        Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
+        Answer findAnswer = optionalAnswer.orElseThrow(()-> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
         return findAnswer;
     }
 
@@ -77,13 +76,14 @@ public class AnswerService {
 //                .orElseThrow(() -> new RuntimeException("Answer not found with id " + answerId));
 //    }
 
-    public Answer findById(Long answerId) {
-        Optional<Answer> answerOptional = answerRepository.findById(answerId);
-        if (answerOptional.isEmpty()) {
-            throw new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND);
-        }
-        return answerOptional.get();
-    }
+//    public Answer findById(Long answerId) {
+//        Optional<Answer> answerOptional = answerRepository.findById(answerId);
+//        if (answerOptional.isEmpty()) {
+//            throw new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND);
+//        }
+//        return answerOptional.get();
+//    }
+
 
 
 
@@ -101,7 +101,8 @@ public class AnswerService {
             throw new BusinessLogicException(ExceptionCode.ALREADY_UP_VOTED);
         } else if (voteStatus == VoteStatus.ALREADY_DOWN_VOTED) {
             answer.downVotedUserId.remove(userId);
-            voteCount++;
+            answer.upVotedUserId.add(userId);
+            voteCount += 2;
         }
         answer.setVoteCount(voteCount);
     }
@@ -118,7 +119,8 @@ public class AnswerService {
             voteCount--;
         } else if (voteStatus == VoteStatus.ALREADY_UP_VOTED) {
             answer.upVotedUserId.remove(userId);
-            voteCount--;
+            answer.downVotedUserId.add(userId);
+            voteCount -= 2;
         } else if (voteStatus == VoteStatus.ALREADY_DOWN_VOTED) {
             throw new BusinessLogicException(ExceptionCode.ALREADY_DOWN_VOTED);
         }

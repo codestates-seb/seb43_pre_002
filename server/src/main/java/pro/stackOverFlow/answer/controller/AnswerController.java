@@ -3,13 +3,12 @@ package pro.stackOverFlow.answer.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.stackOverFlow.answer.dto.AnswerPatchDto;
-import pro.stackOverFlow.answer.dto.AnswerPostDto;
-import pro.stackOverFlow.answer.dto.AnswerResponseDto;
+import pro.stackOverFlow.answer.dto.*;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.answer.mapper.AnswerMapper;
 import pro.stackOverFlow.answer.service.AnswerService;
 import pro.stackOverFlow.dto.SingleResponseDto;
+import pro.stackOverFlow.exception.BusinessLogicException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -67,26 +66,33 @@ public class AnswerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+// ---------------------------------------------------------------------------------------------------------------------
 
+    @PostMapping("/answers/{answer-id}/vote")
+    public ResponseEntity vote(@PathVariable("answer-id") @Positive long answerId,
+                               @RequestBody AnswerVotePostDto voteDto) {
 
-    @PostMapping("/upVote/{question-id}/{answer-id}")
-    public ResponseEntity setUpVote(@PathVariable("question-id") @Positive long questionId,
-                                    @PathVariable("answer-id") @Positive long answerId,
-                                    @Positive @RequestParam long userId) {
-        answerService.setUpVote(answerId, userId);
+        if (voteDto.getVoteType().equals("up")) {
+            try {
+                answerService.setUpVote(answerId, voteDto.getMemberId());
+            } catch(BusinessLogicException e) {
+                return new ResponseEntity(new VoteResponseDto(false, answerService.getVoteCount(answerId), e.getMessage()), HttpStatus.OK);
+            }
+        } else if (voteDto.getVoteType().equals("down")) {
+            try {
+                answerService.setDownVote(answerId, voteDto.getMemberId());
+            } catch(BusinessLogicException e) {
+                return new ResponseEntity(new VoteResponseDto(false, answerService.getVoteCount(answerId), e.getMessage()), HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity(new VoteResponseDto(false, answerService.getVoteCount(answerId), "Invalid vote type."), HttpStatus.OK);
+        }
 
-        return new ResponseEntity(new SingleResponseDto<>(answerService.getVoteCount(answerId)), HttpStatus.OK);
+        return new ResponseEntity(new VoteResponseDto(true, answerService.getVoteCount(answerId), ""), HttpStatus.OK);
     }
 
-    @PostMapping("/downVote/{question-id}/{answer-id}")
-    public ResponseEntity setDownVote(@PathVariable("question-id") @Positive long questionId,
-                                      @PathVariable("answer-id") @Positive long answerId,
-                                      @Positive @RequestParam long userId) {
 
-        answerService.setDownVote(answerId, userId);
 
-        return new ResponseEntity(new SingleResponseDto<>(answerService.getVoteCount(answerId)), HttpStatus.OK);
-    }
 
 
 }

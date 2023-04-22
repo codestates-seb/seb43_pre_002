@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import pro.stackOverFlow.audit.Auditable;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.question.entity.Question;
@@ -19,6 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@DynamicInsert
 public class Answer extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +46,10 @@ public class Answer extends Auditable {
 
     @ManyToOne
     @JoinColumn(name = "question_id")
-//    @JsonIgnore  // 무한 참조 순환 방지 annotation
     private Question question;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-//    @JsonIgnore  // 무한 참조 순환 방지 annotation
     private Member member;
 
 
