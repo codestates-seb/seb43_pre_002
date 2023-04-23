@@ -14,8 +14,9 @@ public enum ExceptionCode {
     ANSWER_NOT_FOUND(404, "Answer not found"),
 
     ALREADY_UP_VOTED(409, "already upVoted"),
-    ALREADY_DOWN_VOTED(409, "already downVoted");
+    ALREADY_DOWN_VOTED(409, "already downVoted"),
 
+    UNAUTHORIZED_MEMBER(404, "you are not authorized member");
 
     @Getter
     private int status;

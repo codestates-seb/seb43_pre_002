@@ -80,4 +80,5 @@ public class Member extends Auditable {
 //        return this.getRoles().contains("ADMIN");
 //    }
 
+
 }

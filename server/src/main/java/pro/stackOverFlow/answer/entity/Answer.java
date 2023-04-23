@@ -30,7 +30,7 @@ public class Answer extends Auditable {
     private String content;
 
     @Column
-    private String answerSelectionStatus; //답변 채택
+    private boolean accepted; //답변 채택
 
     @Column
     @ColumnDefault("0")

@@ -1,6 +1,9 @@
 package pro.stackOverFlow.answer.service;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.graphql.data.GraphQlQueryByExampleAutoConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pro.stackOverFlow.answer.dto.AnswerPatchDto;
@@ -9,8 +12,14 @@ import pro.stackOverFlow.exception.BusinessLogicException;
 import pro.stackOverFlow.exception.ExceptionCode;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.answer.repository.AnswerRepository;
+import pro.stackOverFlow.exception.ResourceNotFoundException;
+import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.member.service.MemberService;
+import pro.stackOverFlow.question.entity.Question;
+import pro.stackOverFlow.question.repository.QuestionRepository;
+import pro.stackOverFlow.question.service.QuestionService;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -19,26 +28,21 @@ import java.util.Optional;
 @Transactional
 @Service
 public class AnswerService {
+    @Autowired
     private AnswerRepository answerRepository;
+    @Autowired
     private MemberService memberService;
+    @Autowired
+    private QuestionRepository questionRepository;
+    @Autowired
+    private QuestionService questionService;
 
-
-    public AnswerService(AnswerRepository answerRepository, MemberService memberService) {
-        this.answerRepository = answerRepository;
-        this.memberService = memberService;
-    }
-
-    public Answer createAnswer(Answer answer){
+    public Answer createAnswer(Answer answer, long questionId) {
+        Question question = questionService.findQuestion(questionId);
+//                .orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
+        answer.setQuestion(question);
         return answerRepository.save(answer);
     }
-
-//    public Answer updateAnswer(Answer answer){
-//        Answer findAnswer = findAnswer(answer.getAnswerId());
-//        Optional.ofNullable(answer.getContent())
-//                .ifPresent(content -> findAnswer.setContent(content));
-//        Answer updateAnswer = answerRepository.save(findAnswer);
-//        return updateAnswer;
-//    }
 
     public Answer updateAnswer(long answerId, AnswerPatchDto answerPatchDto) {
         Answer existingAnswer = findVerifiedAnswer(answerId);
@@ -70,20 +74,6 @@ public class AnswerService {
         Answer answer = findVerifiedAnswer(answerId);
         answerRepository.delete(answer);
     }
-
-//    public Answer findById(Long answerId) {
-//        return answerRepository.findById(answerId)
-//                .orElseThrow(() -> new RuntimeException("Answer not found with id " + answerId));
-//    }
-
-//    public Answer findById(Long answerId) {
-//        Optional<Answer> answerOptional = answerRepository.findById(answerId);
-//        if (answerOptional.isEmpty()) {
-//            throw new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND);
-//        }
-//        return answerOptional.get();
-//    }
-
 
 
 
@@ -157,6 +147,70 @@ public class AnswerService {
             this.status = status;
             this.message = message;
         }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------------------------------
+
+//  답변 채택 부분 로그인 구현되야 테스트 가능
+
+    public Answer markAnswerAsAccepted(Long answerId, Member user) {
+        // 답변 조회
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + answerId));
+
+        // 질문 조회
+        Question question = answer.getQuestion();
+
+//        // 현재 로그인한 사용자가 질문 작성자가 아닐 경우 예외 발생
+//        if (!question.getUser().equals(user)) {
+//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
+//        }
+
+        // 이미 채택된 답변이 있는지 확인
+        if (question.getAcceptedAnswer() != null) {
+            throw new RuntimeException("The question already has an accepted answer");
+        }
+
+        // 답변 채택 처리
+        answer.setAccepted(true);
+        answerRepository.save(answer);
+
+        // 질문의 acceptedAnswer 필드 업데이트
+        question.setAcceptedAnswer(answer);
+        questionRepository.save(question);
+
+        return answer;
+    }
+
+    public Answer cancelAcceptedAnswer(Long answerId, Member user) {
+        // 답변 조회
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + answerId));
+
+        // 질문 조회
+        Question question = answer.getQuestion();
+
+        // 현재 로그인한 사용자가 질문 작성자가 아닐 경우 예외 발생
+        if (!question.getUser().equals(user)) {
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
+        }
+
+        // 채택된 답변인지 확인
+        if (!answer.isAccepted()) {
+            throw new RuntimeException("The answer is not accepted");
+        }
+
+        // 답변 채택 취소 처리
+        answer.setAccepted(false);
+        answerRepository.save(answer);
+
+        // 질문의 acceptedAnswer 필드 업데이트
+        question.setAcceptedAnswer(null);
+        questionRepository.save(question);
+
+        return answer;
     }
 
 

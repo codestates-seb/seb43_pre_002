@@ -22,7 +22,7 @@ public class AnswerResponseDto {
 
     private LocalDateTime modifiedAt;
 
-    private String answerSelectionStatus;
+    private boolean accepted;
 
     private long voteCount;
 
