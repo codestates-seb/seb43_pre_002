@@ -6,12 +6,14 @@ import MyActivity from './pages/mypage/myactivity';
 import Home from './pages/Home';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
+import LoginHeader from './components/Header/LoginHeader';
 
 function App() {
 	return (
 		<div>
 			<GlobalStyles />
 			<BrowserRouter>
+				<LoginHeader />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
