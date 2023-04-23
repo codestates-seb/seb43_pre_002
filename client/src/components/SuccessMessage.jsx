@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import SignButton from './Button/SignButton';
 
 const MessageContainer = styled.div`
@@ -21,16 +22,18 @@ const MessageContainer = styled.div`
 `;
 
 function SuccessMessage() {
+	const email = 'abc@google.com';
+
 	return (
 		<MessageContainer>
 			<h3>화원가입이 완료되었습니다.</h3>
 			<div>
 				<p>회원가입을 축하합니다.</p>
-				<p>
-					Stack Overflow의 새로운 아이디는 &quot;abc@google.com&quot; 입니다.
-				</p>
+				<p>Stack Overflow의 새로운 아이디는 &quot;{email}&quot; 입니다.</p>
 			</div>
-			<SignButton>Login</SignButton>
+			<Link to="/login">
+				<SignButton>Login</SignButton>
+			</Link>
 		</MessageContainer>
 	);
 }
