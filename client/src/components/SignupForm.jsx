@@ -25,6 +25,10 @@ function SignupForm() {
 			.post(`/members`, data)
 			.then((response) => {
 				console.log(response.data);
+				localStorage.setItem(
+					'signupMemberId',
+					JSON.stringify(response.data.member[0].memberId),
+				); // 가입한 멤버 memberId를 로컬 스토리지에 저장
 				navigate('/signupsuccess');
 			})
 			.catch((error) => console.log(error));
