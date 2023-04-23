@@ -17,7 +17,11 @@ const FormContainer = styled.div`
 function LoginForm({ setIsLogin, setLoginError }) {
 	const navigate = useNavigate();
 
-	const onSubmit = async (loginInfo) => {
+	const onSubmit = async (inputData) => {
+		const loginInfo = {
+			email: inputData.email,
+			password: inputData.password,
+		};
 		await axios
 			.post(`/auth/login`, loginInfo) // package.json proxy url 확인
 			.then((response) => {
@@ -31,10 +35,7 @@ function LoginForm({ setIsLogin, setLoginError }) {
 				return response.data;
 			})
 			.then((data) => {
-				localStorage.setItem(
-					'loginMemberId',
-					JSON.stringify(data.member[0].memberId),
-				); // 로그인한 멤버 memberId를 로컬 스토리지에 저장
+				localStorage.setItem('loginMemberId', JSON.stringify(data.memberId)); // 로그인한 멤버 memberId를 로컬 스토리지에 저장
 				setIsLogin(true);
 				navigate('/');
 			})
