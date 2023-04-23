@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import OAuthButton from '../../components/Button/OAuthButton';
 import LoginForm from '../../components/LoginForm';
-import LoginHeader from '../../components/Header/LoginHeader';
 
 const LoginContainer = styled.div`
 	display: flex;
@@ -38,10 +37,8 @@ const SignupLink = styled.div`
 	}
 `;
 
-function Login() {
+function Login({ setIsLogin }) {
 	const [loginError, setLoginError] = useState(null);
-	const [isLogin, setIsLogin] = useState(false);
-	const [userInfo, setUserInfo] = useState(null);
 
 	// 로그인 실패 시 alert 띄우기
 	useEffect(() => {
@@ -53,17 +50,10 @@ function Login() {
 
 	return (
 		<LoginContainer>
-			<LoginHeader />
 			<LoginWrapper>
 				<img src={`${process.env.PUBLIC_URL}/assets/main_logo.png`} alt="" />
 				<OAuthButton type="button" buttonText="Log in with Google" />
-				<LoginForm
-					isLogin={isLogin}
-					setIsLogin={setIsLogin}
-					userInfo={userInfo}
-					setUserInfo={setUserInfo}
-					setLoginError={setLoginError}
-				/>
+				<LoginForm setIsLogin={setIsLogin} setLoginError={setLoginError} />
 				<SignupLink>
 					<span>Already have an account?</span>
 					<Link to="/signup">Sign up</Link>
