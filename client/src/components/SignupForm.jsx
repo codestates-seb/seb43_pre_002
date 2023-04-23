@@ -20,18 +20,21 @@ const PasswordText = styled.p`
 
 function SignupForm() {
 	const navigate = useNavigate();
-	const onSubmit = (data) => {
+	const onSubmit = (inputData) => {
+		const userInfo = {
+			displayName: inputData.displayName,
+			email: inputData.email,
+			password: inputData.password, // 서버와 함께 해시화 해야 함
+		};
 		axios
-			.post(`/members`, data)
+			.post(`/members`, userInfo)
 			.then((response) => {
-				console.log(response.data);
-				localStorage.setItem(
-					'signupMemberId',
-					JSON.stringify(response.data.member[0].memberId),
-				); // 가입한 멤버 memberId를 로컬 스토리지에 저장
+				// console.log('가입 성공: ', response.data);
+				const { memberId } = response.data;
+				window.localStorage.setItem('signupMemberId', JSON.stringify(memberId)); // 가입한 멤버 memberId를 로컬 스토리지에 저장
 				navigate('/signupsuccess');
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => console.log(error.message));
 	};
 
 	const {
