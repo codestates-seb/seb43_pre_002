@@ -31,7 +31,10 @@ function LoginForm({ setIsLogin, setLoginError }) {
 				return response.data;
 			})
 			.then((data) => {
-				localStorage.setItem('user', JSON.stringify(data.user)); // 유저 정보를 로컬 스토리지에 저장
+				localStorage.setItem(
+					'loginMemberId',
+					JSON.stringify(data.member[0].memberId),
+				); // 로그인한 멤버 memberId를 로컬 스토리지에 저장
 				setIsLogin(true);
 				navigate('/');
 			})
