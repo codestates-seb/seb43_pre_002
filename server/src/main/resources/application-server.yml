@@ -10,8 +10,8 @@ spring:
         format_sql: true  # (3) SQL pretty print
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${RDS_ENDPOINT}:3306/${RDS_DATABASE}?characterEncoding=UTF-8
-    username: ${RDS_USERNAME}
+    url: jdbc:mysql://seb-pre.chopahyluxk1.ap-northeast-2.rds.amazonaws.com:3306/seb_pre?characterEncoding=UTF-8
+    username: admin
     password: ${RDS_PASSWORD}
 
 #jwt:
