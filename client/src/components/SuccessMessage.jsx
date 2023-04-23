@@ -25,20 +25,26 @@ const MessageContainer = styled.div`
 
 function SuccessMessage() {
 	const [currentEmail, setCurrentEmail] = useState('');
-	const memberId = JSON.parse(localStorage.getItem('signupMemberId'));
-	axios.get(`/members/${memberId}`).then((res) => {
-		const { email } = res.data.member[0];
-		setCurrentEmail(email);
-	});
+	const memberId = JSON.parse(window.localStorage.getItem('signupMemberId'));
+	axios
+		.get(`/members/${memberId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'ngrok-skip-browser-warning': '69420',
+			},
+		})
+		.then((res) => {
+			// console.log(res);
+			const { email } = res.data;
+			setCurrentEmail(email);
+		});
 
 	return (
 		<MessageContainer>
 			<h3>화원가입이 완료되었습니다.</h3>
 			<div>
 				<p>회원가입을 축하합니다.</p>
-				<p>
-					Stack Overflow의 새로운 아이디는 &quot;{currentEmail}&quot; 입니다.
-				</p>
+				<p>Stack Overflow의 새로운 아이디는 [{currentEmail}] 입니다.</p>
 			</div>
 			<Link
 				to="/login"
