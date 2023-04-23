@@ -30,15 +30,20 @@ const QnABoxContainer = styled.div`
 `;
 
 // Qusetion, Answer에 사용되는 Div
-function QnABox({ questionData, setQuestionData }) {
-	const [data, setData] = useState(questionData);
-
-	const deleteQnA = () => {
-		axios.delete(`http://localhost:3001/datas/${data.id}`);
-	};
-
-	const deleteHandler = () => {
+function QnABox({
+	questionData,
+	deleteQuestionHandler,
+	updateAnswerHandler,
+	deleteAnswerHandler,
+	mode,
+}) {
+	const deleteButtonHandler = () => {
 		if (window.confirm('삭제하시겠습니까?')) {
+			if (mode === 'question') {
+				deleteQuestionHandler(questionData);
+			} else {
+				deleteAnswerHandler(questionData);
+			}
 			alert('삭제되었습니다.');
 		} else {
 			alert('취소합니다.');
@@ -55,14 +60,14 @@ function QnABox({ questionData, setQuestionData }) {
 				<div className="right__container">
 					<div
 						className="text__container"
-						dangerouslySetInnerHTML={{ __html: questionData.bodyHTML }}
+						dangerouslySetInnerHTML={{ __html: questionData.content }}
 					/>
-					;
+
 					<div className="bottom__container">
 						<div className="function__container">
 							<span>copy</span>
 							<span>edit</span>
-							<span onClick={deleteHandler} aria-hidden="true">
+							<span onClick={deleteButtonHandler} aria-hidden="true">
 								delete
 							</span>
 						</div>
