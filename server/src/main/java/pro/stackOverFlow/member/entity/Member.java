@@ -1,9 +1,11 @@
 package pro.stackOverFlow.member.entity;
 
 import lombok.*;
+import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.audit.Auditable;
 import pro.stackOverFlow.exception.BusinessLogicException;
 import pro.stackOverFlow.exception.ExceptionCode;
+import pro.stackOverFlow.question.entity.Question;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,7 +32,6 @@ public class Member extends Auditable {
 
     @Column(length = 300)
     private String aboutMe;
-
 
 
 //    @ElementCollection(fetch = FetchType.EAGER)
@@ -78,5 +79,6 @@ public class Member extends Auditable {
 //    public boolean isAdmin() {
 //        return this.getRoles().contains("ADMIN");
 //    }
+
 
 }
