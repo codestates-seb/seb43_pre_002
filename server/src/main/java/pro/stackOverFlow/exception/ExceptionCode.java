@@ -7,6 +7,7 @@ public enum ExceptionCode {
 
     QUESTION_NOT_FOUND(404, "Question not found"),
     QUESTION_EXISTS(409, "Question exists"),
+    VOTE_NOT_ALLOW(405, "Already vote"),
 
     MEMBER_NOT_FOUND(404, "Member not found"),
     MEMBER_EXISTS(409, "Member exists"),

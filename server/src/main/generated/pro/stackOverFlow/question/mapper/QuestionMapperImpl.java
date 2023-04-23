@@ -9,7 +9,7 @@ import pro.stackOverFlow.question.entity.Question;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-19T13:57:29+0900",
+    date = "2023-04-20T15:48:54+0900",
     comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
