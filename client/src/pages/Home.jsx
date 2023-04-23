@@ -8,22 +8,32 @@ import HomeFooter from '../components/HomeFooter';
 
 function Home() {
 	const [allData, setAllData] = useState([]);
+	const [filteredData, setFilteredData] = useState([...allData]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [limitItems, setLimitItems] = useState(5);
-	const totalDataCount = allData.length;
+	const totalDataCount = filteredData.length;
+
+	useEffect(() => {
+		setFilteredData([...allData]);
+	}, [allData]);
+
 	useEffect(() => {
 		axios
 			.get('http://localhost:3001/datas')
 			.then((res) => setAllData(res.data));
 	}, []);
-	const currentPageData = allData.slice(
+	const currentPageData = filteredData.slice(
 		(currentPage - 1) * limitItems,
 		currentPage * limitItems,
 	);
 	return (
 		<HomeContainer>
 			<HomeHeader />
-			<HomeFilter totalDataCount={totalDataCount} />
+			<HomeFilter
+				totalDataCount={totalDataCount}
+				allData={allData}
+				setFilteredData={setFilteredData}
+			/>
 			{currentPageData.map((el) => (
 				<HomeQuestionItem key={el.id} data={el} />
 			))}

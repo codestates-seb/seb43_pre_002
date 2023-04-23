@@ -1,11 +1,23 @@
 import styled from 'styled-components';
+import { newestList, unansweredList } from '../utils/filterFunction';
 
-function HomeFilter({ totalDataCount }) {
+function HomeFilter({ totalDataCount, allData, setFilteredData }) {
+	const handleNewest = () => {
+		setFilteredData(newestList(allData));
+	};
+	const handleUnanswered = () => {
+		setFilteredData(unansweredList(allData));
+	};
+
 	return (
 		<HomeFilterContainer>
 			<span className="total">{totalDataCount} questions</span>
 			<div>
-				<button className="sort-button newest" type="button">
+				<button
+					className="sort-button newest"
+					type="button"
+					onClick={handleNewest}
+				>
 					Newest
 				</button>
 				<button className="sort-button active" type="button">
@@ -14,7 +26,11 @@ function HomeFilter({ totalDataCount }) {
 				<button className="sort-button recommend" type="button">
 					Recommend
 				</button>
-				<button className="sort-button unanswered" type="button">
+				<button
+					className="sort-button unanswered"
+					type="button"
+					onClick={handleUnanswered}
+				>
 					Unanswered
 				</button>
 			</div>

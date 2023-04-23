@@ -52,7 +52,7 @@ function HomePagination({
 					</button>
 				);
 			})}
-			{currentPage < maxPages - 2 ? (
+			{(currentPage < maxPages - 2 || currentPage === 4) && maxPages > 5 ? (
 				<div>
 					<span className="dot">...</span>
 					<button
