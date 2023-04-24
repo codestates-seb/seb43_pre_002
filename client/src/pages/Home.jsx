@@ -15,12 +15,8 @@ function Home({ searchTerm }) {
 	const totalDataCount = filteredData.length;
 
 	useEffect(() => {
-		setFilteredData(allData);
-	}, [allData]);
-	useEffect(() => {
-		console.log(searchTerm);
 		setFilteredData(filterByTerm(allData, searchTerm));
-	}, [searchTerm]);
+	}, [allData, searchTerm]);
 
 	useEffect(() => {
 		axios

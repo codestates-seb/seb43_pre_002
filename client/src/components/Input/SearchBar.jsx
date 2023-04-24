@@ -32,7 +32,7 @@ const SearchInput = styled.input`
 	background-color: transparent;
 `;
 
-function SearchBar({ type, placeholder, searchTerm, setSearchTerm }) {
+function SearchBar({ type, placeholder, setSearchTerm }) {
 	const [searchInput, setSearchInput] = useState('');
 	const navigate = useNavigate();
 	const InputRef = useRef(null);
@@ -42,14 +42,16 @@ function SearchBar({ type, placeholder, searchTerm, setSearchTerm }) {
 	};
 
 	const handleInputChange = (e) => {
-		setSearchInput(e.target.value);
+		setSearchInput(e.target.value.trim());
 	};
 
 	const handleSearch = (e) => {
-		if (e.key === 'Enter') {
+		if (e.key === 'Enter' && searchInput !== '') {
 			setSearchTerm(searchInput);
 			navigate('/');
-			setSearchTerm(''); // 검색어 초기화
+			setTimeout(() => {
+				setSearchInput('');
+			}, 100);
 		}
 	};
 

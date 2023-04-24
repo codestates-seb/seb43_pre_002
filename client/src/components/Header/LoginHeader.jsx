@@ -32,7 +32,7 @@ function LoginHeader({ isLogin, setIsLogin, searchTerm, setSearchTerm }) {
 	return (
 		<Header>
 			<HeaderContainer>
-				<Link to="/">
+				<Link to="/" onClick={() => setSearchTerm('')}>
 					<Logo />
 				</Link>
 				<SearchBar
