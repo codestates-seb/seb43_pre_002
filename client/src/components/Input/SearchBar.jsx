@@ -32,10 +32,9 @@ const SearchInput = styled.input`
 	background-color: transparent;
 `;
 
-function SearchBar({ type, placeholder }) {
+function SearchBar({ type, placeholder, searchTerm, setSearchTerm }) {
 	const navigate = useNavigate();
 	const InputRef = useRef(null);
-	const [searchTerm, setSearchTerm] = useState('');
 
 	const handleSearchClick = () => {
 		InputRef.current.focus();

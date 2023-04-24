@@ -29,7 +29,7 @@ const LogoutButton = styled(SignButton)`
 	margin: 0 10px;
 `;
 
-function UserActionButtons() {
+function UserActionButtons({ setIsLogin }) {
 	const userDisplayName = 'abcde12345'; // 임시 데이터
 	// const { memberId } = localStorage.getItem('user');
 	// useEffect(() => {
@@ -45,6 +45,7 @@ function UserActionButtons() {
 
 	const navigate = useNavigate();
 	const logoutHandler = () => {
+		setIsLogin(false);
 		navigate('/');
 		// 로컬스토리지의 유저 정보, 토큰 삭제 코드 추가해야 함
 		// localStorage.removeItem('user');
