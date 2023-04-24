@@ -6,21 +6,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
+import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.dto.MultiResponseDto;
 import pro.stackOverFlow.dto.SingleResponseDto;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.member.service.MemberService;
 import pro.stackOverFlow.question.dto.QuestionDto;
+import pro.stackOverFlow.question.dto.QuestionGetAnswerDto;
 import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.question.mapper.QuestionMapper;
+import pro.stackOverFlow.question.mapper.QuestionMapperIm;
+import pro.stackOverFlow.question.mapper.QuestionMapperImpl;
 import pro.stackOverFlow.question.service.QuestionService;
-import pro.stackOverFlow.vote.mapper.VoteMapper;
 import pro.stackOverFlow.vote.service.QuestionVoteService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -31,9 +32,9 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
+    private final QuestionMapperIm questionMapperIm;
     private final MemberService memberService;
     private final QuestionVoteService questionVoteService;
-    private final VoteMapper voteMapper;
 
 
     @PostMapping
@@ -59,9 +60,12 @@ public class QuestionController {
     public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
         Question question = questionService.findQuestion(questionId);
         questionService.addViewCount(question);
+        List<Answer> answers = question.getAnswers();
+        List<QuestionGetAnswerDto> questionGetAnswerDto = questionMapperIm.answersToQuestionGetAnswerDto(answers);
+        Member member = question.getMember();
 
         return new ResponseEntity(
-                new SingleResponseDto<>(questionMapper.questionToQuestionResponse(question)),
+                new SingleResponseDto<>(questionMapperIm.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto)),
                 HttpStatus.OK);
     }
 
