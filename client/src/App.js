@@ -20,26 +20,25 @@ function App() {
 	const [isLogin, setIsLogin] = useState(false);
 	// 로그인 상태, (memberId) 전역상태로 관리
 	return (
-		<GlobalStyles>
-			<BrowserRouter>
-				<LoginHeader isLogin={isLogin} setIsLogin={setIsLogin} />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/question/:question_id" element={<Question />} />
-					<Route path="/edit/:qna_id" element={<EditQnA />} />
-					<Route path="/timeline/:qna_id" element={<Timeline />} />
-					<Route path="/askquestion" element={<AskQuestion />} />
-					<Route path="/useractivity/:member_id" element={<UserActivity />} />
-					<Route path="/userprofile/:member_id" element={<UserProfile />} />
-					<Route path="/myactivity/:member_id" element={<MyActivity />} />
-					<Route path="/myprofile/:member_id" element={<MyProfile />} />
-					<Route path="/myedit/:member_id" element={<MyEdit />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/signup" element={<Signup />} />
-					<Route path="/signupsuccess" element={<SignupSuccess />} />
-				</Routes>
-			</BrowserRouter>
-		</GlobalStyles>
+		<BrowserRouter>
+			<GlobalStyles />
+			<LoginHeader isLogin={isLogin} setIsLogin={setIsLogin} />
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/question/:question_id" element={<Question />} />
+				<Route path="/edit/:qna_id" element={<EditQnA />} />
+				<Route path="/timeline/:qna_id" element={<Timeline />} />
+				<Route path="/askquestion" element={<AskQuestion />} />
+				<Route path="/useractivity/:member_id" element={<UserActivity />} />
+				<Route path="/userprofile/:member_id" element={<UserProfile />} />
+				<Route path="/myactivity/:member_id" element={<MyActivity />} />
+				<Route path="/myprofile/:member_id" element={<MyProfile />} />
+				<Route path="/myedit/:member_id" element={<MyEdit />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/signup" element={<Signup />} />
+				<Route path="/signupsuccess" element={<SignupSuccess />} />
+			</Routes>
+		</BrowserRouter>
 	);
 }
 

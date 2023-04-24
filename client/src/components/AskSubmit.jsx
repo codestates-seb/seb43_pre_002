@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-function Submit({ isNext }) {
+function AskSubmit({ isNext }) {
 	return (
 		<AskSubmitContainer>
 			<div className="button-container">
