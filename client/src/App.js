@@ -12,15 +12,22 @@ import Login from './pages/Login/Login';
 import Home from './pages/Home';
 import LoginHeader from './components/Header/LoginHeader';
 import SignupSuccess from './pages/SignupSuccess/SignupSuccess';
+import Question from './pages/Question';
+import EditQnA from './pages/EditQnA';
+import Timeline from './pages/Timeline';
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
+	// 로그인 상태, (memberId) 전역상태로 관리
 	return (
 		<GlobalStyles>
 			<BrowserRouter>
 				<LoginHeader isLogin={isLogin} setIsLogin={setIsLogin} />
 				<Routes>
 					<Route path="/" element={<Home />} />
+					<Route path="/question/:question_id" element={<Question />} />
+					<Route path="/edit/:qna_id" element={<EditQnA />} />
+					<Route path="/timeline/:qna_id" element={<Timeline />} />
 					<Route path="/askquestion" element={<AskQuestion />} />
 					<Route path="/useractivity/:member_id" element={<UserActivity />} />
 					<Route path="/userprofile/:member_id" element={<UserProfile />} />
