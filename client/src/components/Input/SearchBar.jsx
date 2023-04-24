@@ -42,14 +42,16 @@ function SearchBar({ type, placeholder, setSearchTerm }) {
 	};
 
 	const handleInputChange = (e) => {
-		setSearchInput(e.target.value);
+		setSearchInput(e.target.value.trim());
 	};
 
 	const handleSearch = (e) => {
-		if (e.key === 'Enter') {
+		if (e.key === 'Enter' && searchInput !== '') {
 			setSearchTerm(searchInput);
 			navigate('/');
-			setSearchInput(''); // input value 초기화
+			setTimeout(() => {
+				setSearchInput('');
+			}, 100);
 		}
 	};
 
