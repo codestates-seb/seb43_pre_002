@@ -22,7 +22,7 @@ const QuestionContentsContainer = styled.div`
 	width: 80%;
 	padding: 0 2%;
 	.question-header {
-		margin: -3% 0 2% 0;
+		margin: 1.5% 0 2% 0;
 		font-size: var(--font-title-small);
 		font-weight: 700;
 		color: var(--button-hover-color);

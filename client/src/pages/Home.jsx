@@ -56,4 +56,5 @@ const HomeContainer = styled.div`
 	align-items: center;
 	background-color: white;
 	width: 98vw;
+	margin-top: 50px;
 `;
