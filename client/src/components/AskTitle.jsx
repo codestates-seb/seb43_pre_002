@@ -15,6 +15,7 @@ function AskTitle({ setIsTitleFocus, register, isNext, setIsNext, watch }) {
 		setIsNext(newObj);
 		setIsValid(false);
 	};
+  
 	return (
 		<AskTitleContainer>
 			<h5 className="title">Title</h5>

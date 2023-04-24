@@ -1,0 +1,189 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "memberId": 1,
+      "email": "pjw@gmail.com",
+      "displayName": "지원",
+      "title": "프론트엔드 개발자입니다!",
+      "aboutMe": "",
+      "websiteLink": "web.com",
+      "twitterLink": "twitter.com",
+      "githubLink": "https://github.com",
+      "notionLink": "notion.com",
+      "blogLink": "blog.com",
+      "createdAt": "2023-04-22T00:07:15.344789",
+      "modifiedAt": "2023-04-22T00:07:20.34977"
+    },
+    {
+      "id": 2,
+      "memberId": 2,
+      "email": "ksr@gmail.com",
+      "displayName": "김상래",
+      "title": "백엔드 개발자입니다!",
+      "aboutMe": "상래 이즈 백",
+      "websiteLink": "web.com",
+      "twitterLink": "twitter.com",
+      "githubLink": "https://github.com",
+      "notionLink": "notion.com",
+      "blogLink": "blog.com",
+      "createdAt": "2023-04-22T00:07:15.344789",
+      "modifiedAt": "2023-04-22T00:07:20.34977"
+    }
+  ],
+  "question": [
+    {
+      "questionId": 1,
+      "title": "궁금한 이야기 Y",
+      "answer": 4,
+      "memberId": 2,
+      "answerId": 1,
+      "createdAt": "2023-04-20T15:27:17.831659"
+    },
+    {
+      "questionId": 2,
+      "title": "궁금하지않은 이야기 Y",
+      "answer": 6,
+      "memberId": 2,
+      "answerId": 1,
+      "createdAt": "2023-04-10T15:27:17.831659"
+    },
+    {
+      "questionId": 3,
+      "title": "궁금했던 이야기 Y",
+      "answer": 2,
+      "memberId": 1,
+      "answerId": 2,
+      "createdAt": "2023-04-20T15:27:17.831659"
+    },
+    {
+      "questionId": 4,
+      "title": "금하지않은 이야기 Y",
+      "answer": 3,
+      "memberId": 1,
+      "answerId": 2,
+      "createdAt": "2023-04-10T15:27:17.831659"
+    },
+    {
+      "questionId": 5,
+      "title": "궁금하지않은 이야기 Y",
+      "answer": 6,
+      "memberId": 1,
+      "answerId": 2,
+      "createdAt": "2023-04-10T15:27:17.831659"
+    },
+    {
+      "questionId": 6,
+      "title": "궁금한 이야기 Y",
+      "answer": 4,
+      "memberId": 2,
+      "answerId": 1,
+      "createdAt": "2023-04-20T15:27:17.831659"
+    },
+    {
+      "questionId": 7,
+      "title": "궁금하지않은 이야기 Y",
+      "answer": 6,
+      "memberId": 1,
+      "answerId": 2,
+      "createdAt": "2023-04-10T15:27:17.831659"
+    },
+    {
+      "questionId": 8,
+      "title": "궁금한 이야기 Y",
+      "answer": 4,
+      "memberId": 2,
+      "answerId": 1,
+      "createdAt": "2023-04-20T15:27:17.831659"
+    },
+    {
+      "questionId": 9,
+      "title": "궁금하지않은 이야기 Y",
+      "answer": 6,
+      "memberId": 2,
+      "answerId": 1,
+      "createdAt": "2023-04-10T15:27:17.831659"
+    },
+    {
+      "questionId": 10,
+      "title": "궁금했던 이야기 Y",
+      "answer": 2,
+      "memberId": 1,
+      "answerId": 2,
+      "createdAt": "2023-04-20T15:27:17.831659"
+    },
+    {
+      "questionId": 11,
+      "title": "금하지않은 이야기 Y",
+      "answer": 3,
+      "memberId": 1,
+      "answerId": 2,
+      "createdAt": "2023-04-10T15:27:17.831659"
+    },
+    {
+      "questionId": 12,
+      "title": "궁금하지않은 이야기 Y",
+      "answer": 6,
+      "memberId": 1,
+      "answerId": 2,
+      "createdAt": "2023-04-10T15:27:17.831659"
+    },
+    {
+      "questionId": 13,
+      "title": "궁금한 이야기 Y",
+      "answer": 4,
+      "memberId": 2,
+      "answerId": 1,
+      "createdAt": "2023-04-20T15:27:17.831659"
+    },
+    {
+      "questionId": 14,
+      "title": "궁금하지않은 이야기 Y",
+      "answer": 6,
+      "memberId": 1,
+      "answerId": 2,
+      "createdAt": "2023-04-10T15:27:17.831659"
+    },
+    {
+      "questionId": 15,
+      "title": "궁금했던 이야기 Y",
+      "answer": 5,
+      "memberId": 1,
+      "answerId": 2,
+      "createdAt": "2023-04-20T15:27:17.831659"
+    },
+    {
+      "questionId": 16,
+      "title": "궁금했던 이야기 Y",
+      "answer": 1,
+      "memberId": 1,
+      "answerId": 2,
+      "createdAt": "2023-04-20T15:27:17.831659"
+    },
+    {
+      "questionId": 17,
+      "title": "궁금했던 이야기 Y",
+      "answer": 1,
+      "memberId": 1,
+      "answerId": 2,
+      "createdAt": "2023-04-20T15:27:17.831659"
+    }
+  ]
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

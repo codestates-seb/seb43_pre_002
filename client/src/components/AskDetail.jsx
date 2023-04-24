@@ -30,6 +30,7 @@ function AskDetail({
 	useEffect(() => {
 		register('detail', { required: true, minLength: 20 });
 	}, [register]);
+  
 	return (
 		<AskDetailContainer>
 			<h5 className="title">What are the details of your problem?</h5>
