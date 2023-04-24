@@ -27,10 +27,12 @@ public interface MemberMapper {
     MemberDto.Response memberToMemberResponseDto(Member member);
     List<MemberDto.Response> membersToMemberResponseDtos(List<Member> members);
 
-    default MemberMyPageDto memberToMemberMyPageDto(Member member) { // 완료
+    default MemberMyPageDto memberToMemberMyPageDto(Member member) {
+
         if (member == null) {
             return null;
         }
+
         MemberMyPageDto memberMyPageDto = new MemberMyPageDto();
         memberMyPageDto.setMemberId(member.getMemberId());
         memberMyPageDto.setEmail(member.getEmail());
@@ -39,18 +41,20 @@ public interface MemberMapper {
         memberMyPageDto.setAboutMe(member.getAboutMe());
 
 
-        List<Answer> answerList = member.getAnswers(); // 답변 리스트
+        List<Answer> answerList = member.getAnswers();
+
         List<AnswerMyPageDto> answerMyPageDtoList = answerList.stream().map(answer ->{
             AnswerMyPageDto answerMyPageDto = new AnswerMyPageDto();
             answerMyPageDto.setAnswerId(answer.getAnswerId());
             answerMyPageDto.setContent(answer.getContent());
             answerMyPageDto.setCreatedAt(answer.getCreatedAt());
             return answerMyPageDto;
-
         }).collect(Collectors.toList());
+
         memberMyPageDto.setAnswers(answerMyPageDtoList);
 //
-        List<Question> questionList = member.getQuestions(); // 질문 리스트
+        List<Question> questionList = member.getQuestions();
+
         List<QuestionMyPageDto> questionMyPageDtoList = questionList.stream().map(question ->{
             QuestionMyPageDto questionMyPageDto = new QuestionMyPageDto();
             questionMyPageDto.setQuestionId(question.getQuestionId());
@@ -59,6 +63,7 @@ public interface MemberMapper {
             questionMyPageDto.setCreatedAt(question.getMember().getCreatedAt());
             return questionMyPageDto;
         }).collect(Collectors.toList());
+
         memberMyPageDto.setQuestions(questionMyPageDtoList);
 
         return memberMyPageDto;
