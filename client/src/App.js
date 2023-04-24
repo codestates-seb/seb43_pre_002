@@ -34,7 +34,7 @@ function App() {
 					<Route path="/myactivity/:member_id" element={<MyActivity />} />
 					<Route path="/myprofile/:member_id" element={<MyProfile />} />
 					<Route path="/myedit/:member_id" element={<MyEdit />} />
-					<Route path="/login" element={<Login />} />
+					<Route path="/login" element={<Login setIsLogin={setIsLogin} />} />
 					<Route path="/signup" element={<Signup />} />
 					<Route path="/signupsuccess" element={<SignupSuccess />} />
 				</Routes>
