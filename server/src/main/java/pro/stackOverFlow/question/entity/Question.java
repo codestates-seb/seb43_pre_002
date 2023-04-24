@@ -1,18 +1,19 @@
 package pro.stackOverFlow.question.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.audit.Auditable;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@Data
+@Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Question extends Auditable {
 
     @Id
@@ -32,17 +33,29 @@ public class Question extends Auditable {
     private long questionVoteCount;
 
 
-    //------------------------------------------------------------------------------------------------------------------
+    @ManyToOne
+    @Getter
+    @Setter
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<Answer> answers;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<QuestionVote> questionVotes;
+
+
 
 
     @OneToOne
     @JoinColumn(name = "accepted_answer_id")
     private Answer acceptedAnswer;
 
-    @ManyToOne//(targetEntity = Member.class, cascade = CascadeType.PERSIST)
-    @Setter
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
+//    @ManyToOne//(targetEntity = Member.class, cascade = CascadeType.PERSIST)
+//    @Setter
+//    @JoinColumn(name = "MEMBER_ID")
+//    private Member member;
 
     public Answer getAcceptedAnswer() {
         return acceptedAnswer;
@@ -53,9 +66,10 @@ public class Question extends Auditable {
     }
 
 
-    public Member getUser() {
-        return this.member;
-    }
+//    public Member getUser() {
+//        return this.member;
+//    }
+
 
 
 

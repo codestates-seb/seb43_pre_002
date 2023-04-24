@@ -6,9 +6,9 @@ import pro.stackOverFlow.audit.Auditable;
 import pro.stackOverFlow.exception.BusinessLogicException;
 import pro.stackOverFlow.exception.ExceptionCode;
 import pro.stackOverFlow.question.entity.Question;
+import pro.stackOverFlow.question.entity.QuestionVote;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -32,6 +32,7 @@ public class Member extends Auditable {
 
     @Column(length = 300)
     private String aboutMe;
+
 
 
 //    @ElementCollection(fetch = FetchType.EAGER)
@@ -80,5 +81,12 @@ public class Member extends Auditable {
 //        return this.getRoles().contains("ADMIN");
 //    }
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Question> questions;
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Answer> answers;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<QuestionVote> questionVoteList;
 }

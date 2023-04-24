@@ -35,7 +35,7 @@ public class AnswerController {
         Answer createdAnswer = answerService.createAnswer(answer, questionId);
         AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(createdAnswer);
 
-        return new ResponseEntity<>(new SingleResponseDto<>(createdAnswer), HttpStatus.CREATED);
+        return new ResponseEntity<>(new SingleResponseDto<>(responseDto), HttpStatus.CREATED);
     }
 
 

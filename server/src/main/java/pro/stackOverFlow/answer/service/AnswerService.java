@@ -193,7 +193,7 @@ public class AnswerService {
         Question question = answer.getQuestion();
 
         // 현재 로그인한 사용자가 질문 작성자가 아닐 경우 예외 발생
-        if (!question.getUser().equals(user)) {
+        if (!question.getMember().equals(user)) {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
         }
 

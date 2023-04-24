@@ -6,5 +6,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class SingleResponseDto<T> {
-    private T Data;
+    private T data;
 }
