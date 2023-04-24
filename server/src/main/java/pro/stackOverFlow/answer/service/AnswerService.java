@@ -197,10 +197,10 @@ public class AnswerService {
         // 질문 조회
         Question question = answer.getQuestion();
 
-        // 현재 로그인한 사용자가 질문 작성자가 아닐 경우 예외 발생
-        if (!question.getUser().equals(user)) {
-            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
-        }
+//        // 현재 로그인한 사용자가 질문 작성자가 아닐 경우 예외 발생
+//        if (!question.getUser().equals(user)) {
+//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
+//        }
 
         // 채택된 답변인지 확인
         if (!answer.isAccepted()) {

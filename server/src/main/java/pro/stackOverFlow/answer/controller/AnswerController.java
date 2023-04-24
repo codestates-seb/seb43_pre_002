@@ -106,7 +106,7 @@ public class AnswerController {
     }
 
 
-//----------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------
 
     @PostMapping("/answers/{answer-id}/accept/{member-id}")
     public ResponseEntity markAnswerAsAccepted(@PathVariable("answer-id") Long answerId,
