@@ -38,23 +38,10 @@ const AnswerFormContainer = styled.form`
 	}
 `;
 function AnswerForm({ createAnswerHandler }) {
-	const [newAnswer, setNewAnswer] = useState({
-		id: 0,
-		answer_id: 0,
-		title: 'koans 과제 진행 중 npm install 오류로 인해 정상 작동 되지 않습니다',
-		content: '',
-		content_open_status: true,
-		answer_selection_status: true,
-		answer_status: true,
-		member_id: 1,
-		question_id: 2,
-		created_at: new Date(),
-		modified_at: new Date(),
-	});
+	const [newAnswer, setNewAnswer] = useState('');
 
 	const newContentHandler = (e) => {
 		setNewAnswer({
-			...newAnswer,
 			content: e,
 		});
 	};
@@ -63,6 +50,7 @@ function AnswerForm({ createAnswerHandler }) {
 		e.preventDefault();
 		if (window.confirm('작성하시겠습니까?')) {
 			createAnswerHandler(newAnswer);
+			setNewAnswer('');
 			alert('작성되었습니다.');
 		} else {
 			alert('취소합니다.');

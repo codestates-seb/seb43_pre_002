@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import CommentBox from './CommentBox';
 import DividerLine from './DividerLine';
@@ -30,19 +31,13 @@ const QnABoxContainer = styled.div`
 `;
 
 // Qusetion, Answer에 사용되는 Div
-function QnABox({
-	questionData,
-	deleteQuestionHandler,
-	updateAnswerHandler,
-	deleteAnswerHandler,
-	mode,
-}) {
+function QnABox({ data, deleteQuestionHandler, deleteAnswerHandler, mode }) {
 	const deleteButtonHandler = () => {
 		if (window.confirm('삭제하시겠습니까?')) {
 			if (mode === 'question') {
-				deleteQuestionHandler(questionData);
+				deleteQuestionHandler(data);
 			} else {
-				deleteAnswerHandler(questionData);
+				deleteAnswerHandler(data);
 			}
 			alert('삭제되었습니다.');
 		} else {
@@ -55,23 +50,32 @@ function QnABox({
 			<DividerLine />
 			<QnABoxContainer>
 				<div className="left__container">
-					<IconList />
+					<IconList data={data} mode={mode} />
 				</div>
 				<div className="right__container">
 					<div
 						className="text__container"
-						dangerouslySetInnerHTML={{ __html: questionData.content }}
+						dangerouslySetInnerHTML={{
+							__html:
+								mode === 'question' ? data.questionContent : data.answerContent,
+						}}
 					/>
 
 					<div className="bottom__container">
 						<div className="function__container">
 							<span>copy</span>
-							<span>edit</span>
+							<Link
+								to={`/edit/${
+									mode === 'question' ? data.questionId : data.answerId
+								}`}
+							>
+								<span>edit</span>
+							</Link>
 							<span onClick={deleteButtonHandler} aria-hidden="true">
 								delete
 							</span>
 						</div>
-						<UserInfoCard questionData={questionData} />
+						<UserInfoCard data={data} mode={mode} />
 					</div>
 					<CommentBox />
 				</div>

@@ -41,14 +41,16 @@ const UserInfoCardContainer = styled.div`
 `;
 
 // 유저의 정보가 담긴 InfoCard
-function UserInfoCard({ questionData }) {
+function UserInfoCard({ data, mode }) {
 	return (
 		<UserInfoCardContainer>
-			<span>{questionData.created_at}</span>
+			<span>
+				{mode === 'question' ? data.questionCreatedAt : data.answerCreatedAt}
+			</span>
 			<div className="bottom__container">
-				{questionData.member_id && (
+				{data.member_id && (
 					<UserProfile
-						userName={String(questionData.member_id)}
+						userName={String(data.memberId)}
 						boxSize="32px"
 						fontSize="13px"
 					/>
@@ -56,13 +58,8 @@ function UserInfoCard({ questionData }) {
 
 				<div className="right__container">
 					<Link to="/myprofile">
-						<span className="user__name">{questionData.author}</span>
+						<span className="user__name">{data.memberId}</span>
 					</Link>
-					<div className="user__activity">
-						<span> 1149</span>
-						<span> 5</span>
-						<span> 11</span>
-					</div>
 				</div>
 			</div>
 		</UserInfoCardContainer>

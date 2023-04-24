@@ -90,198 +90,138 @@ const AnswersContainer = styled.div`
 `;
 
 function Question() {
-	// const apiUrl = 'https://caa6-183-97-142-84.ngrok-free.app/questions/1';
 	const { question_id: targetId } = useParams();
 	const [questionData, setQuestionData] = useState(null);
 	const [answerList, setAnswerList] = useState([]);
 
 	const navigate = useNavigate();
 
-	// 질문 조회
+	// 질문 조회 및 답변 조회(완료)
 	useEffect(() => {
-		axios.get('http://localhost:3001/questions').then((res) => {
-			const questions = res.data;
-			const target = questions.find(
-				(it) => it.question_id === Number(targetId),
-			);
-
-			if (target) {
-				setQuestionData(target);
-			} else {
-				navigate('/');
-			}
-		});
-		// axios.get(apiUrl).then((res) => console.log(res));
-		//	axios.get(`/questions/1`).then((res) => console.log(res));
-
-		// axios
-		// 	.get('/answers/1', {
-		// 		headers: {
-		// 			'Content-Type': `application/json`,
-		// 			'ngrok-skip-browser-warning': '69420',
-		// 		},
-		// 	})
-		// 	.then((res) => console.log(res.data));
-	}, [answerList]);
-
-	// 질문 수정
-	const updateQuestionHandler = (data) => {
 		axios
-			.put(
-				`http://localhost:3001/questions${data.id}`,
-				{ ...data },
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
+			.get(`/questions/${targetId}`, {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
 				},
-			)
-			.then((res) => setQuestionData(data));
-	};
+			})
+			.then((res) => {
+				const question = res.data;
+				setQuestionData(question.data);
+				setAnswerList(question.data.answers);
+			})
+			.catch((res) => {
+				console.log('에러발생');
+				navigate('/');
+			});
+	}, []);
 
-	// 질문 삭제
+	// 질문 삭제(백엔드 구현 필요)
 	const deleteQuestionHandler = (data) => {
-		axios.delete(`http://localhost:3001/questions/${data.id}`).then((res) => {
+		axios.delete(`/questions/${targetId}`).then((res) => {
 			setQuestionData({});
 			navigate('/');
 		});
 	};
 
-	// 답변 조회
-	useEffect(() => {
-		axios.get('http://localhost:3001/answers').then((res) => {
-			const answers = res.data;
-			const targetAnswer = answers.filter(
-				(it) => it.question_id === Number(targetId),
-			);
-			if (targetAnswer) {
-				setAnswerList(targetAnswer);
-			}
-		});
-	}, []);
-
 	// 답변 생성
 	const createAnswerHandler = (data) => {
 		axios
-			.post(
-				'http://localhost:3001/answers',
-				{
-					...data,
-					id: answerList[answerList.length - 1].answer_id + 1,
-					answer_id: answerList[answerList.length - 1].answer_id + 1,
+			.post(`/questions/${targetId}/answers`, JSON.stringify({ ...data }), {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
 				},
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				},
-			)
+			})
 			.then((res) => {
-				setAnswerList([...answerList, res.data]);
+				navigate(0);
 			});
-	};
-
-	// 답변 수정
-	const updateAnswerHandler = (data) => {
-		axios
-			.put(
-				`http://localhost:3001/answers${data.id}`,
-				{ ...data },
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				},
-			)
-			.then((res) =>
-				setAnswerList(
-					answerList.map((it) => (it.answer_id === data.answer_id ? data : it)),
-				),
-			);
 	};
 
 	// 답변 삭제
 	const deleteAnswerHandler = (data) => {
 		axios
-			.delete(`http://localhost:3001/answers/${data.id}`)
+			.delete(`/answers/${data.answerId}`)
 			.then((res) =>
-				setAnswerList(
-					answerList.filter((it) => it.answer_id !== data.answer_id),
-				),
+				setAnswerList(answerList.filter((it) => it.answerId !== data.answerId)),
 			);
 	};
 
 	return (
-		questionData && (
-			<QuestionContainer>
-				<LoginHeader />
+		<QuestionContainer>
+			<LoginHeader />
 
-				<main>
-					<TitleContainer>
-						<div className="top__container">
-							<span>{questionData.title}</span>
+			<main>
+				{questionData && (
+					<>
+						<TitleContainer>
+							<div className="top__container">
+								<span>{questionData.questionTitle}</span>
 
-							<Link to="/myprofile">
-								<button type="button">Ask Questions</button>
-							</Link>
-						</div>
-						<div className="bottom__container">
-							<div className="info__container">
-								<InfoBox>
-									<span className="first__span">Asked</span>
-									<span className="second__span">
-										{questionData.created_at}
-									</span>
-								</InfoBox>
-								<InfoBox>
-									<span className="first__span">Modified</span>
-									<span className="second__span">
-										{questionData.modified_at}
-									</span>
-								</InfoBox>
-								<InfoBox>
-									<span className="first__span">Viewed</span>
-									<span className="second__span">8times</span>
-								</InfoBox>
+								<Link to="/myprofile">
+									<button type="button">Ask Questions</button>
+								</Link>
 							</div>
-						</div>
-					</TitleContainer>
-
-					<QnABox
-						questionData={questionData}
-						deleteQuestionHandler={deleteQuestionHandler}
-						deleteAnswerHandler={deleteAnswerHandler}
-						mode="question"
-					/>
-
-					<AnswersContainer>
-						<div className="answers__header">
-							<span>{`${answerList.length} Answers`}</span>
-							<div className="filter__container">
-								<span>Sorted by:</span>
-								<select>
-									<option>Date modified (newest first)</option>
-									<option>Date created (oldest first)</option>
-								</select>
+							<div className="bottom__container">
+								<div className="info__container">
+									<InfoBox>
+										<span className="first__span">Asked</span>
+										<span className="second__span">
+											{questionData.questionCreatedAt}
+										</span>
+									</InfoBox>
+									<InfoBox>
+										<span className="first__span">Modified</span>
+										<span className="second__span">
+											{questionData.questionModifiedAt}
+										</span>
+									</InfoBox>
+									<InfoBox>
+										<span className="first__span">Viewed</span>
+										<span className="second__span">
+											{questionData.questionViewCount}
+										</span>
+									</InfoBox>
+								</div>
 							</div>
+						</TitleContainer>
+
+						<QnABox
+							data={questionData}
+							deleteQuestionHandler={deleteQuestionHandler}
+							deleteAnswerHandler={deleteAnswerHandler}
+							mode="question"
+						/>
+					</>
+				)}
+				<AnswersContainer>
+					<div className="answers__header">
+						<span>{`${answerList.length} Answers`}</span>
+						<div className="filter__container">
+							<span>Sorted by:</span>
+							<select>
+								<option>Date modified (newest first)</option>
+								<option>Date created (oldest first)</option>
+							</select>
 						</div>
-						<div>
-							{answerList.map((it) => (
+					</div>
+					<div>
+						{answerList.map((it) => {
+							return (
 								<QnABox
-									key={it.id}
-									// key={it.answer_id}
-									questionData={it}
+									key={it.answerId}
+									data={it}
 									deleteQuestionHandler={deleteQuestionHandler}
 									deleteAnswerHandler={deleteAnswerHandler}
 									mode="answer"
 								/>
-							))}
-						</div>
-					</AnswersContainer>
-					<AnswerForm createAnswerHandler={createAnswerHandler} />
-				</main>
-			</QuestionContainer>
-		)
+							);
+						})}
+					</div>
+				</AnswersContainer>
+				<AnswerForm createAnswerHandler={createAnswerHandler} />
+			</main>
+		</QuestionContainer>
 	);
 }
 
