@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { useState } from 'react';
 import styled from 'styled-components';
 import CommentBox from './CommentBox';
 import DividerLine from './DividerLine';
@@ -7,6 +9,9 @@ import UserInfoCard from './UserInfoCard';
 const QnABoxContainer = styled.div`
 	display: flex;
 
+	.right__container {
+		flex: 1;
+	}
 	.bottom__container {
 		margin-top: 12px;
 
@@ -19,10 +24,32 @@ const QnABoxContainer = styled.div`
 			}
 		}
 	}
+	.text__container {
+		flex: 1;
+	}
 `;
 
 // Qusetion, Answer에 사용되는 Div
-function QnABox() {
+function QnABox({
+	questionData,
+	deleteQuestionHandler,
+	updateAnswerHandler,
+	deleteAnswerHandler,
+	mode,
+}) {
+	const deleteButtonHandler = () => {
+		if (window.confirm('삭제하시겠습니까?')) {
+			if (mode === 'question') {
+				deleteQuestionHandler(questionData);
+			} else {
+				deleteAnswerHandler(questionData);
+			}
+			alert('삭제되었습니다.');
+		} else {
+			alert('취소합니다.');
+		}
+	};
+
 	return (
 		<>
 			<DividerLine />
@@ -31,20 +58,20 @@ function QnABox() {
 					<IconList />
 				</div>
 				<div className="right__container">
-					<p className="text__container">
-						Our app needs to connect to a AWS-Db-Instance but with credentials
-						from AWS-auth-credentials. I am getting the credentials but the
-						connection call happening before I get the credentials. In below
-						NodeJS app, I need to initialize the db variable before the
-						authentication.
-					</p>
+					<div
+						className="text__container"
+						dangerouslySetInnerHTML={{ __html: questionData.content }}
+					/>
 
 					<div className="bottom__container">
 						<div className="function__container">
 							<span>copy</span>
 							<span>edit</span>
+							<span onClick={deleteButtonHandler} aria-hidden="true">
+								delete
+							</span>
 						</div>
-						<UserInfoCard />
+						<UserInfoCard questionData={questionData} />
 					</div>
 					<CommentBox />
 				</div>
