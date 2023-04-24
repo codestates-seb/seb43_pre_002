@@ -1,12 +1,11 @@
 package pro.stackOverFlow.question.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pro.stackOverFlow.answer.entity.Answer;
+import org.springframework.web.util.UriComponentsBuilder;
 import pro.stackOverFlow.dto.MultiResponseDto;
 import pro.stackOverFlow.dto.SingleResponseDto;
 import pro.stackOverFlow.member.entity.Member;
@@ -20,6 +19,7 @@ import pro.stackOverFlow.question.service.QuestionService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -33,27 +33,32 @@ public class QuestionController {
     private final QuestionMapperIm questionMapperIm;
     private final MemberService memberService;
 
+    public QuestionController(QuestionService questionService, QuestionMapper mapper) {
+        this.questionService = questionService;
+        this.mapper = mapper;
+    }
 
-    @PostMapping
-    public ResponseEntity postQuestion(Long memberId,
-            @Valid @RequestBody QuestionDto.Post requestBody) {
-//        Member member = memberService.findMember(memberId);
-//        Question question = questionService.createQuestion(questionMapperIm.questionPostDtoToQuestion(requestBody, member));
+    @PostMapping("/{member-id}")
+    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody,
+                                       @PathVariable("member-id") long memberId) {
+        Question question = mapper.questionPostDtoToQuestion(requestBody);
+        Member member = memberService.findMember(memberId);
+        question.addMember(member);
+        Question createdQuestion = questionService.createQuestion(question);
 
-        Question question = questionService.createQuestion(questionMapper.questionPostDtoToQuestion(requestBody));
-
+//        return ResponseEntity.created(URI.create("/questions")).build();
         return new ResponseEntity<>(
-                new SingleResponseDto<>(question), HttpStatus.CREATED);
+                new SingleResponseDto<>(createdQuestion), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")
     public ResponseEntity patchQuestion(@Valid @RequestBody QuestionDto.Patch requestBody,
                                         @PathVariable("question-id") long questionId) {
         requestBody.setQuestionId(questionId);
-        Question question = questionService.updateQuestion(questionMapper.questionPatchDtoToQuestion(requestBody));
+        Question question = questionService.updateQuestion(mapper.questionPatchDtoToQuestion(requestBody));
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(questionMapper.questionToQuestionResponse(question)), HttpStatus.OK);
+                new SingleResponseDto<>(mapper.questionToQuestionResponse(question)), HttpStatus.OK);
     }
 
     @GetMapping("/{question-id}")
@@ -65,7 +70,7 @@ public class QuestionController {
         Member member = question.getMember();
 
         return new ResponseEntity(
-                new SingleResponseDto<>(questionMapperIm.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto)),
+                new SingleResponseDto<>(mapper.questionToQuestionResponse(question)),
                 HttpStatus.OK);
     }
 
