@@ -28,7 +28,7 @@ const HeaderContainer = styled.div`
 	margin: 0 auto;
 `;
 
-function LoginHeader({ isLogin, setIsLogin, searchTerm, setSearchTerm }) {
+function LoginHeader({ isLogin, setIsLogin, setSearchTerm }) {
 	return (
 		<Header>
 			<HeaderContainer>
@@ -38,7 +38,6 @@ function LoginHeader({ isLogin, setIsLogin, searchTerm, setSearchTerm }) {
 				<SearchBar
 					type="text"
 					placeholder="검색어를 입력하세요."
-					searchTerm={searchTerm}
 					setSearchTerm={setSearchTerm}
 				/>
 				{isLogin ? (

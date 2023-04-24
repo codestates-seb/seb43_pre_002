@@ -32,7 +32,8 @@ const SearchInput = styled.input`
 	background-color: transparent;
 `;
 
-function SearchBar({ type, placeholder, searchTerm, setSearchTerm }) {
+function SearchBar({ type, placeholder, setSearchTerm }) {
+	const [searchInput, setSearchInput] = useState('');
 	const navigate = useNavigate();
 	const InputRef = useRef(null);
 
@@ -41,12 +42,14 @@ function SearchBar({ type, placeholder, searchTerm, setSearchTerm }) {
 	};
 
 	const handleInputChange = (e) => {
-		setSearchTerm(e.target.value);
+		setSearchInput(e.target.value);
 	};
 
 	const handleSearch = (e) => {
 		if (e.key === 'Enter') {
+			setSearchTerm(searchInput);
 			navigate('/');
+			setSearchInput(''); // input value 초기화
 		}
 	};
 
@@ -57,7 +60,7 @@ function SearchBar({ type, placeholder, searchTerm, setSearchTerm }) {
 				type={type}
 				placeholder={placeholder}
 				ref={InputRef}
-				value={searchTerm}
+				value={searchInput}
 				onChange={handleInputChange}
 				onKeyUp={handleSearch}
 			/>

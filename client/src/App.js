@@ -27,7 +27,6 @@ function App() {
 			<LoginHeader
 				isLogin={isLogin}
 				setIsLogin={setIsLogin}
-				searchTerm={searchTerm}
 				setSearchTerm={setSearchTerm}
 			/>
 			<Routes>
