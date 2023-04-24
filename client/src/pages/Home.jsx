@@ -26,6 +26,7 @@ function Home() {
 		(currentPage - 1) * limitItems,
 		currentPage * limitItems,
 	);
+
 	return (
 		<HomeContainer>
 			<HomeHeader />
