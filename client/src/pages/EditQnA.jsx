@@ -90,7 +90,7 @@ const PreviewContainer = styled.div`
 	border: black solid 1px;
 `;
 
-function EditQuestion() {
+function EditQnA() {
 	const navigate = useNavigate();
 
 	const [title, setTitle] = useState('');
@@ -153,4 +153,4 @@ function EditQuestion() {
 	);
 }
 
-export default EditQuestion;
+export default EditQnA;
