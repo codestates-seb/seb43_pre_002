@@ -4,6 +4,8 @@ package pro.stackOverFlow.member.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import pro.stackOverFlow.answer.dto.AnswerMyPageDto;
+import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.member.dto.MemberDto;
 import pro.stackOverFlow.member.dto.MemberMyPageDto;
 import pro.stackOverFlow.member.entity.Member;
@@ -35,30 +37,18 @@ public interface MemberMapper {
         memberMyPageDto.setDisplayName(member.getDisplayName());
         memberMyPageDto.setTitle(member.getTitle());
         memberMyPageDto.setAboutMe(member.getAboutMe());
-//        List<Question> questions = member.getQuestions(); // 질문 리스트
 
-//        List<AnswerMyPageDto> answerMyPageDtoList = answerList.stream().map(answer ->{
-//            AnswerMyPageDto answerMyPageDto = new AnswerMyPageDto();
-//            answerMyPageDto.setAnswerId(answer.getAnswerId());
-//            answerMyPageDto.setTitle(answer.getQuestion().getTitle());
-//            answerMyPageDto.setCreatedAt(answer.getCreatedAt());
-//            answerMyPageDto.setAnswerCount(answer.getQuestion().getAnswers().size());
-//            return answerMyPageDto;
 
-//        }
-//        ).collect(Collectors.toList());
-//        List<Answer> answerList = member.getAnswers(); // 답변 리스트
+        List<Answer> answerList = member.getAnswers(); // 답변 리스트
+        List<AnswerMyPageDto> answerMyPageDtoList = answerList.stream().map(answer ->{
+            AnswerMyPageDto answerMyPageDto = new AnswerMyPageDto();
+            answerMyPageDto.setAnswerId(answer.getAnswerId());
+            answerMyPageDto.setContent(answer.getContent());
+            answerMyPageDto.setCreatedAt(answer.getCreatedAt());
+            return answerMyPageDto;
 
-//        List<AnswerMyPageDto> answerMyPageDtoList = answerList.stream().map(answer ->{
-//            AnswerMyPageDto answerMyPageDto = new AnswerMyPageDto();
-//            answerMyPageDto.setAnswerId(answer.getAnswerId());
-//            answerMyPageDto.setTitle(answer.getQuestion().getTitle());
-//            answerMyPageDto.setCreatedAt(answer.getCreatedAt());
-//            answerMyPageDto.setAnswerCount(answer.getQuestion().getAnswers().size());
-//            return answerMyPageDto;
-//
-//        }).collect(Collectors.toList());
-//        memberMyPageDto.setAnswers(answerMyPageDtoList);
+        }).collect(Collectors.toList());
+        memberMyPageDto.setAnswers(answerMyPageDtoList);
 //
         List<Question> questionList = member.getQuestions(); // 질문 리스트
         List<QuestionMyPageDto> questionMyPageDtoList = questionList.stream().map(question ->{

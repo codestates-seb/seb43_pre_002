@@ -10,6 +10,8 @@ import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.answer.mapper.AnswerMapper;
 import pro.stackOverFlow.answer.service.AnswerService;
 import pro.stackOverFlow.dto.SingleResponseDto;
+import pro.stackOverFlow.member.entity.Member;
+import pro.stackOverFlow.member.service.MemberService;
 
 import javax.validation.Valid;
 
@@ -17,27 +19,42 @@ import javax.validation.Valid;
 public class AnswerController {
 
     private AnswerService answerService;
+
+    private MemberService memberService;
     private AnswerMapper answerMapper;
 
 
-    public AnswerController(AnswerService answerService, AnswerMapper answerMapper) {
+    public AnswerController(AnswerService answerService, AnswerMapper answerMapper, MemberService memberService) {
         this.answerService = answerService;
         this.answerMapper = answerMapper;
+        this.memberService = memberService;
     }
 
 
-    @PostMapping("/qna-questions/{question-id}/qna-answers")
-    public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
+//    @PostMapping("/questions/{question-id}/answers")
+//    public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
+//
+//        Answer answer = answerMapper.answerPostDtoToAnswer(answerPostDto);
+//        Answer createdAnswer = answerService.createAnswer(answer);
+//        AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(createdAnswer);
+//
+//        return new ResponseEntity<>(new SingleResponseDto<>(createdAnswer), HttpStatus.CREATED);
+//    }
+    @PostMapping("/members/{member-id}/answers")
+    public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto requestBody,
+                                     @PathVariable("member-id") Long memberId ) {
 
-        Answer answer = answerMapper.answerPostDtoToAnswer(answerPostDto);
+        Answer answer = answerMapper.answerPostDtoToAnswer(requestBody);
+        Member member = memberService.findMember(memberId);
+        answer.addMember(member);
         Answer createdAnswer = answerService.createAnswer(answer);
         AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(createdAnswer);
 
-        return new ResponseEntity<>(new SingleResponseDto<>(createdAnswer), HttpStatus.CREATED);
+        return new ResponseEntity<>(new SingleResponseDto<>(responseDto), HttpStatus.CREATED);
     }
 
 
-    @GetMapping("/qna-answers/{answer-id}")
+    @GetMapping("/answers/{answer-id}")
     public ResponseEntity getAnswer(@PathVariable("answer-id") long answerId){
 
         Answer foundAnswer = answerService.findAnswer(answerId);
@@ -47,7 +64,7 @@ public class AnswerController {
     }
 
 
-    @PatchMapping("/qna-answers/{answer-id}")
+    @PatchMapping("/answers/{answer-id}")
     public ResponseEntity updateAnswer(@PathVariable("answer-id") long answerId,
                                      @Valid @RequestBody AnswerPatchDto answerPatchDto) {
 
@@ -59,7 +76,7 @@ public class AnswerController {
     }
 
 
-    @DeleteMapping("/qna-answers/{answer-id}")
+    @DeleteMapping("/answers/{answer-id}")
     public ResponseEntity deleteAnswer(@PathVariable("answer-id") long answerId) {
 
         answerService.deleteAnswer(answerId);

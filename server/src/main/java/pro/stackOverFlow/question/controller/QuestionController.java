@@ -23,6 +23,7 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/questions")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class QuestionController {
     private final QuestionService questionService;
     private final MemberService memberService;

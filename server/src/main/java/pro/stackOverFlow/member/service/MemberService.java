@@ -46,7 +46,7 @@ public class MemberService {
     }
 
     public Member createMember(Member member) {
-        Member findMember = memberRepository.findByEmail(member.getEmail());
+        Member findMember = memberRepository.findByEmail(member.getEmail()).get();
         Member.checkExistEmail(findMember);
 
 //        String encryptedPassword = passwordEncoder.encode(member.getPassword());

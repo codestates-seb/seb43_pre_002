@@ -35,6 +35,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/members")
 @Validated
 @Slf4j
+//@CrossOrigin(origins = "http://localhost:3000" )
 public class MemberController {
     private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
@@ -66,7 +67,7 @@ public class MemberController {
         return new ResponseEntity<>(
                 new SingleResponseDto<>(memberMapper.memberToMemberResponseDto(createdMember)), HttpStatus.CREATED);
     }
-    @CrossOrigin(origins = "http://localhost:3000" )
+//    @CrossOrigin(origins = "http://localhost:3000" )
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
