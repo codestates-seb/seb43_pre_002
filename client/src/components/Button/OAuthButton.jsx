@@ -21,6 +21,7 @@ const ButtonWrapper = styled.div`
 		border: none;
 		background-color: transparent;
 		font-size: var(--font-base);
+		cursor: pointer;
 	}
 `;
 

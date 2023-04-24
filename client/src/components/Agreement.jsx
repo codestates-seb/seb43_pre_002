@@ -1,30 +1,14 @@
 import styled from 'styled-components';
 import { AiFillExclamationCircle } from 'react-icons/ai';
 
-const InputContainer = styled.div`
+const AgreementContainer = styled.div`
 	display: flex;
-	flex-direction: column;
-	margin: 10px 0;
-	label {
-		margin: 2px 0;
-		font-size: var(--font-large);
-		font-weight: 600;
-	}
+	flex-wrap: wrap;
+	align-items: center;
+	margin: 6px 0;
+	font-size: var(--font-small);
 	input {
-		margin: 2px 0;
-		border-radius: 3px;
-		height: 30px;
-		border: 1px solid var(--line-color);
-		&:focus {
-			outline: none;
-			border: 2px solid var(--main-color);
-		}
-	}
-	input.error {
-		border-color: var(--error-message-color);
-		&:focus {
-			border: 2px solid var(--error-message-color);
-		}
+		margin-left: 0;
 	}
 `;
 
@@ -40,7 +24,7 @@ const ErrorIcon = styled(AiFillExclamationCircle)`
 	margin-right: 5px;
 `;
 
-function SignInput({
+function Agreement({
 	labelName,
 	labelFor,
 	inputType,
@@ -49,23 +33,22 @@ function SignInput({
 	error,
 }) {
 	return (
-		<InputContainer>
-			<label htmlFor={labelFor}>{labelName}</label>
+		<AgreementContainer>
 			<input
-				className={error ? 'error' : ''}
 				type={inputType}
 				name={labelFor}
 				id={labelFor}
 				{...register(labelFor, registerOptions)}
 			/>
+			<label htmlFor={labelFor}>{labelName}</label>
 			{error && (
 				<ErrorMessage>
 					<ErrorIcon />
 					{error.message}
 				</ErrorMessage>
 			)}
-		</InputContainer>
+		</AgreementContainer>
 	);
 }
 
-export default SignInput;
+export default Agreement;
