@@ -39,7 +39,13 @@ public class QuestionDto {
         private long questionId;
         private String title;
         private String content;
-        private long viewCount;
+
+        private int viewCount;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
+
+//        private Long memberId;
     }
+
 
 }
