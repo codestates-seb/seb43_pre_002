@@ -1,33 +1,57 @@
-import { Link } from 'react-router-dom';
+/* eslint-disable camelcase */
+import axios from 'axios';
+import { Link, useParams } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GlobalStyles from '../styles/GlobalStyles.style';
 import DeleteModal from './DeleteModal';
 
 function MyHeader() {
 	const [isOpen2, setIsOpen2] = useState(false);
+	const [userData, setUserData] = useState({});
+	const [articleData, setArticleData] = useState([]);
+	const { member_id } = useParams();
 
 	const handleClick2 = () => {
 		setIsOpen2(!isOpen2);
 	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await axios.get(`http://localhost:3000/data/${member_id}`);
+			setUserData(result.data);
+
+			const articleResult = await axios.get(`http://localhost:3000/question`);
+			setArticleData(articleResult.data);
+		};
+		fetchData();
+	}, []);
+
+	const filteredArticles = articleData
+		? articleData.filter((a) => a.memberId === parseInt(member_id, 10))
+		: [];
+
+	const filteredAnswerd = articleData
+		? articleData.filter((a) => a.answerId === parseInt(member_id, 10))
+		: [];
 
 	return (
 		<Wrap>
 			<GlobalStyles />
 			<ProfileHeader>
 				<Profile>
-					<UserImg>2pro</UserImg>
+					<UserImg>{userData && userData.displayName}</UserImg>
 					<UserInfo>
-						<Name>2Pro</Name>
-						<Info>User Title</Info>
-						<Info>질문 수 : 0 답변 수 : 0</Info>
+						<Name>{userData && userData.displayName}</Name>
+						<Info>{userData && userData.title}</Info>
+						<Info>{`질문 수 : ${filteredArticles.length} 답변 수 : ${filteredAnswerd.length}`}</Info>
 					</UserInfo>
 				</Profile>
 				<Buttons>
 					<ButtonEdit type="button">
 						<FaPencilAlt size={13} />
-						<Link to="/myedit">
+						<Link to={`/myedit/${member_id}`}>
 							<Span>Exit Profile</Span>
 						</Link>
 					</ButtonEdit>
@@ -38,10 +62,10 @@ function MyHeader() {
 				</Buttons>
 			</ProfileHeader>
 			<PageButtons>
-				<Link to="/myprofile">
+				<Link to={`/myprofile/${member_id}`}>
 					<PageButton type="button">Profile</PageButton>
 				</Link>
-				<Link to="/myactivity">
+				<Link to={`/myactivity/${member_id}`}>
 					<PageButton type="button">Activity</PageButton>
 				</Link>
 			</PageButtons>

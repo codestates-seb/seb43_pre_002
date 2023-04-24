@@ -14,16 +14,15 @@ function App() {
 	const [isLogin, setIsLogin] = useState(false);
 	return (
 		<div>
-			<GlobalStyles />
 			<BrowserRouter>
 				<LoginHeader isLogin={isLogin} setIsLogin={setIsLogin} />
 				<Routes>
+					<Route path="/myactivity/:member_id" element={<MyActivity />} />
+					<Route path="/myprofile/:member_id" element={<MyProfile />} />
+					<Route path="/myedit/:member_id" element={<MyEdit />} />
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />
-					<Route path="/myprofile" element={<MyProfile />} />
-					<Route path="/myactivity" element={<MyActivity />} />
-					<Route path="/myedit" element={<MyEdit />} />
 					<Route path="/signupsuccess" element={<SignupSuccess />} />
 				</Routes>
 			</BrowserRouter>

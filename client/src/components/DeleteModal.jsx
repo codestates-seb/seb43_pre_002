@@ -1,6 +1,22 @@
+/* eslint-disable camelcase */
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import styled from 'styled-components';
 
 function DeleteModal({ isOpen, setIsOpen }) {
+	const { member_id } = useParams();
+	const navigate = useNavigate();
+
+	const deleteData = async () => {
+		try {
+			await axios.delete(`http://localhost:3000/data/${member_id}`); // 해당 id에 해당하는 문서 삭제
+			alert('문서가 삭제되었습니다.');
+			navigate(`/`);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const closeModalHandler = () => {
 		setIsOpen(false);
 	};
@@ -14,7 +30,11 @@ function DeleteModal({ isOpen, setIsOpen }) {
 							회원 정보가 영구 삭제됩니다. 삭제하시겠습니까?
 						</p>
 						<div className="button-container">
-							<button className="button-container__button" type="button">
+							<button
+								className="button-container__button"
+								type="button"
+								onClick={deleteData}
+							>
 								Delete
 							</button>
 							<button

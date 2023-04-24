@@ -1,0 +1,156 @@
+import { useState } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+import GlobalStyles from './styles/GlobalStyles.style';
+
+const apiUrl = 'http://localhost:3000/api';
+
+const AppButton = styled.button`
+	margin: 10px;
+	padding: 10px;
+`;
+
+function App() {
+	const [userData, setUserData] = useState(null);
+
+	const handleClick = () => {
+		axios
+			.get(apiUrl)
+			.then((response) => {
+				setUserData(response.data);
+			})
+			.catch((error) => {
+				// eslint-disable-next-line
+				console.log(error);
+			});
+	};
+
+	return (
+		<div>
+			<GlobalStyles />
+			<AppButton onClick={handleClick}>Get User Data</AppButton>
+			{userData && <pre>{JSON.stringify(userData, null, 2)}</pre>}
+		</div>
+	);
+}
+
+export default App;
+
+
+
+[
+  {
+    "memberId": 1,
+    "email": "ksr@naver.com",
+    "displayName": "김상래",
+    "title": "백엔드 개발자입니다!",
+    "aboutMe": "안녕하세요 김입니다.",
+    "websiteLink": "web.com",
+    "twitterLink": "twitter.com",
+    "githubLink": "git.com",
+    "notionLink": "notion.com",
+    "blogLink": "blog.com",
+    "createdAt": "2023-04-20T14:52:31.955292",
+    "modifiedAt": "2023-04-20T14:54:38.621878"
+  },
+
+
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+import GlobalStyles from './styles/GlobalStyles.style';
+
+const apiUrl = 'https://769f-118-32-224-80.jp.ngrok.io/members/1';
+
+const AppButton = styled.button`
+	margin: 10px;
+	padding: 10px;
+`;
+
+function App() {
+	const [userData, setUserData] = useState(null);
+	const { register, handleSubmit, reset } = useForm();
+
+	useEffect(() => {
+		axios
+			.get(apiUrl)
+			.then((response) => {
+				const formattedData = response.data.member.map((data) => {
+					const date = new Date(data.createdAt);
+					const formattedDate = date.toLocaleDateString();
+					return { ...data, createdAt: formattedDate };
+				});
+				setUserData(formattedData);
+			})
+			.catch((error) => {
+				// eslint-disable-next-line
+				console.log(error);
+			});
+	}, []);
+
+	const onSubmit = (data) => {
+		axios
+			.patch(`${apiUrl}/member/${data.memberId}`, data)
+			.then((response) => {
+				const updatedData = response.data.member.map((memberData) => {
+					const date = new Date(memberData.createdAt);
+					const formattedDate = date.toLocaleDateString();
+					return { ...memberData, createdAt: formattedDate };
+				});
+				setUserData(updatedData);
+				reset();
+			})
+			.catch((error) => {
+				// eslint-disable-next-line
+				console.log(error);
+			});
+	};
+
+	return (
+		<div>
+			<GlobalStyles />
+			<AppButton onClick={() => setUserData(null)}>Reset</AppButton>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<label htmlFor="name">
+					Display Name:
+					<input type="text" {...register('displayName')} />
+				</label>
+				<label htmlFor="title">
+					Title:
+					<input type="text" {...register('title')} />
+				</label>
+				<button type="submit">Submit</button>
+			</form>
+			{userData ? (
+				<pre>{JSON.stringify(userData, null, 2)}</pre>
+			) : (
+				<p>Loading...</p>
+			)}
+		</div>
+	);
+}
+
+export default App;
+
+
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import UserActivity from './pages/user/useractivity';
+import UserProfile from './pages/user/userprofile';
+
+function App() {
+	return (
+		<div>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/useractivity" element={<UserActivity />} />
+					<Route path="/userprofile" element={<UserProfile />} />
+				</Routes>
+			</BrowserRouter>
+		</div>
+	);
+}
+
+export default App;
+
