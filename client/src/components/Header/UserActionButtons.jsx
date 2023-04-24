@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
+import { setIsLogin } from '../../reducers/loginSlice';
 import SignButton from '../Button/SignButton';
 import UserProfile from '../UserProfile';
 
@@ -29,8 +31,9 @@ const LogoutButton = styled(SignButton)`
 	margin: 0 10px;
 `;
 
-function UserActionButtons({ setIsLogin }) {
-	// const userDisplayName = 'abcde12345'; // 임시 데이터
+function UserActionButtons() {
+	const dispatch = useDispatch();
+
 	const [userDisplayName, setUserDisplayName] = useState('');
 	const memberId = localStorage.getItem('loginMemberId');
 
@@ -51,7 +54,7 @@ function UserActionButtons({ setIsLogin }) {
 
 	const navigate = useNavigate();
 	const logoutHandler = () => {
-		setIsLogin(false);
+		dispatch(setIsLogin(false));
 		navigate('/');
 		setUserDisplayName('');
 		// 로컬스토리지의 유저 정보, 토큰, 토큰 유효기간 삭제

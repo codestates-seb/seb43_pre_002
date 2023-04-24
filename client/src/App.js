@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setIsLogin } from './reducers/loginSlice';
 import GlobalStyles from './styles/GlobalStyles.style';
 import MyEdit from './pages/mypage/myedit';
 import MyProfile from './pages/mypage/myprofile';
@@ -18,10 +20,10 @@ import EditQnA from './pages/EditQnA';
 import Timeline from './pages/Timeline';
 
 function App() {
-	const [isLogin, setIsLogin] = useState(false);
-	const [searchTerm, setSearchTerm] = useState('');
-	const loginMemberId = localStorage.getItem('loginMemberId');
+	const dispatch = useDispatch();
+
 	useEffect(() => {
+		const loginMemberId = localStorage.getItem('loginMemberId');
 		const accessToken = localStorage.getItem('access_token');
 		const expiresIn = localStorage.getItem('expires_in');
 
@@ -34,22 +36,18 @@ function App() {
 				localStorage.removeItem('access_token');
 				localStorage.removeItem('loginMemberId');
 				localStorage.removeItem('expires_in');
-				setIsLogin(false);
+				dispatch(setIsLogin(false));
 				return;
 			}
 			axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-			setIsLogin(true);
+			dispatch(setIsLogin(true));
 		}
 	}, []);
-	// 로그인 상태, (memberId) 전역상태로 관리
+
 	return (
 		<BrowserRouter>
 			<GlobalStyles />
-			<LoginHeader
-				isLogin={isLogin}
-				setIsLogin={setIsLogin}
-				setSearchTerm={setSearchTerm}
-			/>
+			<LoginHeader />
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/question/:question_id" element={<Question />} />
@@ -61,7 +59,7 @@ function App() {
 				<Route path="/myactivity/:member_id" element={<MyActivity />} />
 				<Route path="/myprofile/:member_id" element={<MyProfile />} />
 				<Route path="/myedit/:member_id" element={<MyEdit />} />
-				<Route path="/login" element={<Login setIsLogin={setIsLogin} />} />
+				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/signupsuccess" element={<SignupSuccess />} />
 			</Routes>

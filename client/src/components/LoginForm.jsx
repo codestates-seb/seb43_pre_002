@@ -1,10 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { AiFillExclamationCircle } from 'react-icons/ai';
 import axios from 'axios';
 import styled from 'styled-components';
+import { setIsLogin } from '../reducers/loginSlice';
 import SignInput from './Input/SignInput';
 import SignButton from './Button/SignButton';
 
@@ -27,7 +29,8 @@ const ErrorIcon = styled(AiFillExclamationCircle)`
 	margin-right: 5px;
 `;
 
-function LoginForm({ setIsLogin }) {
+function LoginForm() {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [loginError, setLoginError] = useState(null);
 
@@ -50,7 +53,7 @@ function LoginForm({ setIsLogin }) {
 					JSON.stringify(response.data.memberId),
 				); // 로그인한 멤버 memberId를 로컬 스토리지에 저장
 				localStorage.setItem('expires_in', expiresInSec);
-				setIsLogin(true);
+				dispatch(setIsLogin(true));
 				setLoginError(null);
 				navigate(`/`);
 			})

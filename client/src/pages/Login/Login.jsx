@@ -36,13 +36,13 @@ const SignupLink = styled.div`
 	}
 `;
 
-function Login({ setIsLogin }) {
+function Login() {
 	return (
 		<LoginContainer>
 			<LoginWrapper>
 				<img src={`${process.env.PUBLIC_URL}/assets/main_logo.png`} alt="" />
 				<OAuthButton type="button" buttonText="Log in with Google" />
-				<LoginForm setIsLogin={setIsLogin} />
+				<LoginForm />
 				<SignupLink>
 					<span>Already have an account?</span>
 					<Link to="/signup">Sign up</Link>
