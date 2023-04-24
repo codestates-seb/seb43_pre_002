@@ -15,11 +15,10 @@ import SignupSuccess from './pages/SignupSuccess/SignupSuccess';
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
 	return (
-		<div>
+		<GlobalStyles>
 			<BrowserRouter>
 				<LoginHeader isLogin={isLogin} setIsLogin={setIsLogin} />
 				<Routes>
-
 					<Route path="/useractivity/:member_id" element={<UserActivity />} />
 					<Route path="/userprofile/:member_id" element={<UserProfile />} />
 					<Route path="/myactivity/:member_id" element={<MyActivity />} />
@@ -31,7 +30,7 @@ function App() {
 					<Route path="/signupsuccess" element={<SignupSuccess />} />
 				</Routes>
 			</BrowserRouter>
-		</div>
+		</GlobalStyles>
 	);
 }
 
