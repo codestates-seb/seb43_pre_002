@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import crypto from 'crypto-js';
 import styled from 'styled-components';
 import axios from 'axios';
 import SignInput from './Input/SignInput';
@@ -21,10 +22,15 @@ const PasswordText = styled.p`
 function SignupForm() {
 	const navigate = useNavigate();
 	const onSubmit = (inputData) => {
+		// const cipherPassword = crypto.AES.encrypt(
+		// 	inputData.password,
+		// 	process.env.REACT_APP_SECRET_KEY,
+		// ).toString();
 		const userInfo = {
 			displayName: inputData.displayName,
 			email: inputData.email,
-			password: inputData.password, // 서버와 함께 해시화 해야 함
+			password: inputData.password,
+			// password: cipherPassword, // 서버와 함께 해시화 해야 함
 		};
 		axios
 			.post(`/members`, userInfo)
