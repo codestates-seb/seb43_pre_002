@@ -9,7 +9,7 @@ import pro.stackOverFlow.answer.entity.Answer;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-24T13:16:21+0900",
+    date = "2023-04-24T14:06:11+0900",
     comments = "version: 1.5.1.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.1.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -38,7 +38,6 @@ public class AnswerMapperImpl implements AnswerMapper {
 
         answer.setAnswerId( answerPatchDto.getAnswerId() );
         answer.setContent( answerPatchDto.getContent() );
-        answer.setAnswerSelectionStatus( answerPatchDto.getAnswerSelectionStatus() );
 
         return answer;
     }
@@ -57,8 +56,10 @@ public class AnswerMapperImpl implements AnswerMapper {
         answerResponseDto.setContent( answer.getContent() );
         answerResponseDto.setCreatedAt( answer.getCreatedAt() );
         answerResponseDto.setModifiedAt( answer.getModifiedAt() );
-        answerResponseDto.setAnswerSelectionStatus( answer.getAnswerSelectionStatus() );
-        answerResponseDto.setVoteCount( answer.getVoteCount() );
+        answerResponseDto.setAccepted( answer.isAccepted() );
+        if ( answer.getVoteCount() != null ) {
+            answerResponseDto.setVoteCount( answer.getVoteCount() );
+        }
 
         return answerResponseDto;
     }

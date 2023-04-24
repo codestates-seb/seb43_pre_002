@@ -25,7 +25,7 @@ public class QuestionMapperIm {
                             .answerCreatedAt(answer.getCreatedAt())
                             .answerContent(answer.getContent())
                             .answerVoteCount((long) answer.getVoteCount())
-                            .memberId(answer.getMember().getMemberId())
+//                            .memberId(answer.getMember().getMemberId())
                             .build();
                 })
                 .collect(Collectors.toList());

@@ -9,7 +9,7 @@ import pro.stackOverFlow.question.entity.Question;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-24T13:16:21+0900",
+    date = "2023-04-24T14:06:11+0900",
     comments = "version: 1.5.1.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.1.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -21,12 +21,12 @@ public class QuestionMapperImpl implements QuestionMapper {
             return null;
         }
 
-        Question question = new Question();
+        Question.QuestionBuilder question = Question.builder();
 
-        question.setTitle( requestBody.getTitle() );
-        question.setContent( requestBody.getContent() );
+        question.title( requestBody.getTitle() );
+        question.content( requestBody.getContent() );
 
-        return question;
+        return question.build();
     }
 
     @Override
@@ -35,13 +35,13 @@ public class QuestionMapperImpl implements QuestionMapper {
             return null;
         }
 
-        Question question = new Question();
+        Question.QuestionBuilder question = Question.builder();
 
-        question.setQuestionId( requestBody.getQuestionId() );
-        question.setTitle( requestBody.getTitle() );
-        question.setContent( requestBody.getContent() );
+        question.questionId( requestBody.getQuestionId() );
+        question.title( requestBody.getTitle() );
+        question.content( requestBody.getContent() );
 
-        return question;
+        return question.build();
     }
 
     @Override

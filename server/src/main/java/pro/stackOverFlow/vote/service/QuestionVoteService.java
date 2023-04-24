@@ -25,7 +25,7 @@ public class QuestionVoteService {
         QuestionVote questionVote = findQuestionVote(member, question);
 
         if (questionVote.getVoteStatus().toString().equals("UP")) {
-            throw new BusinessLogicException(ExceptionCode.VOTE_NOT_ALLOW);
+            throw new BusinessLogicException(ExceptionCode.ALREADY_UP_VOTED);
         } else if (questionVote.getVoteStatus().toString().equals("NONE")) {
             questionVote.setVoteStatus(VoteStatus.UP);
         } else if (questionVote.getVoteStatus().toString().equals("DOWN")) {
@@ -38,7 +38,7 @@ public class QuestionVoteService {
         QuestionVote questionVote = findQuestionVote(member, question);
 
         if (questionVote.getVoteStatus().toString().equals("DOWN")) {
-            throw new BusinessLogicException(ExceptionCode.VOTE_NOT_ALLOW);
+            throw new BusinessLogicException(ExceptionCode.ALREADY_DOWN_VOTED);
         } else if (questionVote.getVoteStatus().toString().equals("NONE")) {
             questionVote.setVoteStatus(VoteStatus.DOWN);
         } else if (questionVote.getVoteStatus().toString().equals("UP")) {
