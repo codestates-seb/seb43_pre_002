@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 function HomeQuestionContents({ data }) {
 	// html에서 텍스트 추출
-	const previewBody = data.bodyHTML.replace(/(<([^>]+)>)/gi, '').trim();
+	const previewBody = data.content.replace(/(<([^>]+)>)/gi, '').trim();
 	return (
 		<QuestionContentsContainer>
 			<a href="/" className="question-header">

@@ -31,6 +31,7 @@ const HomeHeaderContainer = styled.header`
 		width: 11%;
 		height: 3em;
 		font-size: var(--font-large);
+		border: 1px inset var(--line-color);
 		border-radius: 5px;
 		padding: 0;
 		cursor: pointer;

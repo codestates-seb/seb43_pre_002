@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-function HomeQuestionInfo() {
+function HomeQuestionInfo({ data }) {
 	return (
 		<QuestionInfoContainer>
-			<div className="info">0 votes</div>
-			<div className="info">0 answers</div>
-			<div className="info">0 views</div>
+			<div className="info">{data.questionVoteCount} votes</div>
+			<div className="info">{data.answers.length} answers</div>
+			<div className="info">{data.viewCount} views</div>
 		</QuestionInfoContainer>
 	);
 }

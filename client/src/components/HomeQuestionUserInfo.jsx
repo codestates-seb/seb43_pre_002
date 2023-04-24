@@ -6,7 +6,7 @@ function HomeQuestionUserInfo({ data }) {
 		<QuestionUserInfoContainer>
 			<span className="user-icon">😆</span>
 			<a href="www.google.com" className="user-profile">
-				{data.author}
+				{data.member}
 			</a>
 			<span className="user-updated">{parsedDate}</span>
 		</QuestionUserInfoContainer>

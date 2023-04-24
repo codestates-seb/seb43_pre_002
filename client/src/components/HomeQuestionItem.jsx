@@ -6,7 +6,7 @@ import HomeQuestionContents from './HomeQuestionContents';
 function HomeQuestionItem({ data }) {
 	return (
 		<QuestionItemContainer>
-			<HomeQuestionInfo />
+			<HomeQuestionInfo data={data} />
 			<HomeQuestionContents data={data} />
 			<HomeQuestionUserInfo data={data} />
 		</QuestionItemContainer>

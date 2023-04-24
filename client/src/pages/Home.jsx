@@ -20,9 +20,18 @@ function Home({ searchTerm }) {
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:3001/datas')
-			.then((res) => setAllData(res.data));
+			.get('/questions', {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => {
+				console.log(res.data.data);
+				setAllData(res.data.data.reverse());
+			});
 	}, []);
+
 	const currentPageData = filteredData.slice(
 		(currentPage - 1) * limitItems,
 		currentPage * limitItems,
@@ -37,7 +46,7 @@ function Home({ searchTerm }) {
 				setFilteredData={setFilteredData}
 			/>
 			{currentPageData.map((el) => (
-				<HomeQuestionItem key={el.id} data={el} />
+				<HomeQuestionItem key={el.questionId} data={el} />
 			))}
 			<HomeFooter
 				totalDataCount={totalDataCount}
