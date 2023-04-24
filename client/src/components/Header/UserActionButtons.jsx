@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -29,31 +29,41 @@ const LogoutButton = styled(SignButton)`
 	margin: 0 10px;
 `;
 
-function UserActionButtons() {
-	const userDisplayName = 'abcde12345'; // 임시 데이터
-	// const { memberId } = localStorage.getItem('user');
-	// useEffect(() => {
-	// 	axios
-	// 		.get(`/members/${memberId}`)
-	// 		.then((res) => {
-	// 			return res.data;
-	// 		})
-	// 		.then((data) => {
-	// 			const userDisplayName = data.member[0].displayName;
-	// 		});
-	// }, []);
+function UserActionButtons({ setIsLogin }) {
+	// const userDisplayName = 'abcde12345'; // 임시 데이터
+	const [userDisplayName, setUserDisplayName] = useState('');
+	const memberId = localStorage.getItem('loginMemberId');
+
+	axios
+		.get(`/members/${memberId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'ngrok-skip-browser-warning': '69420',
+			},
+		})
+		.then((res) => {
+			return res.data;
+		})
+		.then((data) => {
+			setUserDisplayName(data.displayName);
+			// console.log(userDisplayName);
+		});
 
 	const navigate = useNavigate();
 	const logoutHandler = () => {
+		setIsLogin(false);
 		navigate('/');
-		// 로컬스토리지의 유저 정보, 토큰 삭제 코드 추가해야 함
-		// localStorage.removeItem('user');
+		setUserDisplayName('');
+		// 로컬스토리지의 유저 정보, 토큰, 토큰 유효기간 삭제
+		localStorage.removeItem('loginMemberId');
+		localStorage.removeItem('access_token');
+		localStorage.removeItem('expires_in');
 	};
 
 	return (
 		<UserActionsContainer>
 			<UserProfileContainer>
-				<Link to="/myprofile">
+				<Link to={`/myprofile/${memberId}`}>
 					<UserProfile
 						userName={userDisplayName}
 						boxSize="35px"

@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AiFillExclamationCircle } from 'react-icons/ai';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -39,17 +39,17 @@ function LoginForm({ setIsLogin }) {
 		await axios
 			.post(`/auth/login`, loginInfo) // package.json proxy url 확인
 			.then((response) => {
-				// console.log(response);
+				setLoginError(null);
 				const accessToken = response.headers.authorization.split(' ')[1];
-				const localAccessToken = localStorage.getItem('access_token');
-				if (!localAccessToken) {
-					localStorage.setItem('access_token', accessToken); // 로그아웃 시 removeItem
-				}
-				axios.defaults.headers.common.Authorization = `Bearer ${localAccessToken}`;
-				return response.data;
-			})
-			.then((data) => {
-				localStorage.setItem('loginMemberId', JSON.stringify(data.memberId)); // 로그인한 멤버 memberId를 로컬 스토리지에 저장
+				const expiresInSec =
+					parseInt(response.headers['access-token-expiration-minutes'], 10) *
+					60;
+				localStorage.setItem('access_token', accessToken); // 로그아웃 시 removeItem
+				localStorage.setItem(
+					'loginMemberId',
+					JSON.stringify(response.data.memberId),
+				); // 로그인한 멤버 memberId를 로컬 스토리지에 저장
+				localStorage.setItem('expires_in', expiresInSec);
 				setIsLogin(true);
 				setLoginError(null);
 				navigate(`/`);
