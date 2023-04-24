@@ -20,7 +20,7 @@ export const titleHelperContents = [
 			</div>
 		</div>
 	</>,
-	150,
+	125,
 ];
 
 // 디테일 헬퍼
