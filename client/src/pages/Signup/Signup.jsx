@@ -34,7 +34,6 @@ const LoginLink = styled.div`
 function Signup() {
 	return (
 		<SignupContainer>
-			<LoginHeader />
 			<JoinDescription />
 			<SignupWrapper>
 				<OAuthButton type="button" buttonText="Sign up with Google" />
