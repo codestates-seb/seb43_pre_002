@@ -148,80 +148,77 @@ function Question() {
 	};
 
 	return (
-		<QuestionContainer>
-			<LoginHeader />
+		questionData && (
+			<QuestionContainer>
+				<main>
+					<TitleContainer>
+						<div className="top__container">
+							<span>{questionData.questionTitle}</span>
 
-			<main>
-				{questionData && (
-					<>
-						<TitleContainer>
-							<div className="top__container">
-								<span>{questionData.questionTitle}</span>
-
-								<Link to="/myprofile">
-									<button type="button">Ask Questions</button>
-								</Link>
-							</div>
-							<div className="bottom__container">
-								<div className="info__container">
-									<InfoBox>
-										<span className="first__span">Asked</span>
-										<span className="second__span">
-											{questionData.questionCreatedAt}
-										</span>
-									</InfoBox>
-									<InfoBox>
-										<span className="first__span">Modified</span>
-										<span className="second__span">
-											{questionData.questionModifiedAt}
-										</span>
-									</InfoBox>
-									<InfoBox>
-										<span className="first__span">Viewed</span>
-										<span className="second__span">
-											{questionData.questionViewCount}
-										</span>
-									</InfoBox>
-								</div>
-							</div>
-						</TitleContainer>
-
-						<QnABox
-							data={questionData}
-							deleteQuestionHandler={deleteQuestionHandler}
-							deleteAnswerHandler={deleteAnswerHandler}
-							mode="question"
-						/>
-					</>
-				)}
-				<AnswersContainer>
-					<div className="answers__header">
-						<span>{`${answerList.length} Answers`}</span>
-						<div className="filter__container">
-							<span>Sorted by:</span>
-							<select>
-								<option>Date modified (newest first)</option>
-								<option>Date created (oldest first)</option>
-							</select>
+							<Link to="/myprofile">
+								<button type="button">Ask Questions</button>
+							</Link>
 						</div>
-					</div>
-					<div>
-						{answerList.map((it) => {
-							return (
-								<QnABox
-									key={it.answerId}
-									data={it}
-									deleteQuestionHandler={deleteQuestionHandler}
-									deleteAnswerHandler={deleteAnswerHandler}
-									mode="answer"
-								/>
-							);
-						})}
-					</div>
-				</AnswersContainer>
-				<AnswerForm createAnswerHandler={createAnswerHandler} />
-			</main>
-		</QuestionContainer>
+						<div className="bottom__container">
+							<div className="info__container">
+								<InfoBox>
+									<span className="first__span">Asked</span>
+									<span className="second__span">
+										{questionData.questionCreatedAt}
+									</span>
+								</InfoBox>
+								<InfoBox>
+									<span className="first__span">Modified</span>
+									<span className="second__span">
+										{questionData.questionModifiedAt}
+									</span>
+								</InfoBox>
+								<InfoBox>
+									<span className="first__span">Viewed</span>
+									<span className="second__span">
+										{questionData.questionViewCount}
+									</span>
+								</InfoBox>
+							</div>
+						</div>
+					</TitleContainer>
+
+					<QnABox
+						data={questionData}
+						deleteQuestionHandler={deleteQuestionHandler}
+						deleteAnswerHandler={deleteAnswerHandler}
+						mode="question"
+					/>
+
+					<AnswersContainer>
+						<div className="answers__header">
+							<span>{`${answerList.length} Answers`}</span>
+							<div className="filter__container">
+								<span>Sorted by:</span>
+								<select>
+									<option>Date modified (newest first)</option>
+									<option>Date created (oldest first)</option>
+								</select>
+							</div>
+						</div>
+						<div>
+							{answerList.map((it) => {
+								return (
+									<QnABox
+										key={it.answerId}
+										data={it}
+										deleteQuestionHandler={deleteQuestionHandler}
+										deleteAnswerHandler={deleteAnswerHandler}
+										mode="answer"
+									/>
+								);
+							})}
+						</div>
+					</AnswersContainer>
+					<AnswerForm createAnswerHandler={createAnswerHandler} />
+				</main>
+			</QuestionContainer>
+		)
 	);
 }
 
