@@ -5,10 +5,10 @@ import NewQuestionHeader from '../components/AskQuestionHeader';
 import AskDescription from '../components/AskDescription';
 import AskTitleBox from '../components/AskTitleBox';
 import AskDetailBox from '../components/AskDetailBox';
-import TryAndExpectBox from '../components/AskTryAndExpectBox';
-import Submit from '../components/AskSubmit';
+import AskTryAndExpectBox from '../components/AskTryAndExpectBox';
+import AskSubmit from '../components/AskSubmit';
 
-function NewQuestion() {
+function AskQuestion() {
 	const initialIsNext = {
 		title: false,
 		detail: false,
@@ -35,19 +35,19 @@ function NewQuestion() {
 				setValue={setValue}
 				watch={watch}
 			/>
-			<TryAndExpectBox
+			<AskTryAndExpectBox
 				register={register}
 				isNext={isNext}
 				setIsNext={setIsNext}
 				setValue={setValue}
 				watch={watch}
 			/>
-			<Submit isNext={isNext} />
+			<AskSubmit isNext={isNext} />
 		</NewQuestionContainer>
 	);
 }
 
-export default NewQuestion;
+export default AskQuestion;
 
 const NewQuestionContainer = styled.form`
 	display: flex;

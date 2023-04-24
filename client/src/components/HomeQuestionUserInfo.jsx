@@ -1,29 +1,30 @@
 import styled from 'styled-components';
 
-function QuestionUserInfo() {
+function HomeQuestionUserInfo({ data }) {
+	const parsedDate = new Date(data.createdAt).toLocaleString('ko-kr');
 	return (
 		<QuestionUserInfoContainer>
 			<span className="user-icon">😆</span>
 			<a href="www.google.com" className="user-profile">
-				Kim Coding
+				{data.author}
 			</a>
-			<span className="user-updated">asked 56secs ago</span>
+			<span className="user-updated">{parsedDate}</span>
 		</QuestionUserInfoContainer>
 	);
 }
 
-export default QuestionUserInfo;
+export default HomeQuestionUserInfo;
 
 const QuestionUserInfoContainer = styled.div`
 	display: flex;
-	justify-content: center;
+	justify-content: right;
 	align-items: center;
-	width: 25%;
+	width: 30%;
 	height: 20%;
-	background-color: white;
+	background-color: transparent;
 	position: absolute;
 	bottom: 5%;
-	right: 5%;
+	right: 1%;
 	.user-icon,
 	.user-profile,
 	.user-activity,

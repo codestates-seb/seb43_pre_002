@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import ReactQuill from 'react-quill';
 import { useEffect, useState } from 'react';
 
-function TryAndExpect({
+function AskTryAndExpect({
 	setIsTryAndExpectFocus,
 	register,
 	isNext,
@@ -30,7 +30,7 @@ function TryAndExpect({
 		register('tryAndExpect', { required: true, minLength: 20 });
 	}, [register]);
 	return (
-		<TryAndExpectContainer>
+		<AskTryAndExpectContainer>
 			<h5 className="title">What did you try and what were you expecting?</h5>
 			<div className="descriptor">
 				Describe what you tried, what you expected to happen, and what actually
@@ -51,13 +51,13 @@ function TryAndExpect({
 				</button>
 			) : null}
 			{isValid ? <p className="invalid">20자 이상 작성해주세요!</p> : null}
-		</TryAndExpectContainer>
+		</AskTryAndExpectContainer>
 	);
 }
 
-export default TryAndExpect;
+export default AskTryAndExpect;
 
-const TryAndExpectContainer = styled.div`
+const AskTryAndExpectContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	position: relative;

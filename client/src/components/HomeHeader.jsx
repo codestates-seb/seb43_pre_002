@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 function HomeHeader() {
 	return (
 		<HomeHeaderContainer>
 			<h2 className="all">All Questions</h2>
 			<button className="ask-question" type="button">
-				Ask Questions
+				<AskLink to="/askquestion">Ask Questions</AskLink>
 			</button>
 		</HomeHeaderContainer>
 	);
@@ -27,13 +28,22 @@ const HomeHeaderContainer = styled.header`
 	.ask-question {
 		color: white;
 		background-color: var(--main-color);
-		width: 10%;
+		width: 11%;
 		height: 3em;
 		font-size: var(--font-large);
 		border-radius: 5px;
+		padding: 0;
 		cursor: pointer;
 		&:hover {
-			background-color: #3b6fa0; // 나중에 global 변수로 변경하기
+			background-color: var(--button-hover-color);
 		}
 	}
+`;
+const AskLink = styled(Link)`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 1% 6%;
 `;

@@ -1,12 +1,27 @@
 import styled from 'styled-components';
-import Pagination from './HomePagination';
+import HomePagination from './HomePagination';
 import QuestionsPerPage from './HomeQuestionsPerPage';
 
-function HomeFooter() {
+function HomeFooter({
+	totalDataCount,
+	currentPage,
+	setCurrentPage,
+	limitItems,
+	setLimitItems,
+}) {
 	return (
 		<HomeFooterContainer>
-			<Pagination />
-			<QuestionsPerPage />
+			<HomePagination
+				totalDataCount={totalDataCount}
+				currentPage={currentPage}
+				setCurrentPage={setCurrentPage}
+				limitItems={limitItems}
+			/>
+			<QuestionsPerPage
+				limitItems={limitItems}
+				setLimitItems={setLimitItems}
+				setCurrentPage={setCurrentPage}
+			/>
 		</HomeFooterContainer>
 	);
 }

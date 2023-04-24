@@ -2,20 +2,20 @@ import styled from 'styled-components';
 
 function Submit({ isNext }) {
 	return (
-		<SubmitContainer>
+		<AskSubmitContainer>
 			<div className="button-container">
 				{!isNext.tryAndExpect ? <div className="disabled" /> : null}
 				<button className="submit-button" type="submit">
 					Submit
 				</button>
 			</div>
-		</SubmitContainer>
+		</AskSubmitContainer>
 	);
 }
 
-export default Submit;
+export default AskSubmit;
 
-const SubmitContainer = styled.div`
+const AskSubmitContainer = styled.div`
 	display: flex;
 	.button-container {
 		display: flex;

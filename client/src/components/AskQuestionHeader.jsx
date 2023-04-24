@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-function NewQuestionHeader() {
+function AskQuestionHeader() {
 	return (
-		<NewQuestionHeaderContainer>
+		<AskQuestionHeaderContainer>
 			<h1 className="header-text">Ask a public question</h1>
 			<div className="img-container">
 				<img
@@ -11,13 +11,13 @@ function NewQuestionHeader() {
 					alt="robot-img"
 				/>
 			</div>
-		</NewQuestionHeaderContainer>
+		</AskQuestionHeaderContainer>
 	);
 }
 
-export default NewQuestionHeader;
+export default AskQuestionHeader;
 
-const NewQuestionHeaderContainer = styled.div`
+const AskQuestionHeaderContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;

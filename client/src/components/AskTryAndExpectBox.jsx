@@ -2,14 +2,14 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import AskHelpler from './AskHelper';
 import { tryAndExpectContents } from './askHelperContents';
-import TryAndExpect from './AskTryAndExpect';
+import AskTryAndExpect from './AskTryAndExpect';
 
-function TryAndExpectBox({ register, isNext, setIsNext, setValue, watch }) {
+function AskTryAndExpectBox({ register, isNext, setIsNext, setValue, watch }) {
 	const [isTryAndExpectFocus, setIsTryAndExpectFocus] = useState(false);
 	return (
-		<TryAndExpectBoxContainer>
+		<AskTryAndExpectBoxContainer>
 			{!isNext.detail ? <div className="disabled" /> : null}
-			<TryAndExpect
+			<AskTryAndExpect
 				setIsTryAndExpectFocus={setIsTryAndExpectFocus}
 				register={register}
 				setValue={setValue}
@@ -20,13 +20,13 @@ function TryAndExpectBox({ register, isNext, setIsNext, setValue, watch }) {
 			{isTryAndExpectFocus ? (
 				<AskHelpler contents={tryAndExpectContents} />
 			) : null}
-		</TryAndExpectBoxContainer>
+		</AskTryAndExpectBoxContainer>
 	);
 }
 
-export default TryAndExpectBox;
+export default AskTryAndExpectBox;
 
-const TryAndExpectBoxContainer = styled.div`
+const AskTryAndExpectBoxContainer = styled.div`
 	display: flex;
 	position: relative;
 	width: 100%;
