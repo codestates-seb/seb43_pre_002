@@ -16,9 +16,7 @@ import pro.stackOverFlow.question.dto.QuestionGetAnswerDto;
 import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.question.mapper.QuestionMapper;
 import pro.stackOverFlow.question.mapper.QuestionMapperIm;
-import pro.stackOverFlow.question.mapper.QuestionMapperImpl;
 import pro.stackOverFlow.question.service.QuestionService;
-import pro.stackOverFlow.vote.service.QuestionVoteService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -34,16 +32,18 @@ public class QuestionController {
     private final QuestionMapper questionMapper;
     private final QuestionMapperIm questionMapperIm;
     private final MemberService memberService;
-    private final QuestionVoteService questionVoteService;
 
 
     @PostMapping
-    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody) {
-        Question question = questionMapper.questionPostDtoToQuestion(requestBody);
-        Question createdQuestion = questionService.createQuestion(question);
+    public ResponseEntity postQuestion(Long memberId,
+            @Valid @RequestBody QuestionDto.Post requestBody) {
+//        Member member = memberService.findMember(memberId);
+//        Question question = questionService.createQuestion(questionMapperIm.questionPostDtoToQuestion(requestBody, member));
+
+        Question question = questionService.createQuestion(questionMapper.questionPostDtoToQuestion(requestBody));
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(createdQuestion), HttpStatus.CREATED);
+                new SingleResponseDto<>(question), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")
@@ -89,27 +89,27 @@ public class QuestionController {
     }
 
 
-//    @PostMapping("/{question-id}/upvote/{member-id}")
-//    public ResponseEntity questionUpVote(@PathVariable("member-id") Long memberId,
-//                                         @PathVariable("question-id") Long questionId) {
-//        Member member = memberService.findMember(memberId);
-//        Question question = questionService.findQuestion(questionId);
-//        questionVoteService.upVote(member, question);
-//
-//        return new ResponseEntity(
-//                new SingleResponseDto<>(voteMapper.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
-//    }
-//
-//    @PostMapping("/{question-id}/downvote/{member-id}")
-//    public ResponseEntity questionDownVote(@PathVariable("member-id") Long memberId,
-//                                           @PathVariable("question-id") Long questionId) {
-//        Member member = memberService.findMember(memberId);
-//        Question question = questionService.findQuestion(questionId);
-//        questionVoteService.downVote(member, question);
-//
-//        return new ResponseEntity(
-//                new SingleResponseDto<>(voteMapper.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
-//    }
+    @PostMapping("/{question-id}/upvote/{member-id}")
+    public ResponseEntity questionUpVote(@PathVariable("member-id") Long memberId,
+                                         @PathVariable("question-id") Long questionId) {
+        Member member = memberService.findMember(memberId);
+        Question question = questionService.findQuestion(questionId);
+        questionService.upVote(member, question);
+
+        return new ResponseEntity(
+                new SingleResponseDto<>(questionMapperIm.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
+    }
+
+    @PostMapping("/{question-id}/downvote/{member-id}")
+    public ResponseEntity questionDownVote(@PathVariable("member-id") Long memberId,
+                                           @PathVariable("question-id") Long questionId) {
+        Member member = memberService.findMember(memberId);
+        Question question = questionService.findQuestion(questionId);
+        questionService.downVote(member, question);
+
+        return new ResponseEntity(
+                new SingleResponseDto<>(questionMapperIm.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
+    }
 
 
 }

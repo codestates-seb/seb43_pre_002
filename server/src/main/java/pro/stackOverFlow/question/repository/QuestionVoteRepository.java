@@ -1,9 +1,9 @@
-package pro.stackOverFlow.vote.repository;
+package pro.stackOverFlow.question.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.question.entity.Question;
-import pro.stackOverFlow.vote.entity.QuestionVote;
+import pro.stackOverFlow.question.entity.QuestionVote;
 
 import java.util.Optional;
 

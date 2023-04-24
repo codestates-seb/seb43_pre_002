@@ -4,7 +4,6 @@ import lombok.*;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.audit.Auditable;
-import pro.stackOverFlow.vote.entity.QuestionVote;
 
 import javax.persistence.*;
 import java.util.List;

@@ -6,10 +6,9 @@ import pro.stackOverFlow.audit.Auditable;
 import pro.stackOverFlow.exception.BusinessLogicException;
 import pro.stackOverFlow.exception.ExceptionCode;
 import pro.stackOverFlow.question.entity.Question;
-import pro.stackOverFlow.vote.entity.QuestionVote;
+import pro.stackOverFlow.question.entity.QuestionVote;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor

@@ -1,4 +1,4 @@
-package pro.stackOverFlow.vote.dto;
+package pro.stackOverFlow.question.dto;
 
 import lombok.*;
 

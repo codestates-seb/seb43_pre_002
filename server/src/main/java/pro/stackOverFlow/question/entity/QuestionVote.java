@@ -1,4 +1,4 @@
-package pro.stackOverFlow.vote.entity;
+package pro.stackOverFlow.question.entity;
 
 import lombok.*;
 import pro.stackOverFlow.member.entity.Member;
@@ -27,6 +27,13 @@ public class QuestionVote {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public enum VoteStatus {
+        UP,
+        DOWN,
+        NONE
+    }
+
 }
 
 
