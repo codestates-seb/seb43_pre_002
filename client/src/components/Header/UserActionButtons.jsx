@@ -54,9 +54,10 @@ function UserActionButtons({ setIsLogin }) {
 		setIsLogin(false);
 		navigate('/');
 		setUserDisplayName('');
-		// 로컬스토리지의 유저 정보, 토큰 삭제
+		// 로컬스토리지의 유저 정보, 토큰, 토큰 유효기간 삭제
 		localStorage.removeItem('loginMemberId');
 		localStorage.removeItem('access_token');
+		localStorage.removeItem('expires_in');
 	};
 
 	return (
