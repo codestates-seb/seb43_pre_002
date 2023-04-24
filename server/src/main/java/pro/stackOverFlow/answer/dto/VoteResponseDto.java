@@ -13,17 +13,10 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnswerResponseDto {
-    private long answerId;
-
-    private String content;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime modifiedAt;
-
-    private boolean accepted;
+public class VoteResponseDto {
+    private boolean success;
 
     private long voteCount;
 
+    private String message;
 }

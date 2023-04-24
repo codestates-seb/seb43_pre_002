@@ -4,12 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pro.stackOverFlow.answer.entity.Answer;
-import pro.stackOverFlow.audit.Auditable;
 import pro.stackOverFlow.member.entity.Member;
-import pro.stackOverFlow.vote.entity.QuestionVote;
+import pro.stackOverFlow.audit.Auditable;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -33,14 +31,32 @@ public class Question extends Auditable {
     @Column(nullable = false)
     private long questionVoteCount;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
+
+    //------------------------------------------------------------------------------------------------------------------
+
+
+    @OneToOne
+    @JoinColumn(name = "accepted_answer_id")
+    private Answer acceptedAnswer;
+
+    @ManyToOne//(targetEntity = Member.class, cascade = CascadeType.PERSIST)
+    @Setter
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<Answer> answers;
+    public Answer getAcceptedAnswer() {
+        return acceptedAnswer;
+    }
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<QuestionVote> questionVotes;
+    public void setAcceptedAnswer(Answer acceptedAnswer) {
+        this.acceptedAnswer = acceptedAnswer;
+    }
+
+
+    public Member getUser() {
+        return this.member;
+    }
+
+
 
 }
