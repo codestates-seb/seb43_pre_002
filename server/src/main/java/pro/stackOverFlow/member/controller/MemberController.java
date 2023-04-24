@@ -9,21 +9,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pro.stackOverFlow.dto.SingleResponseDto;
 import pro.stackOverFlow.member.dto.MemberDto;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.member.mapper.MemberMapper;
 import pro.stackOverFlow.member.service.MemberService;
 //import pro.stackOverFlow.response.SingleResponseDto;
-import pro.stackOverFlow.question.dto.QuestionDto;
-import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.utils.UriCreator;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 
 /**
@@ -35,7 +32,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/members")
 @Validated
 @Slf4j
-//@CrossOrigin(origins = "http://localhost:3000" )
 public class MemberController {
     private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
@@ -60,14 +56,11 @@ public class MemberController {
 
 
         Member createdMember = memberService.createMember(member);
-//        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
-//        return ResponseEntity.created(location).build();
-
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(memberMapper.memberToMemberResponseDto(createdMember)), HttpStatus.CREATED);
+        return ResponseEntity.created(location).build();
     }
-//    @CrossOrigin(origins = "http://localhost:3000" )
+
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
@@ -77,28 +70,19 @@ public class MemberController {
                 memberService.updateMember(memberMapper.memberPatchDtoToMember(requestBody.addMemberId(memberId)));
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(memberMapper.memberToMemberResponseDto(member)),
+                memberMapper.memberToMemberResponseDto(member),
                 HttpStatus.OK);
     }
 
 //
-@GetMapping("/{member-id}")
-public ResponseEntity getMember(
-        @PathVariable("member-id") @Positive long memberId) {
-    Member member = memberService.findMember(memberId);
-    return new ResponseEntity<>(
-            new SingleResponseDto<>(
-                    memberMapper.memberToMemberMyPageDto(member))
-            , HttpStatus.OK);
-}
-
-//public ResponseEntity getMember(
-//        @PathVariable("member-id") @Positive long memberId) {
-//    Member member = memberService.findMember(memberId);
-//    return new ResponseEntity<>(
-//            new SingleResponseDto<>(memberMapper.memberToMemberResponseDto(member))
-//            , HttpStatus.OK);
-//}
+    @GetMapping("/{member-id}")
+    public ResponseEntity getMember(
+            @PathVariable("member-id") @Positive long memberId) {
+        Member member = memberService.findMember(memberId);
+        return new ResponseEntity<>(
+                memberMapper.memberToMemberResponseDto(member)
+                , HttpStatus.OK);
+    }
 
 //    @GetMapping
 //    public ResponseEntity getMembers(@Positive @RequestParam int page,

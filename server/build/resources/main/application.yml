@@ -15,24 +15,10 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
-  security:
-    oauth2:
-      client:
-        registration:
-          #          github:
-          #            client-id: ${GITHUB_CLIENT_ID}
-          #            client-secret: ${GITHUB_CLIENT_SECRET}
-          #            scope:
-          #              - user:email
-          #              - user:profile
-          google:
-            client-id: ${GOOGLE_CLIENT_ID}
-            client-secret: ${GOOGLE_CLIENT_SECRET}
-            scope:
-              - email
-              - profile
 logging:
   level:
+    com:
+      codestates: DEBUG
     org:
       springframework:
         orm:
@@ -45,7 +31,7 @@ mail:
   address:
     admin: admin@gmail.com
 
-jwt:
-  key: ${JWT_SECRET_KEY}
-  access-token-expiration-minutes: 40
-  refresh-token-expiration-minutes: 420
+#jwt:
+#  key: ${JWT_SECRET_KEY}
+#  access-token-expiration-minutes: 40
+#  refresh-token-expiration-minutes: 420

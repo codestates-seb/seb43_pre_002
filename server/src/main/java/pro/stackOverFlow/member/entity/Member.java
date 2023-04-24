@@ -5,19 +5,16 @@ import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.audit.Auditable;
 import pro.stackOverFlow.exception.BusinessLogicException;
 import pro.stackOverFlow.exception.ExceptionCode;
-import pro.stackOverFlow.question.dto.QuestionDto;
-import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.question.entity.QuestionVote;
 
 import javax.persistence.*;
 import java.util.List;
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Builder
 public class Member extends Auditable {
 
     @Id
@@ -33,49 +30,27 @@ public class Member extends Auditable {
     @Column(length = 100, nullable = false)
     private String displayName;
 
-    @Column(length = 50)
-    private String title;
-
     @Column(length = 300)
     private String aboutMe;
 
-    @Column
-    private String websiteLink;
-    @Column
-    private String twitterLink;
-    @Column
-    private String githubLink;
-    @Column
-    private String notionLink;
-    @Column
-    private String blogLink;
 
 
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    private List<String> roles = new ArrayList<>();
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
+//    @Setter(AccessLevel.NONE)
+//    @OneToMany(mappedBy = "member")
+//    private List<QnaQuestion> qnaQuestions = new ArrayList<>();
 
-    @Setter
-    @OneToMany(mappedBy = "member")
-    private List<Question> Questions;
-
-    @Setter
-    @OneToMany(mappedBy = "member")
-    private List<Answer> Answers;
-
-//    public Member(Long memberId) {
-//        this.memberId = memberId;
-//    }
-
-        public Member(String email) {
-        this.email = email;
+    public Member(Long memberId) {
+        this.memberId = memberId;
     }
 
 
-//    public void setQuestion(Question Question) {
-//        this.Questions.add(Question);
-//        if (Question.getMember() != this) {
-//            Question.setMember(this);
+//    public void setQnAQuestion(QnaQuestion qnaQuestion) {
+//        this.qnaQuestions.add(qnaQuestion);
+//        if (qnaQuestion.getMember() != this) {
+//            qnaQuestion.setMember(this);
 //        }
 //    }
 
