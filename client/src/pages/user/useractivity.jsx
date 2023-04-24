@@ -33,6 +33,7 @@ function UserActivity() {
 	const sortedArticles = filteredArticles.sort((a, b) => b.answer - a.answer);
 	const sortedAnswers = filteredAnswerd.sort((a, b) => b.answer - a.answer);
 
+function UserActivity() {
 	return (
 		<Wrap>
 			<GlobalStyles />
@@ -111,6 +112,25 @@ function UserActivity() {
 						</Title>
 					</ListTitle>
 				</List>
+						<MyList lists={lists1} />
+					</PostWrap>
+					<PostWrap>
+						<Category>Question</Category>
+						<MyList lists={lists1} />
+					</PostWrap>
+				</Post>
+				<Category2>Account</Category2>
+				<PostList>
+					{lists1.map((list) => (
+						<List key={list.id}>
+							<ListTitle>
+								<Title href={list.link}>
+									{`프로필에 작성한 계정: ${`링크`}`}
+								</Title>
+							</ListTitle>
+						</List>
+					))}
+				</PostList>
 			</ListColumn>
 		</Wrap>
 	);
@@ -158,7 +178,8 @@ const GlobalStyles = createGlobalStyle`
 		justify-content: center;
 	}
 `;
-const List = styled.ul`
+
+const PostList = styled.ul`
 	margin-top: 20px;
 	padding: 0;
 	width: 100%;
@@ -173,7 +194,7 @@ const Title = styled.a`
 	color: var(--main-color);
 	font-size: var(--font-large);
 `;
-const ListTitle = styled.li`
+const List = styled.li`
 	border: 1px solid var(--line-color);
 	padding: 10px;
 	display: flex;
@@ -183,5 +204,31 @@ const Ansewer = styled.span`
 	margin-left: 10px;
 	padding: 5px 0;
 	font-size: var(--font-large);
+`;
+	justify-content: space-between;
+`;
+
+const ListTitle = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
+
+const Title = styled.a`
+	margin-left: 10px;
+	padding: 5px 0;
+	color: var(--main-color);
+	font-size: var(--font-large);
+`;
+
+const ListColumn = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
+const GlobalStyles = createGlobalStyle`
+	#root{
+		display: flex;
+		justify-content: center;
+	}
 `;
 export default UserActivity;

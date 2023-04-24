@@ -32,6 +32,13 @@ function UserProfile() {
 		return value === null || value === undefined || value === '';
 	}
 
+const lists2 = Array(10).fill({
+	answerCount: 0,
+	link: 'https://stackoverflow.com/',
+	date: 'YYYY.MM.DD',
+});
+
+function UserProfile() {
 	return (
 		<Wrap>
 			<GlobalStyles />
@@ -45,6 +52,16 @@ function UserProfile() {
 			<Post>
 				<Category>Top posts</Category>
 				<MyList lists={sortedArticles.slice(0, 10)} />
+			<div>
+				<Category>About</Category>
+				<AboutBox>
+					유저가 작성한 Aboutme 내용이 들어갑니다.유저가 About me에 작성한
+					내용이 없을경우 hidden처리 합니다.
+				</AboutBox>
+			</div>
+			<Post>
+				<Category>Top posts</Category>
+				<MyList lists={lists2} />
 			</Post>
 		</Wrap>
 	);
@@ -65,7 +82,7 @@ const AboutBox = styled.p`
 	margin-top: 20px;
 	border-radius: 5px;
 	text-justify: center;
-	padding: 10px 5px;
+  padding: 10px 5px;
 `;
 const Category = styled.span`
 	font-size: 21px;

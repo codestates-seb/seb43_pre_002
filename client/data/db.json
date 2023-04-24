@@ -1,0 +1,32 @@
+{
+  "members": [
+    {
+      "memberId": 1,
+      "email": "ksr@naver.com",
+      "displayName": "김상래",
+      "title": "백엔드 개발자입니다!",
+      "aboutMe": "안녕하세요 김입니다.",
+      "websiteLink": "web.com",
+      "twitterLink": "twitter.com",
+      "githubLink": "git.com",
+      "notionLink": "notion.com",
+      "blogLink": "blog.com",
+      "createdAt": "2023-04-20T15:27:17.831659",
+      "modifiedAt": "2023-04-20T15:27:30.543405"
+    },
+    {
+      "memberId": 2,
+      "email": "ksr2@naver.com",
+      "displayName": "김상래",
+      "title": "백엔드 개발자입니다!",
+      "aboutMe": "안녕하세요 김입니다.",
+      "websiteLink": "web.com",
+      "twitterLink": "twitter.com",
+      "githubLink": "git.com",
+      "notionLink": "notion.com",
+      "blogLink": "blog.com",
+      "createdAt": "2023-04-20T15:28:36.097213",
+      "modifiedAt": "2023-04-20T15:28:43.430035"
+    }
+  ]
+}

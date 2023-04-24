@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import DividerLine from './DividerLine';
 
@@ -46,37 +47,65 @@ const NewCommentContainer = styled.div`
 `;
 
 // Comment 출력시 사용되는 컴포넌트
-
-function CommentBox() {
+function CommentBox({ commentList }) {
 	const [isWrite, setIsWrite] = useState(false);
+	const [comments, setComments] = useState([]);
+	const [newComment, setNewComment] = useState('');
+
+	const commentHandler = (event) => {
+		setNewComment(event.target.value);
+	};
 
 	const isWriteHandler = () => {
 		setIsWrite(!isWrite);
 	};
 
+	const postComment = () => {
+		console.log('comment보내기');
+	};
+
+	// 새로운 커멘트 작성
+	const postCommentHandler = (e) => {
+		e.preventDefault();
+		if (window.confirm('댓글을 작성하겠습니까?')) {
+			postComment();
+			isWriteHandler();
+			setNewComment('');
+			setComments([...comments, newComment]);
+			alert('작성되었습니다.');
+		} else {
+			alert('취소합니다.');
+		}
+	};
+
 	return (
 		<CommentContainer>
-			<p>
-				Personally, I think the easiest and most widely useful solution is that
-				the Play Store should report purchases from all Google accounts for the
-				current user that are signed in on the device. –
-				<span className="user__name">ashughes Jun</span>
-				<span className="created__time">6, 2017 at 19:13</span>
-			</p>
-			<DividerLine />
+			{comments.map((it, idx) => (
+				<div key={1}>
+					<p>
+						{it} –
+						<Link to="/myprofile">
+							<span className="user__name">ashughes Jun</span>
+						</Link>
+						<span className="created__time">{String(new Date())}</span>
+					</p>
+					<DividerLine />
+				</div>
+			))}
 
 			<NewCommentContainer>
 				{isWrite ? (
 					<form className="comment__form">
 						<div className="left__container">
-							<textarea />
-							<span>497 characters left</span>
+							<textarea onChange={commentHandler} maxLength="500" />
+							<span>{`${Number(
+								500 - newComment.length,
+							)} characters left`}</span>
 						</div>
 						<button
 							type="submit"
 							onClick={(e) => {
-								e.preventDefault();
-								isWriteHandler();
+								postCommentHandler(e);
 							}}
 						>
 							Add comment
