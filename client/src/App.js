@@ -42,18 +42,6 @@ function App() {
 		}
 	}, []);
 	// 로그인 상태, (memberId) 전역상태로 관리
-	const click = () => {
-		axios
-			.get(`/members/1`, {
-				headers: {
-					'Content-Type': 'application/json',
-					'ngrok-skip-browser-warning': '69420',
-				},
-			})
-			.then((res) => {
-				return res.data;
-			});
-	};
 	return (
 		<BrowserRouter>
 			<GlobalStyles />
