@@ -1,14 +1,11 @@
 package pro.stackOverFlow.question.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pro.stackOverFlow.answer.entity.Answer;
-import pro.stackOverFlow.dto.MultiResponseDto;
-import pro.stackOverFlow.dto.SingleResponseDto;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.member.service.MemberService;
 import pro.stackOverFlow.question.dto.QuestionDto;
@@ -18,7 +15,6 @@ import pro.stackOverFlow.question.mapper.QuestionMapper;
 import pro.stackOverFlow.question.service.QuestionService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -43,7 +39,7 @@ public class QuestionController {
         Question question = questionService.createQuestion(questionMapper.questionPostDtoToQuestion(requestBody));
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(question), HttpStatus.CREATED);
+                question, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")
@@ -54,7 +50,7 @@ public class QuestionController {
         Question question = questionService.updateQuestion(questionMapper.questionPatchDtoToQuestion(requestBody));
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(questionMapper.questionToQuestionResponse(question)), HttpStatus.OK);
+                questionMapper.questionToQuestionResponse(question), HttpStatus.OK);
     }
 
     @GetMapping("/{question-id}")
@@ -66,7 +62,7 @@ public class QuestionController {
         Member member = question.getMember();
 
         return new ResponseEntity(
-                new SingleResponseDto<>(questionMapper.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto)),
+                questionMapper.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto),
                 HttpStatus.OK);
     }
 
@@ -92,9 +88,7 @@ public class QuestionController {
     public ResponseEntity getAllQuestions() {
         List<Question> allQuestions = questionService.findAllQuestions();
 
-        return new ResponseEntity(
-                new SingleResponseDto<>(allQuestions),
-                HttpStatus.OK);
+        return new ResponseEntity(allQuestions, HttpStatus.OK);
     }
 
     @DeleteMapping("/{question-id}/{member-id}")
@@ -102,7 +96,7 @@ public class QuestionController {
                                          @PathVariable("question-id") Long questionId) {
         questionService.deleteQuestion(memberId, questionId);
 
-        return new ResponseEntity<>(new SingleResponseDto<>("question delete!"), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("question delete!", HttpStatus.NO_CONTENT);
     }
 
 
@@ -114,7 +108,7 @@ public class QuestionController {
         questionService.upVote(member, question);
 
         return new ResponseEntity(
-                new SingleResponseDto<>(questionMapper.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
+                questionMapper.questionToQuestionVoteResponseDto(question), HttpStatus.OK);
     }
 
     @PostMapping("/{question-id}/downvote/{member-id}")
@@ -125,7 +119,7 @@ public class QuestionController {
         questionService.downVote(member, question);
 
         return new ResponseEntity(
-                new SingleResponseDto<>(questionMapper.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
+                questionMapper.questionToQuestionVoteResponseDto(question), HttpStatus.OK);
     }
 
 
