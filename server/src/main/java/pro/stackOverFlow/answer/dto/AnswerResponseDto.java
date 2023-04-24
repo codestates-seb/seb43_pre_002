@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pro.stackOverFlow.member.entity.Member;
 
 import java.time.LocalDateTime;
 
@@ -26,7 +25,5 @@ public class AnswerResponseDto {
     private boolean accepted;
 
     private long voteCount;
-
-    private Member member;
 
 }
