@@ -74,6 +74,7 @@ function MyHeader() {
 }
 
 const Wrap = styled.div`
+	margin-top: 70px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -90,6 +91,7 @@ const ProfileHeader = styled.div`
 `;
 
 const Profile = styled.div`
+	padding-top: 20px;
 	display: flex;
 	flex-direction: row;
 `;
@@ -156,8 +158,9 @@ const ButtonDelete = styled.button`
 const PageButtons = styled.div`
 	display: flex;
 	width: 100%;
-	margin-top: 60px;
-	margin-bottom: 50px;
+	margin-top: 70px;
+	margin-bottom: 10px;
+	margin-left: 30%;
 `;
 
 const PageButton = styled.button`
