@@ -66,7 +66,9 @@ function QnABox({ data, deleteQuestionHandler, deleteAnswerHandler, mode }) {
 							<span>copy</span>
 							<Link
 								to={`/edit/${
-									mode === 'question' ? data.questionId : data.answerId
+									mode === 'question'
+										? `question/${data.questionId}`
+										: `answer/${data.answerId}`
 								}`}
 							>
 								<span>edit</span>

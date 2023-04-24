@@ -13,7 +13,8 @@ import Home from './pages/Home';
 import LoginHeader from './components/Header/LoginHeader';
 import SignupSuccess from './pages/SignupSuccess/SignupSuccess';
 import Question from './pages/Question';
-import EditQnA from './pages/EditQnA';
+import EditQuestion from './pages/EditQuestion';
+import EditAnswer from './pages/EditAnswer';
 import Timeline from './pages/Timeline';
 
 function App() {
@@ -26,7 +27,8 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/question/:question_id" element={<Question />} />
-				<Route path="/edit/:qna_id" element={<EditQnA />} />
+				<Route path="/edit/question/:question_id" element={<EditQuestion />} />
+				<Route path="/edit/answer/:answer_id" element={<EditAnswer />} />
 				<Route path="/timeline/:qna_id" element={<Timeline />} />
 				<Route path="/askquestion" element={<AskQuestion />} />
 				<Route path="/useractivity/:member_id" element={<UserActivity />} />
