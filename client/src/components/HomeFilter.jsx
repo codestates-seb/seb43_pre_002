@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { newestList, unansweredList } from '../utils/filterFunction';
+import {
+	newestList,
+	recommendList,
+	unansweredList,
+} from '../utils/filterFunction';
 
 function HomeFilter({ totalDataCount, allData, setFilteredData }) {
 	const handleNewest = () => {
@@ -7,6 +11,9 @@ function HomeFilter({ totalDataCount, allData, setFilteredData }) {
 	};
 	const handleUnanswered = () => {
 		setFilteredData(unansweredList(allData));
+	};
+	const handleRecommend = () => {
+		setFilteredData(recommendList(allData));
 	};
 
 	return (
@@ -23,7 +30,11 @@ function HomeFilter({ totalDataCount, allData, setFilteredData }) {
 				<button className="sort-button active" type="button">
 					Active
 				</button>
-				<button className="sort-button recommend" type="button">
+				<button
+					className="sort-button recommend"
+					type="button"
+					onClick={handleRecommend}
+				>
 					Recommend
 				</button>
 				<button

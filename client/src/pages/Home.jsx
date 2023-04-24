@@ -15,10 +15,6 @@ function Home({ searchTerm }) {
 	const totalDataCount = filteredData.length;
 
 	useEffect(() => {
-		setFilteredData(filterByTerm(allData, searchTerm));
-	}, [allData, searchTerm]);
-
-	useEffect(() => {
 		axios
 			.get('/questions', {
 				headers: {
@@ -27,10 +23,13 @@ function Home({ searchTerm }) {
 				},
 			})
 			.then((res) => {
-				console.log(res.data.data);
 				setAllData(res.data.data.reverse());
 			});
 	}, []);
+
+	useEffect(() => {
+		setFilteredData(filterByTerm(allData, searchTerm));
+	}, [allData, searchTerm]);
 
 	const currentPageData = filteredData.slice(
 		(currentPage - 1) * limitItems,
