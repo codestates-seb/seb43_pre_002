@@ -26,7 +26,7 @@ function LoginForm({ setIsLogin, setLoginError }) {
 			.post(`/auth/login`, loginInfo) // package.json proxy url 확인
 			.then((response) => {
 				// console.log(response);
-				const accessToken = response.headers.authorization;
+				const accessToken = response.headers.authorization.split(' ')[0];
 				const localAccessToken = localStorage.getItem('access_token');
 				if (!localAccessToken) {
 					localStorage.setItem('access_token', accessToken); // 로그아웃 시 removeItem
@@ -37,7 +37,7 @@ function LoginForm({ setIsLogin, setLoginError }) {
 			.then((data) => {
 				localStorage.setItem('loginMemberId', JSON.stringify(data.memberId)); // 로그인한 멤버 memberId를 로컬 스토리지에 저장
 				setIsLogin(true);
-				navigate('/');
+				navigate(`/home/${data.memberId}`);
 			})
 			.catch((error) => {
 				setLoginError(
