@@ -19,12 +19,12 @@ function App() {
 				<LoginHeader isLogin={isLogin} setIsLogin={setIsLogin} />
 				<Routes>
 					<Route path="/" element={<Home />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/signup" element={<Signup />} />
 					<Route path="/myprofile" element={<MyProfile />} />
 					<Route path="/myactivity" element={<MyActivity />} />
 					<Route path="/myedit" element={<MyEdit />} />
-					<Route path="/signup" element={<Signup />} />
 					<Route path="/signupsuccess" element={<SignupSuccess />} />
-					<Route path="/login" element={<Login setIsLogin={setIsLogin} />} />
 				</Routes>
 			</BrowserRouter>
 		</div>
