@@ -31,7 +31,7 @@ function App() {
 				setSearchTerm={setSearchTerm}
 			/>
 			<Routes>
-				<Route path="/" element={<Home />} />
+				<Route path="/" element={<Home searchTerm={searchTerm} />} />
 				<Route path="/question/:question_id" element={<Question />} />
 				<Route path="/edit/:qna_id" element={<EditQnA />} />
 				<Route path="/timeline/:qna_id" element={<Timeline />} />

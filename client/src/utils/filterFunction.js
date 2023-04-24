@@ -14,3 +14,10 @@ export const unansweredList = (arr) => {
 	const newArr = JSON.parse(JSON.stringify(arr));
 	return newArr.filter((el) => !el.answer);
 };
+
+export const filterByTerm = (arr, term) => {
+	const newArr = JSON.parse(JSON.stringify(arr));
+	return newArr.filter((el) =>
+		el.title.toLowerCase().includes(term.toLowerCase()),
+	);
+};

@@ -5,17 +5,22 @@ import HomeHeader from '../components/HomeHeader';
 import HomeFilter from '../components/HomeFilter';
 import HomeQuestionItem from '../components/HomeQuestionItem';
 import HomeFooter from '../components/HomeFooter';
+import { filterByTerm } from '../utils/filterFunction';
 
-function Home() {
+function Home({ searchTerm }) {
 	const [allData, setAllData] = useState([]);
-	const [filteredData, setFilteredData] = useState([...allData]);
+	const [filteredData, setFilteredData] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [limitItems, setLimitItems] = useState(5);
 	const totalDataCount = filteredData.length;
 
 	useEffect(() => {
-		setFilteredData([...allData]);
+		setFilteredData(allData);
 	}, [allData]);
+	useEffect(() => {
+		console.log(searchTerm);
+		setFilteredData(filterByTerm(allData, searchTerm));
+	}, [searchTerm]);
 
 	useEffect(() => {
 		axios
