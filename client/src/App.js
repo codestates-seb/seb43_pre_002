@@ -4,6 +4,8 @@ import GlobalStyles from './styles/GlobalStyles.style';
 import MyEdit from './pages/mypage/myedit';
 import MyProfile from './pages/mypage/myprofile';
 import MyActivity from './pages/mypage/myactivity';
+import UserActivity from './pages/user/useractivity';
+import UserProfile from './pages/user/userprofile';
 import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
 import Home from './pages/Home';
@@ -17,6 +19,9 @@ function App() {
 			<BrowserRouter>
 				<LoginHeader isLogin={isLogin} setIsLogin={setIsLogin} />
 				<Routes>
+
+					<Route path="/useractivity/:member_id" element={<UserActivity />} />
+					<Route path="/userprofile/:member_id" element={<UserProfile />} />
 					<Route path="/myactivity/:member_id" element={<MyActivity />} />
 					<Route path="/myprofile/:member_id" element={<MyProfile />} />
 					<Route path="/myedit/:member_id" element={<MyEdit />} />

@@ -1,26 +1,52 @@
-import { Link } from 'react-router-dom';
+/* eslint-disable camelcase */
+import axios from 'axios';
+import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GlobalStyles from '../styles/GlobalStyles.style';
 
 function UserHeader() {
+	const [userData, setUserData] = useState({});
+	const [articleData, setArticleData] = useState([]);
+	const { member_id } = useParams();
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await axios.get(`http://localhost:3000/data/${member_id}`);
+			setUserData(result.data);
+
+			const articleResult = await axios.get(`http://localhost:3000/question`);
+			setArticleData(articleResult.data);
+		};
+		fetchData();
+	}, []);
+
+	const filteredArticles = articleData
+		? articleData.filter((a) => a.memberId === parseInt(member_id, 10))
+		: [];
+
+	const filteredAnswerd = articleData
+		? articleData.filter((a) => a.answerId === parseInt(member_id, 10))
+		: [];
+
 	return (
 		<Wrap>
 			<GlobalStyles />
 			<ProfileHeader>
 				<Profile>
-					<UserImg>Other</UserImg>
+					<UserImg>{userData && userData.displayName}</UserImg>
 					<UserInfo>
-						<Name>Other</Name>
-						<Info>User Title</Info>
-						<Info>질문 수 : 0 답변 수 : 0</Info>
+						<Name>{userData && userData.displayName}</Name>
+						<Info>{userData && userData.title}</Info>
+						<Info>{`질문 수 : ${filteredArticles.length} 답변 수 : ${filteredAnswerd.length}`}</Info>
 					</UserInfo>
 				</Profile>
 			</ProfileHeader>
 			<PageButtons>
-				<Link to="/userprofile">
+				<Link to={`/userprofile/${member_id}`}>
 					<PageButton type="button">Profile</PageButton>
 				</Link>
-				<Link to="/useractivity">
+				<Link to={`/useractivity/${member_id}`}>
 					<PageButton type="button">Activity</PageButton>
 				</Link>
 			</PageButtons>
