@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import axios from 'axios';
 import NewQuestionHeader from '../components/AskQuestionHeader';
 import AskDescription from '../components/AskDescription';
 import AskTitleBox from '../components/AskTitleBox';
@@ -17,7 +18,20 @@ function AskQuestion() {
 	const { register, handleSubmit, setValue, watch } = useForm();
 	const [isNext, setIsNext] = useState(initialIsNext);
 	// 데이터 잘나오나 확인용 함수
-	const onSubmit = (data) => console.log(data);
+	const onSubmit = (data) => {
+		const body = {
+			title: data.title,
+			content: `${data.detail}</br>${data.tryAndExpect}`,
+		};
+		axios
+			.post('/questions', JSON.stringify(body), {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => console.log(res.data));
+	};
 	return (
 		<NewQuestionContainer onSubmit={handleSubmit(onSubmit)}>
 			<NewQuestionHeader />
