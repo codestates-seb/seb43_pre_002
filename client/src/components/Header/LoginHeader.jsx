@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import SignButton from '../Button/SignButton';
 import SearchBar from '../Input/SearchBar';
 import Logo from './Logo';
+import AuthButtons from './AuthButtons';
+import UserActionButtons from './UserActionButtons';
 
 const Header = styled.header`
 	display: flex;
@@ -26,33 +28,15 @@ const HeaderContainer = styled.div`
 	margin: 0 auto;
 `;
 
-// const LogoLink = styled(Link)`
-// 	display: block;
-// 	width: 100px;
-// `;
-
-const AuthButtons = styled.div`
-	display: flex;
-`;
-
-const AuthButton = styled(SignButton)`
-	font-size: var(--font-base);
-	font-weight: 800;
-	width: 70px;
-	height: 35px;
-	margin: 0 10px;
-`;
-
-function LoginHeader() {
+function LoginHeader({ isLogin }) {
 	return (
 		<Header>
 			<HeaderContainer>
-				<Logo />
+				<Link to="/">
+					<Logo />
+				</Link>
 				<SearchBar type="text" placeholder="검색어를 입력하세요." />
-				<AuthButtons>
-					<AuthButton>Log In</AuthButton>
-					<AuthButton>Sign up</AuthButton>
-				</AuthButtons>
+				{isLogin ? <UserActionButtons /> : <AuthButtons />}
 			</HeaderContainer>
 		</Header>
 	);
