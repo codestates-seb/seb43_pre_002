@@ -45,7 +45,7 @@ const HomeFilterContainer = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
-	height: 50px;
+	min-height: 30px;
 	background-color: white;
 	margin-bottom: 10px;
 	padding: 0 10%;

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 function HomeQuestionContents({ data }) {
@@ -5,9 +6,9 @@ function HomeQuestionContents({ data }) {
 	const previewBody = data.content.replace(/(<([^>]+)>)/gi, '').trim();
 	return (
 		<QuestionContentsContainer>
-			<a href="/" className="question-header">
+			<Link to={`/question/${data.questionId}`} className="question-header">
 				<span>{data.title}</span>
-			</a>
+			</Link>
 			<p className="question-body">{previewBody}</p>
 		</QuestionContentsContainer>
 	);

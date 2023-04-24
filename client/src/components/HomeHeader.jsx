@@ -18,7 +18,7 @@ const HomeHeaderContainer = styled.header`
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
-	height: 50px;
+	min-height: 50px;
 	background-color: white;
 	padding: 0 10%;
 	margin: 1% 0;

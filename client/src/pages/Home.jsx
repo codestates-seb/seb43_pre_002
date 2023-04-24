@@ -65,6 +65,7 @@ const HomeContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	background-color: white;
-	width: 98vw;
+	width: 100vw;
 	margin-top: 50px;
+	overflow-y: scroll;
 `;
