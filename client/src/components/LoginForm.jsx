@@ -2,6 +2,7 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { AiFillExclamationCircle } from 'react-icons/ai';
 import axios from 'axios';
 import styled from 'styled-components';
 import SignInput from './Input/SignInput';
@@ -14,8 +15,21 @@ const FormContainer = styled.div`
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
 `;
 
-function LoginForm({ setIsLogin, setLoginError }) {
+const ErrorMessage = styled.p`
+	margin-top: 1px;
+	display: flex;
+	align-items: center;
+	font-size: var(--font-small);
+	color: var(--error-message-color);
+`;
+
+const ErrorIcon = styled(AiFillExclamationCircle)`
+	margin-right: 5px;
+`;
+
+function LoginForm({ setIsLogin }) {
 	const navigate = useNavigate();
+	const [loginError, setLoginError] = useState(null);
 
 	const onSubmit = async (inputData) => {
 		const loginInfo = {
@@ -26,7 +40,7 @@ function LoginForm({ setIsLogin, setLoginError }) {
 			.post(`/auth/login`, loginInfo) // package.json proxy url 확인
 			.then((response) => {
 				// console.log(response);
-				const accessToken = response.headers.authorization.split(' ')[0];
+				const accessToken = response.headers.authorization.split(' ')[1];
 				const localAccessToken = localStorage.getItem('access_token');
 				if (!localAccessToken) {
 					localStorage.setItem('access_token', accessToken); // 로그아웃 시 removeItem
@@ -37,13 +51,14 @@ function LoginForm({ setIsLogin, setLoginError }) {
 			.then((data) => {
 				localStorage.setItem('loginMemberId', JSON.stringify(data.memberId)); // 로그인한 멤버 memberId를 로컬 스토리지에 저장
 				setIsLogin(true);
+				setLoginError(null);
 				navigate(`/`);
 			})
 			.catch((error) => {
 				setLoginError(
 					'로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.',
 				);
-				// console.log(error.response.data);
+				console.log(error);
 			});
 	};
 
@@ -81,6 +96,12 @@ function LoginForm({ setIsLogin, setLoginError }) {
 					error={errors.password}
 				/>
 				<SignButton>Log in</SignButton>
+				{loginError && (
+					<ErrorMessage>
+						<ErrorIcon />
+						{loginError}
+					</ErrorMessage>
+				)}
 			</form>
 		</FormContainer>
 	);
