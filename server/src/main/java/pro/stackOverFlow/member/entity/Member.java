@@ -7,9 +7,10 @@ import pro.stackOverFlow.exception.BusinessLogicException;
 import pro.stackOverFlow.exception.ExceptionCode;
 import pro.stackOverFlow.question.dto.QuestionDto;
 import pro.stackOverFlow.question.entity.Question;
+import pro.stackOverFlow.question.entity.Question;
+import pro.stackOverFlow.question.entity.QuestionVote;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -105,4 +106,12 @@ public class Member extends Auditable {
 //        return this.getRoles().contains("ADMIN");
 //    }
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Question> questions;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Answer> answers;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<QuestionVote> questionVoteList;
 }

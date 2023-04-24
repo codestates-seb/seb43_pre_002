@@ -23,9 +23,9 @@ public class AnswerResponseDto {
 
     private LocalDateTime modifiedAt;
 
-    private String answerSelectionStatus;
+    private boolean accepted;
 
-    private int voteCount;
+    private long voteCount;
 
     private Member member;
 

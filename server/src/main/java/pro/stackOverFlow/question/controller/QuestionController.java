@@ -11,8 +11,10 @@ import pro.stackOverFlow.dto.SingleResponseDto;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.member.service.MemberService;
 import pro.stackOverFlow.question.dto.QuestionDto;
+import pro.stackOverFlow.question.dto.QuestionGetAnswerDto;
 import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.question.mapper.QuestionMapper;
+import pro.stackOverFlow.question.mapper.QuestionMapperIm;
 import pro.stackOverFlow.question.service.QuestionService;
 
 import javax.validation.Valid;
@@ -23,15 +25,16 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/questions")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequiredArgsConstructor
+//@CrossOrigin(origins = "*", methods = RequestMethod.GET)
 public class QuestionController {
     private final QuestionService questionService;
+    private final QuestionMapper questionMapper;
+    private final QuestionMapperIm questionMapperIm;
     private final MemberService memberService;
-    private final QuestionMapper mapper;
 
-    public QuestionController(QuestionService questionService, MemberService memberService, QuestionMapper mapper) {
+    public QuestionController(QuestionService questionService, QuestionMapper mapper) {
         this.questionService = questionService;
-        this.memberService = memberService;
         this.mapper = mapper;
     }
 
@@ -45,7 +48,7 @@ public class QuestionController {
 
 //        return ResponseEntity.created(URI.create("/questions")).build();
         return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.questionToQuestionResponse(createdQuestion)), HttpStatus.CREATED);
+                new SingleResponseDto<>(createdQuestion), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")
@@ -61,6 +64,10 @@ public class QuestionController {
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
         Question question = questionService.findQuestion(questionId);
+        questionService.addViewCount(question);
+        List<Answer> answers = question.getAnswers();
+        List<QuestionGetAnswerDto> questionGetAnswerDto = questionMapperIm.answersToQuestionGetAnswerDto(answers);
+        Member member = question.getMember();
 
         return new ResponseEntity(
                 new SingleResponseDto<>(mapper.questionToQuestionResponse(question)),
@@ -74,15 +81,39 @@ public class QuestionController {
         List<Question> questions = questionPage.getContent();
 
         return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions),
+                new MultiResponseDto<>(questionMapper.questionsToQuestionResponses(questions),
                         questionPage), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{question-id}")
-    public ResponseEntity deleteQuestion(@PathVariable("question-id") long questionId) {
-        questionService.deleteQuestion(questionId);
+    @DeleteMapping("/{question-id}/{member-id}")
+    public ResponseEntity deleteQuestion(@PathVariable("member-id") Long memberId,
+                                         @PathVariable("question-id") Long questionId) {
+        questionService.deleteQuestion(memberId, questionId);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(new SingleResponseDto<>("question delete!"), HttpStatus.NO_CONTENT);
+    }
+
+
+    @PostMapping("/{question-id}/upvote/{member-id}")
+    public ResponseEntity questionUpVote(@PathVariable("member-id") Long memberId,
+                                         @PathVariable("question-id") Long questionId) {
+        Member member = memberService.findMember(memberId);
+        Question question = questionService.findQuestion(questionId);
+        questionService.upVote(member, question);
+
+        return new ResponseEntity(
+                new SingleResponseDto<>(questionMapperIm.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
+    }
+
+    @PostMapping("/{question-id}/downvote/{member-id}")
+    public ResponseEntity questionDownVote(@PathVariable("member-id") Long memberId,
+                                           @PathVariable("question-id") Long questionId) {
+        Member member = memberService.findMember(memberId);
+        Question question = questionService.findQuestion(questionId);
+        questionService.downVote(member, question);
+
+        return new ResponseEntity(
+                new SingleResponseDto<>(questionMapperIm.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
     }
 
 
