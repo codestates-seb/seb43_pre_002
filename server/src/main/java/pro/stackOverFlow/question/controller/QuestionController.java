@@ -15,7 +15,6 @@ import pro.stackOverFlow.question.dto.QuestionDto;
 import pro.stackOverFlow.question.dto.QuestionGetAnswerDto;
 import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.question.mapper.QuestionMapper;
-import pro.stackOverFlow.question.mapper.QuestionMapperIm;
 import pro.stackOverFlow.question.service.QuestionService;
 
 import javax.validation.Valid;
@@ -30,15 +29,16 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
-    private final QuestionMapperIm questionMapperIm;
     private final MemberService memberService;
 
 
     @PostMapping
     public ResponseEntity postQuestion(Long memberId,
-            @Valid @RequestBody QuestionDto.Post requestBody) {
-//        Member member = memberService.findMember(memberId);
-//        Question question = questionService.createQuestion(questionMapperIm.questionPostDtoToQuestion(requestBody, member));
+                                       @Valid @RequestBody QuestionDto.Post requestBody) {
+/*
+        Member member = memberService.findMember(memberId);
+        Question question = questionService.createQuestion(questionMapperIm.questionPostDtoToQuestion(requestBody, member));
+*/
 
         Question question = questionService.createQuestion(questionMapper.questionPostDtoToQuestion(requestBody));
 
@@ -47,7 +47,8 @@ public class QuestionController {
     }
 
     @PatchMapping("/{question-id}")
-    public ResponseEntity patchQuestion(@Valid @RequestBody QuestionDto.Patch requestBody,
+    public ResponseEntity patchQuestion(Long memberId,
+                                        @Valid @RequestBody QuestionDto.Patch requestBody,
                                         @PathVariable("question-id") long questionId) {
         requestBody.setQuestionId(questionId);
         Question question = questionService.updateQuestion(questionMapper.questionPatchDtoToQuestion(requestBody));
@@ -61,23 +62,39 @@ public class QuestionController {
         Question question = questionService.findQuestion(questionId);
         questionService.addViewCount(question);
         List<Answer> answers = question.getAnswers();
-        List<QuestionGetAnswerDto> questionGetAnswerDto = questionMapperIm.answersToQuestionGetAnswerDto(answers);
+        List<QuestionGetAnswerDto> questionGetAnswerDto = questionMapper.answersToQuestionGetAnswerDto(answers);
         Member member = question.getMember();
 
         return new ResponseEntity(
-                new SingleResponseDto<>(questionMapperIm.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto)),
+                new SingleResponseDto<>(questionMapper.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto)),
                 HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity getQuestions(@Positive @RequestParam int page,
-                                       @Positive @RequestParam int size) {
-        Page<Question> questionPage = questionService.findQuestions(page - 1, size);
-        List<Question> questions = questionPage.getContent();
+//    @GetMapping
+//    public ResponseEntity getQuestions(@Positive @RequestParam int page,
+//                                       @Positive @RequestParam int size) {
+////        Page<Question> questionPage = questionService.findQuestions(page - 1, size);
+////        List<Question> questions = questionPage.getContent();
+//
+//        Page<Question> pageList = questionService.findAllQuestions(page - 1, 15);
+//        List<Question> questions = pageList.getContent();
+//
+////        return new ResponseEntity<>(
+////                new MultiResponseDto<>(questionMapper.questionsToQuestionResponses(questions),
+////                        questionPage), HttpStatus.OK);
+//
+//        return new ResponseEntity<>(
+//                new MultiResponseDto<>(questionMapper.questionsToQuestionResponses(questions),
+//                        pageList), HttpStatus.OK);
+//    }
 
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(questionMapper.questionsToQuestionResponses(questions),
-                        questionPage), HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity getAllQuestions() {
+        List<Question> allQuestions = questionService.findAllQuestions();
+
+        return new ResponseEntity(
+                new SingleResponseDto<>(allQuestions),
+                HttpStatus.OK);
     }
 
     @DeleteMapping("/{question-id}/{member-id}")
@@ -97,7 +114,7 @@ public class QuestionController {
         questionService.upVote(member, question);
 
         return new ResponseEntity(
-                new SingleResponseDto<>(questionMapperIm.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
+                new SingleResponseDto<>(questionMapper.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
     }
 
     @PostMapping("/{question-id}/downvote/{member-id}")
@@ -108,7 +125,7 @@ public class QuestionController {
         questionService.downVote(member, question);
 
         return new ResponseEntity(
-                new SingleResponseDto<>(questionMapperIm.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
+                new SingleResponseDto<>(questionMapper.questionToQuestionVoteResponseDto(question)), HttpStatus.OK);
     }
 
 
