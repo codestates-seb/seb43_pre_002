@@ -62,9 +62,6 @@ function App() {
 				setIsLogin={setIsLogin}
 				setSearchTerm={setSearchTerm}
 			/>
-			<button type="button" onClick={() => click()}>
-				멤버겟
-			</button>
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/question/:question_id" element={<Question />} />
