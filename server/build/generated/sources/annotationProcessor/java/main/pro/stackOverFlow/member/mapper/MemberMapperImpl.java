@@ -1,5 +1,6 @@
 package pro.stackOverFlow.member.mapper;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -9,7 +10,7 @@ import pro.stackOverFlow.member.entity.Member;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-24T18:17:23+0900",
+    date = "2023-04-18T16:42:42+0900",
     comments = "version: 1.5.1.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.1.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -21,13 +22,13 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        Member member = new Member();
+        Member.MemberBuilder member = Member.builder();
 
-        member.setEmail( requestBody.getEmail() );
-        member.setPassword( requestBody.getPassword() );
-        member.setDisplayName( requestBody.getDisplayName() );
+        member.email( requestBody.getEmail() );
+        member.password( requestBody.getPassword() );
+        member.displayName( requestBody.getDisplayName() );
 
-        return member;
+        return member.build();
     }
 
     @Override
@@ -36,13 +37,19 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        Member member = new Member();
+        Member.MemberBuilder member = Member.builder();
 
-        member.setMemberId( requestBody.getMemberId() );
-        member.setDisplayName( requestBody.getDisplayName() );
-        member.setAboutMe( requestBody.getAboutMe() );
+        member.memberId( requestBody.getMemberId() );
+        member.displayName( requestBody.getDisplayName() );
+        member.title( requestBody.getTitle() );
+        member.aboutMe( requestBody.getAboutMe() );
+        member.websiteLink( requestBody.getWebsiteLink() );
+        member.twitterLink( requestBody.getTwitterLink() );
+        member.githubLink( requestBody.getGithubLink() );
+        member.notionLink( requestBody.getNotionLink() );
+        member.blogLink( requestBody.getBlogLink() );
 
-        return member;
+        return member.build();
     }
 
     @Override
@@ -54,16 +61,32 @@ public class MemberMapperImpl implements MemberMapper {
         long memberId = 0L;
         String email = null;
         String displayName = null;
+        String title = null;
         String aboutMe = null;
+        String websiteLink = null;
+        String twitterLink = null;
+        String githubLink = null;
+        String notionLink = null;
+        String blogLink = null;
+        LocalDateTime createdAt = null;
+        LocalDateTime modifiedAt = null;
 
         if ( member.getMemberId() != null ) {
             memberId = member.getMemberId();
         }
         email = member.getEmail();
         displayName = member.getDisplayName();
+        title = member.getTitle();
         aboutMe = member.getAboutMe();
+        websiteLink = member.getWebsiteLink();
+        twitterLink = member.getTwitterLink();
+        githubLink = member.getGithubLink();
+        notionLink = member.getNotionLink();
+        blogLink = member.getBlogLink();
+        createdAt = member.getCreatedAt();
+        modifiedAt = member.getModifiedAt();
 
-        MemberDto.Response response = new MemberDto.Response( memberId, email, displayName, aboutMe );
+        MemberDto.Response response = new MemberDto.Response( memberId, email, displayName, title, aboutMe, websiteLink, twitterLink, githubLink, notionLink, blogLink, createdAt, modifiedAt );
 
         return response;
     }

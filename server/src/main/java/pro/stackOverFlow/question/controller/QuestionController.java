@@ -27,6 +27,11 @@ public class QuestionController {
     private final QuestionMapper questionMapper;
     private final MemberService memberService;
 
+    public QuestionController(QuestionService questionService, QuestionMapper mapper) {
+        this.questionService = questionService;
+        this.mapper = mapper;
+    }
+
 
     @PostMapping
     public ResponseEntity postQuestion(Long memberId,
@@ -38,8 +43,11 @@ public class QuestionController {
 
         Question question = questionService.createQuestion(questionMapper.questionPostDtoToQuestion(requestBody));
 
+
+//        return ResponseEntity.created(URI.create("/questions")).build();
         return new ResponseEntity<>(
                 question, HttpStatus.CREATED);
+
     }
 
     @PatchMapping("/{question-id}")
@@ -47,10 +55,11 @@ public class QuestionController {
                                         @Valid @RequestBody QuestionDto.Patch requestBody,
                                         @PathVariable("question-id") long questionId) {
         requestBody.setQuestionId(questionId);
-        Question question = questionService.updateQuestion(questionMapper.questionPatchDtoToQuestion(requestBody));
+        Question question = questionService.updateQuestion(mapper.questionPatchDtoToQuestion(requestBody));
 
         return new ResponseEntity<>(
                 questionMapper.questionToQuestionResponse(question), HttpStatus.OK);
+
     }
 
     @GetMapping("/{question-id}")
@@ -63,7 +72,7 @@ public class QuestionController {
 
         return new ResponseEntity(
                 questionMapper.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto),
-                HttpStatus.OK);
+
     }
 
 //    @GetMapping
