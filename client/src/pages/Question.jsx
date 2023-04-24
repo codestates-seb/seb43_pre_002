@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
 import LoginHeader from '../components/Header/LoginHeader';
 import QnABox from '../components/QnABox';
 import AnswerForm from '../components/AnswerForm';
