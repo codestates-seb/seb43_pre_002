@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useState } from 'react';
 
 function AskSubmitModal({ isOpen, setIsOpen, submitData }) {
-	const navegate = useNavigate();
+	const [resultText, setResultText] = useState('제출 완료되었습니다.');
+	const [isResultOpen, setIsResultOpen] = useState(false);
+	const navigate = useNavigate();
 	const closeModalHandler = () => {
 		setIsOpen(false);
 	};
@@ -15,30 +18,51 @@ function AskSubmitModal({ isOpen, setIsOpen, submitData }) {
 					'ngrok-skip-browser-warning': '69420',
 				},
 			})
-			.then(() => navegate('/'));
+			.then(() => setResultText('제출 완료되었습니다.'))
+			.then(() => {
+				setIsResultOpen(true);
+				setTimeout(() => {
+					setIsResultOpen(false);
+					navigate('/');
+				}, 1000);
+			})
+			.catch(() => {
+				setResultText('제출에 실패했습니다. 잠시 후 다시 시도해주세요.');
+				setIsResultOpen(true);
+				setTimeout(() => {
+					setIsResultOpen(false);
+					setIsOpen(false);
+				}, 1000);
+			});
 	};
 	return (
 		<ModalContainer>
 			{isOpen ? (
 				<ModalBackdrop onClick={closeModalHandler}>
 					<ModalView onClick={(e) => e.stopPropagation()}>
-						<p className="modal-text">제출하시겠습니까?</p>
-						<div className="button-container">
-							<button
-								className="button-container__button"
-								type="button"
-								onClick={postData}
-							>
-								Yes
-							</button>
-							<button
-								className="button-container__button"
-								type="button"
-								onClick={closeModalHandler}
-							>
-								Cancel
-							</button>
-						</div>
+						{isResultOpen ? (
+							<p className="result-text">{resultText}</p>
+						) : (
+							<>
+								<p className="modal-text">제출하시겠습니까?</p>
+								<div className="button-container">
+									<button
+										className="button-container__button"
+										type="button"
+										onClick={postData}
+									>
+										Yes
+									</button>
+									<button
+										className="button-container__button"
+										type="button"
+										onClick={closeModalHandler}
+									>
+										Cancel
+									</button>
+								</div>
+							</>
+						)}
 					</ModalView>
 				</ModalBackdrop>
 			) : null}
@@ -77,7 +101,7 @@ const ModalView = styled.div`
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	background-color: #e5f3ff; // 전역 변수로 바꾸기
+	background-color: var(--modal-color);
 	width: 30%;
 	height: 25%;
 	color: black;
@@ -102,5 +126,8 @@ const ModalView = styled.div`
 		height: 40px;
 		border-radius: 5px;
 		cursor: pointer;
+	}
+	.result-text {
+		font-weight: 700;
 	}
 `;

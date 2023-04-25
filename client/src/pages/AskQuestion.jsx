@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import NewQuestionHeader from '../components/AskQuestionHeader';
 import AskDescription from '../components/AskDescription';
 import AskTitleBox from '../components/AskTitleBox';
