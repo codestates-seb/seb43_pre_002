@@ -38,10 +38,7 @@ public class QuestionController {
 
         Question question = questionService.createQuestion(questionMapper.questionPostDtoToQuestion(requestBody));
 
-
-//        return ResponseEntity.created(URI.create("/questions")).build();
-        return new ResponseEntity<>(
-                question, HttpStatus.CREATED);
+        return new ResponseEntity<>(question, HttpStatus.CREATED);
 
     }
 
@@ -50,10 +47,9 @@ public class QuestionController {
                                         @Valid @RequestBody QuestionDto.Patch requestBody,
                                         @PathVariable("question-id") long questionId) {
         requestBody.setQuestionId(questionId);
-        Question question = questionService.updateQuestion(mapper.questionPatchDtoToQuestion(requestBody));
+        Question question = questionService.updateQuestion(questionMapper.questionPatchDtoToQuestion(requestBody));
 
-        return new ResponseEntity<>(
-                questionMapper.questionToQuestionResponse(question), HttpStatus.OK);
+        return new ResponseEntity<>(questionMapper.questionToQuestionResponse(question), HttpStatus.OK);
 
     }
 
@@ -65,9 +61,7 @@ public class QuestionController {
         List<QuestionGetAnswerDto> questionGetAnswerDto = questionMapper.answersToQuestionGetAnswerDto(answers);
         Member member = question.getMember();
 
-        return new ResponseEntity(
-                questionMapper.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto),
-
+        return new ResponseEntity<>(questionMapper.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto), HttpStatus.OK);
     }
 
 //    @GetMapping
@@ -92,16 +86,23 @@ public class QuestionController {
     public ResponseEntity getAllQuestions() {
         List<Question> allQuestions = questionService.findAllQuestions();
 
-        return new ResponseEntity(allQuestions, HttpStatus.OK);
+        return new ResponseEntity<>(allQuestions, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{question-id}/{member-id}")
-    public ResponseEntity deleteQuestion(@PathVariable("member-id") Long memberId,
-                                         @PathVariable("question-id") Long questionId) {
-        questionService.deleteQuestion(memberId, questionId);
+    @DeleteMapping("/{question-id}")
+    public ResponseEntity deleteQuestion(@PathVariable("question-id") Long questionId) {
+        questionService.deleteQuestion(questionId);
 
-        return new ResponseEntity<>("question delete!", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+//    @DeleteMapping("/{question-id}/{member-id}")
+//    public ResponseEntity deleteQuestion(@PathVariable("member-id") Long memberId,
+//                                         @PathVariable("question-id") Long questionId) {
+//        questionService.deleteQuestion(memberId, questionId);
+//
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 
 
     @PostMapping("/{question-id}/upvote/{member-id}")
@@ -111,8 +112,7 @@ public class QuestionController {
         Question question = questionService.findQuestion(questionId);
         questionService.upVote(member, question);
 
-        return new ResponseEntity(
-                questionMapper.questionToQuestionVoteResponseDto(question), HttpStatus.OK);
+        return new ResponseEntity<>(questionMapper.questionToQuestionVoteResponseDto(question), HttpStatus.OK);
     }
 
     @PostMapping("/{question-id}/downvote/{member-id}")
@@ -122,8 +122,7 @@ public class QuestionController {
         Question question = questionService.findQuestion(questionId);
         questionService.downVote(member, question);
 
-        return new ResponseEntity(
-                questionMapper.questionToQuestionVoteResponseDto(question), HttpStatus.OK);
+        return new ResponseEntity<>(questionMapper.questionToQuestionVoteResponseDto(question), HttpStatus.OK);
     }
 
 

@@ -37,11 +37,11 @@ public class Question extends Auditable {
     private long questionVoteCount;
 
 
-    @ManyToOne
-    @Getter
-    @Setter
-    @JoinColumn(name = "member_id")
-    private Member member;
+//    @ManyToOne
+//    @Getter
+//    @Setter
+//    @JoinColumn(name = "member_id")
+//    private Member member;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answers;

@@ -58,12 +58,17 @@ public class QuestionService {
     }
 
     // delete
-    public void deleteQuestion(Long memberId, Long questionId) {
+//    public void deleteQuestion(Long memberId, Long questionId) {
+//        Question question = findVerifiedQuestion(questionId);
+//        Long findMemberId = question.getMember().getMemberId();
+//        if (!memberId.equals(findMemberId)) {
+//            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+//        }
+//        questionRepository.delete(question);
+//    }
+
+    public void deleteQuestion(Long questionId) {
         Question question = findVerifiedQuestion(questionId);
-        Long findMemberId = question.getMember().getMemberId();
-        if (!memberId.equals(findMemberId)) {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
-        }
         questionRepository.delete(question);
     }
 
