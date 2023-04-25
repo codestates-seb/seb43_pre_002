@@ -15,6 +15,4 @@ public interface QuestionMapper {
     QuestionDto.Response questionToQuestionResponse(Question question);
 
     List<QuestionDto.Response> questionsToQuestionResponses(List<Question> questions);
-
-
 }

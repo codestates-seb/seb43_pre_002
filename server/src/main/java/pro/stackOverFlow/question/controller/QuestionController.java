@@ -33,17 +33,23 @@ public class QuestionController {
     private final QuestionMapperIm questionMapperIm;
     private final MemberService memberService;
 
+    //Todo: member-id 임시적으로 추가!! 보안 적용 후 없앨 예정
+    //Todo : addMember 메서드 추가!
 
-    @PostMapping
-    public ResponseEntity postQuestion(Long memberId,
-            @Valid @RequestBody QuestionDto.Post requestBody) {
+    @PostMapping("/{member-id}")
+    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody,
+                                       @PathVariable("member-id") long memberId) {
 //        Member member = memberService.findMember(memberId);
 //        Question question = questionService.createQuestion(questionMapperIm.questionPostDtoToQuestion(requestBody, member));
 
-        Question question = questionService.createQuestion(questionMapper.questionPostDtoToQuestion(requestBody));
+        Question question = questionMapper.questionPostDtoToQuestion(requestBody);
+        Member member = memberService.findMember(memberId);
+        question.addMember(member);
+
+        Question createdQuestion = questionService.createQuestion(question);
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(question), HttpStatus.CREATED);
+                createdQuestion, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")
@@ -53,7 +59,7 @@ public class QuestionController {
         Question question = questionService.updateQuestion(questionMapper.questionPatchDtoToQuestion(requestBody));
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(questionMapper.questionToQuestionResponse(question)), HttpStatus.OK);
+                questionMapper.questionToQuestionResponse(question), HttpStatus.OK);
     }
 
     @GetMapping("/{question-id}")
@@ -65,10 +71,11 @@ public class QuestionController {
         Member member = question.getMember();
 
         return new ResponseEntity(
-                new SingleResponseDto<>(questionMapperIm.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto)),
+                questionMapperIm.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto),
                 HttpStatus.OK);
     }
 
+    //Todo: 수정 요망 (get All
     @GetMapping
     public ResponseEntity getQuestions(@Positive @RequestParam int page,
                                        @Positive @RequestParam int size) {

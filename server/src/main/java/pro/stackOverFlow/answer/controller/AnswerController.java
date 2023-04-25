@@ -32,6 +32,9 @@ public class AnswerController {
                                      @Valid @RequestBody AnswerPostDto answerPostDto) {
 
         Answer answer = answerMapper.answerPostDtoToAnswer(answerPostDto);
+        //추가
+        Member member = memberService.findMember(1);
+        answer.addMember(member);
         Answer createdAnswer = answerService.createAnswer(answer, questionId);
         AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(createdAnswer);
 
