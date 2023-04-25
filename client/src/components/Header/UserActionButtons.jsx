@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -37,20 +37,22 @@ function UserActionButtons() {
 	const [userDisplayName, setUserDisplayName] = useState('');
 	const memberId = localStorage.getItem('loginMemberId');
 
-	axios
-		.get(`/members/${memberId}`, {
-			headers: {
-				'Content-Type': 'application/json',
-				'ngrok-skip-browser-warning': '69420',
-			},
-		})
-		.then((res) => {
-			return res.data;
-		})
-		.then((data) => {
-			setUserDisplayName(data.displayName);
-			// console.log(userDisplayName);
-		});
+	useEffect(() => {
+		axios
+			.get(`/members/${memberId}`, {
+				headers: {
+					'Content-Type': 'application/json',
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => {
+				return res.data;
+			})
+			.then((data) => {
+				setUserDisplayName(data.displayName);
+				// console.log(userDisplayName);
+			});
+	}, []);
 
 	const navigate = useNavigate();
 	const logoutHandler = () => {
