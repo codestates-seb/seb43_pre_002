@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const UserProfileBox = styled.div`
@@ -19,6 +20,7 @@ const UserProfileText = styled.span`
 `;
 
 function UserProfile({ userName, boxSize, fontSize }) {
+	const [color, setColor] = useState('var(--main-color)');
 	const getRandomColor = () => {
 		const colors = [
 			'#ff7f50',
@@ -43,11 +45,13 @@ function UserProfile({ userName, boxSize, fontSize }) {
 		const randomIndex = Math.floor(Math.random() * colors.length);
 		return colors[randomIndex];
 	};
-
-	const bgColor = getRandomColor();
+	useEffect(() => {
+		const bgColor = getRandomColor();
+		setColor(bgColor);
+	}, []);
 
 	return (
-		<UserProfileBox bgColor={bgColor} boxSize={boxSize}>
+		<UserProfileBox bgColor={color} boxSize={boxSize}>
 			<UserProfileText fontSize={fontSize}>
 				{userName.substring(0, 4)}
 			</UserProfileText>
