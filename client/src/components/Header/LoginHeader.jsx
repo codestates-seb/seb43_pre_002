@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectIsLogin } from '../../reducers/loginSlice';
 import { setSearchTerm } from '../../reducers/searchSlice';
 import SearchBar from '../Input/SearchBar';
 import Logo from './Logo';
@@ -32,7 +33,7 @@ const HeaderContainer = styled.div`
 
 function LoginHeader() {
 	const dispatch = useDispatch();
-	const isLogin = useSelector((state) => state.login);
+	const isLogin = useSelector(selectIsLogin);
 	return (
 		<Header>
 			<HeaderContainer>
