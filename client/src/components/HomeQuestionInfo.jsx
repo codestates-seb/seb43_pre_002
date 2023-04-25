@@ -4,7 +4,9 @@ function HomeQuestionInfo({ data }) {
 	return (
 		<QuestionInfoContainer>
 			<div className="info">{data.questionVoteCount} votes</div>
-			<div className="info">{data.answers.length} answers</div>
+			<div className="info">
+				{data.answers ? data.answers.length : 0} answers
+			</div>
 			<div className="info">{data.viewCount} views</div>
 		</QuestionInfoContainer>
 	);

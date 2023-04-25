@@ -9,7 +9,7 @@ import HomeFooter from '../components/HomeFooter';
 import { filterByTerm } from '../utils/filterFunction';
 
 function Home() {
-	const searchTerm = useSelector((state) => state.searchTerm);
+	const { searchTerm } = useSelector((state) => state.search);
 	const [allData, setAllData] = useState([]);
 	const [filteredData, setFilteredData] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -26,7 +26,7 @@ function Home() {
 				},
 			})
 			.then((res) => {
-				setAllData(res.data.data.reverse());
+				setAllData(res.data.reverse());
 			})
 			.catch(() => {
 				setIsFailGet(true);

@@ -1,12 +1,22 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function HomeHeader() {
+	const { isLogin } = useSelector((state) => state.login);
+	const navigate = useNavigate();
+	const handleClick = () => {
+		if (!isLogin) {
+			navigate('/login');
+			return;
+		}
+		navigate('/askquestion');
+	};
 	return (
 		<HomeHeaderContainer>
 			<h2 className="all">All Questions</h2>
-			<button className="ask-question" type="button">
-				<AskLink to="/askquestion">Ask Questions</AskLink>
+			<button className="ask-question" type="button" onClick={handleClick}>
+				Ask Questions
 			</button>
 		</HomeHeaderContainer>
 	);
@@ -39,12 +49,4 @@ const HomeHeaderContainer = styled.header`
 			background-color: var(--button-hover-color);
 		}
 	}
-`;
-const AskLink = styled(Link)`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 100%;
-	padding: 1% 6%;
 `;
