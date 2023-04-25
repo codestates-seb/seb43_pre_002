@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import MyHeader from '../../components/MyHeader';
 import MyList from '../../components/MyList';
@@ -10,14 +10,20 @@ function MyActivity() {
 	const [userData, setUserData] = useState({});
 	const [articleData, setArticleData] = useState([]);
 	const { member_id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios.get(` http://localhost:3000/data`);
-			setUserData(result.data);
+			try {
+				const result = await axios.get(`http://localhost:3000/member`);
+				setUserData(result.data);
 
-			const articleResult = await axios.get(`http://localhost:3000/question`);
-			setArticleData(articleResult.data);
+				const articleResult = await axios.get(`http://localhost:3000/question`);
+				setArticleData(articleResult.data);
+			} catch (error) {
+				console.error(error);
+				navigate('/');
+			}
 		};
 		fetchData();
 	}, []);
@@ -116,7 +122,7 @@ function MyActivity() {
 	);
 }
 const Wrap = styled.div`
-	margin-top: 40px;
+	margin-top: 50px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;

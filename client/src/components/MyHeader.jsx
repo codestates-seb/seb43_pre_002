@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ function MyHeader() {
 	const [userData, setUserData] = useState({});
 	const [articleData, setArticleData] = useState([]);
 	const { member_id } = useParams();
+	const navigate = useNavigate();
 
 	const handleClick2 = () => {
 		setIsOpen2(!isOpen2);
@@ -19,11 +20,18 @@ function MyHeader() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios.get(`http://localhost:3000/data/${member_id}`);
-			setUserData(result.data);
+			try {
+				const result = await axios.get(
+					`http://localhost:3000/member/${member_id}`,
+				);
+				setUserData(result.data);
 
-			const articleResult = await axios.get(`http://localhost:3000/question`);
-			setArticleData(articleResult.data);
+				const articleResult = await axios.get(`http://localhost:3000/question`);
+				setArticleData(articleResult.data);
+			} catch (error) {
+				console.error(error);
+				navigate('/');
+			}
 		};
 		fetchData();
 	}, []);

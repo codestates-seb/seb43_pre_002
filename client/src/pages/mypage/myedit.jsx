@@ -41,6 +41,7 @@ function MyEdit() {
 			})
 			.catch((error) => {
 				console.error(error);
+				navigate(`/`);
 			});
 	};
 
@@ -53,6 +54,7 @@ function MyEdit() {
 			})
 			.catch((error) => {
 				console.error(error);
+				navigate(`/`);
 			});
 	}, [member_id]);
 
@@ -154,7 +156,7 @@ function MyEdit() {
 }
 
 const Wrap = styled.div`
-	margin-top: 40px;
+	margin-top: 50px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
