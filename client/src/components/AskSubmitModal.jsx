@@ -11,8 +11,9 @@ function AskSubmitModal({ isOpen, setIsOpen, submitData }) {
 		setIsOpen(false);
 	};
 	const postData = () => {
+		const memberId = localStorage.getItem('loginMemberId');
 		axios
-			.post('/questions', JSON.stringify(submitData), {
+			.post(`/questions/${memberId}`, JSON.stringify(submitData), {
 				headers: {
 					'Content-Type': `application/json`,
 					'ngrok-skip-browser-warning': '69420',
