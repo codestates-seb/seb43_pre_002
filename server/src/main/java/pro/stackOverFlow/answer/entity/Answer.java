@@ -57,4 +57,11 @@ public class Answer extends Auditable {
         this.voteCount = voteCount;
     }
 
+    public void addMember(Member member) {
+        this.member = member;
+        if (!member.getAnswers().contains(this)) {
+            member.getAnswers().add(this);
+        }
+    }
+
 }

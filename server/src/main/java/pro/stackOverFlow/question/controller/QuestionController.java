@@ -27,19 +27,24 @@ public class QuestionController {
     private final QuestionMapper questionMapper;
     private final MemberService memberService;
 
+    //Todo: member-id 임시적으로 추가!! 보안 적용 후 없앨 예정
+    //Todo : addMember 메서드 추가!
 
-    @PostMapping
-    public ResponseEntity postQuestion(Long memberId,
-                                       @Valid @RequestBody QuestionDto.Post requestBody) {
-/*
+    @PostMapping("/{member-id}")
+    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody,
+                                       @PathVariable("member-id") long memberId) {
+//        Member member = memberService.findMember(memberId);
+//        Question question = questionService.createQuestion(questionMapperIm.questionPostDtoToQuestion(requestBody, member));
+
+
+        Question question = questionMapper.questionPostDtoToQuestion(requestBody);
         Member member = memberService.findMember(memberId);
-        Question question = questionService.createQuestion(questionMapperIm.questionPostDtoToQuestion(requestBody, member));
-*/
+        question.addMember(member);
 
-        Question question = questionService.createQuestion(questionMapper.questionPostDtoToQuestion(requestBody));
+        Question createdQuestion = questionService.createQuestion(question);
 
-        return new ResponseEntity<>(question, HttpStatus.CREATED);
-
+        return new ResponseEntity<>(
+                createdQuestion, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")
@@ -61,26 +66,10 @@ public class QuestionController {
         List<QuestionGetAnswerDto> questionGetAnswerDto = questionMapper.answersToQuestionGetAnswerDto(answers);
         Member member = question.getMember();
 
+
         return new ResponseEntity<>(questionMapper.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto), HttpStatus.OK);
     }
 
-//    @GetMapping
-//    public ResponseEntity getQuestions(@Positive @RequestParam int page,
-//                                       @Positive @RequestParam int size) {
-////        Page<Question> questionPage = questionService.findQuestions(page - 1, size);
-////        List<Question> questions = questionPage.getContent();
-//
-//        Page<Question> pageList = questionService.findAllQuestions(page - 1, 15);
-//        List<Question> questions = pageList.getContent();
-//
-////        return new ResponseEntity<>(
-////                new MultiResponseDto<>(questionMapper.questionsToQuestionResponses(questions),
-////                        questionPage), HttpStatus.OK);
-//
-//        return new ResponseEntity<>(
-//                new MultiResponseDto<>(questionMapper.questionsToQuestionResponses(questions),
-//                        pageList), HttpStatus.OK);
-//    }
 
     @GetMapping
     public ResponseEntity getAllQuestions() {

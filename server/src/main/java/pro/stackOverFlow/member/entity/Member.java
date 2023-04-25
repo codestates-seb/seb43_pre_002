@@ -1,5 +1,6 @@
 package pro.stackOverFlow.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.audit.Auditable;
@@ -9,6 +10,7 @@ import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.question.entity.QuestionVote;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -30,17 +32,37 @@ public class Member extends Auditable {
     @Column(length = 100, nullable = false)
     private String displayName;
 
+    @Column(length = 50)
+    private String title;
+
     @Column(length = 300)
     private String aboutMe;
 
+    @Column
+    private String websiteLink;
+    @Column
+    private String twitterLink;
+    @Column
+    private String githubLink;
+    @Column
+    private String notionLink;
+    @Column
+    private String blogLink;
 
 
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    private List<String> roles = new ArrayList<>();
 
-//    @Setter(AccessLevel.NONE)
-//    @OneToMany(mappedBy = "member")
-//    private List<QnaQuestion> qnaQuestions = new ArrayList<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
+    @JsonIgnore
+    @Setter
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Question> questions;
+
+    @JsonIgnore
+    @Setter
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
+    private List<Answer> answers;
 
     public Member(Long memberId) {
         this.memberId = memberId;
@@ -80,12 +102,6 @@ public class Member extends Auditable {
 //    public boolean isAdmin() {
 //        return this.getRoles().contains("ADMIN");
 //    }
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Question> questions;
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Answer> answers;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<QuestionVote> questionVoteList;
