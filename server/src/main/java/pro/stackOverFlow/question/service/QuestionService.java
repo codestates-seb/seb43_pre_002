@@ -3,6 +3,7 @@ package pro.stackOverFlow.question.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import pro.stackOverFlow.question.entity.QuestionVote;
 import pro.stackOverFlow.question.repository.QuestionRepository;
 import pro.stackOverFlow.question.repository.QuestionVoteRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,18 +43,32 @@ public class QuestionService {
                 Sort.by("questionId").descending()));
     }
 
+    public Page<Question> findAllQuestions(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("questionId").descending());
+        return questionRepository.findAll(pageable);
+    }
+
+    public List<Question> findAllQuestions() {
+        return questionRepository.findAll();
+    }
+
     // update
     public Question updateQuestion(Question question) {
         return questionRepository.save(question);
     }
 
     // delete
-    public void deleteQuestion(Long memberId, Long questionId) {
+//    public void deleteQuestion(Long memberId, Long questionId) {
+//        Question question = findVerifiedQuestion(questionId);
+//        Long findMemberId = question.getMember().getMemberId();
+//        if (!memberId.equals(findMemberId)) {
+//            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+//        }
+//        questionRepository.delete(question);
+//    }
+
+    public void deleteQuestion(Long questionId) {
         Question question = findVerifiedQuestion(questionId);
-        Long findMemberId = question.getMember().getMemberId();
-        if (!memberId.equals(findMemberId)) {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
-        }
         questionRepository.delete(question);
     }
 
