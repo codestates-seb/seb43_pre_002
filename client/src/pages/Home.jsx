@@ -12,6 +12,7 @@ function Home({ searchTerm }) {
 	const [filteredData, setFilteredData] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [limitItems, setLimitItems] = useState(5);
+	const [isFailGet, setIsFailGet] = useState(false);
 	const totalDataCount = filteredData.length;
 
 	useEffect(() => {
@@ -24,6 +25,9 @@ function Home({ searchTerm }) {
 			})
 			.then((res) => {
 				setAllData(res.data.data.reverse());
+			})
+			.catch(() => {
+				setIsFailGet(true);
 			});
 	}, []);
 
@@ -44,9 +48,13 @@ function Home({ searchTerm }) {
 				allData={allData}
 				setFilteredData={setFilteredData}
 			/>
-			{currentPageData.map((el) => (
-				<HomeQuestionItem key={el.questionId} data={el} />
-			))}
+			{isFailGet ? (
+				<p className="fail-get-text">서버 상태가 원활하지 않습니다.</p>
+			) : (
+				currentPageData.map((el) => (
+					<HomeQuestionItem key={el.questionId} data={el} />
+				))
+			)}
 			<HomeFooter
 				totalDataCount={totalDataCount}
 				currentPage={currentPage}
@@ -67,4 +75,12 @@ const HomeContainer = styled.div`
 	width: 100vw;
 	margin-top: 50px;
 	overflow-y: scroll;
+	.fail-get-text {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 150px;
+		width: 80%;
+		border-top: 1px solid var(--line-color);
+	}
 `;
