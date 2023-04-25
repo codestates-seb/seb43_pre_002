@@ -29,7 +29,10 @@ function App() {
 				<Route path="/question/:question_id" element={<Question />} />
 				<Route path="/edit/question/:question_id" element={<EditQuestion />} />
 				<Route path="/edit/answer/:answer_id" element={<EditAnswer />} />
-				<Route path="/timeline/:qna_id" element={<Timeline />} />
+				<Route
+					path="/timeline/:question_id/:answer_id"
+					element={<Timeline />}
+				/>
 				<Route path="/askquestion" element={<AskQuestion />} />
 				<Route path="/useractivity/:member_id" element={<UserActivity />} />
 				<Route path="/userprofile/:member_id" element={<UserProfile />} />

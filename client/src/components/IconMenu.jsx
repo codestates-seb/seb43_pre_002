@@ -232,7 +232,11 @@ function IconMenu({ data, mode }) {
 				<Tooltip>Save this question.</Tooltip>
 			</li> */}
 			<li>
-				<Link to="/timeline/:id">
+				<Link
+					to={`/timeline/${targetId}/${
+						mode === 'question' ? 0 : data.answerId
+					}`}
+				>
 					<AiOutlineFieldTime className="timeline__icon" />
 				</Link>
 				<Tooltip>Show activity on this post.</Tooltip>
