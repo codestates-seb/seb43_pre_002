@@ -38,19 +38,11 @@ public class Question extends Auditable {
     private long questionVoteCount;
 
 
-//    @ManyToOne
-//    @Getter
-//    @Setter
-//    @JoinColumn(name = "member_id")
-//    private Member member;
-
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answers;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<QuestionVote> questionVotes;
-
-
 
 
     @OneToOne
@@ -71,24 +63,6 @@ public class Question extends Auditable {
         this.acceptedAnswer = acceptedAnswer;
     }
 
-
-//    public Member getUser() {
-//        return this.member;
-//    }
-
-    public void addMember(Member member) {
-        this.member = member;
-        if (!member.getQuestions().contains(this)) {
-            member.getQuestions().add(this);
-        }
-    }
-
-
-
-    @ManyToOne(targetEntity = Member.class, cascade = CascadeType.PERSIST)
-    @Setter
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
 
     public void addMember(Member member) {
         this.member = member;
