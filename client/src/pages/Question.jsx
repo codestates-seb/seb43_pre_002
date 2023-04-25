@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import LoginHeader from '../components/Header/LoginHeader';
 import QnABox from '../components/QnABox';
 import AnswerForm from '../components/AnswerForm';
@@ -96,6 +97,14 @@ function Question() {
 	const [questionData, setQuestionData] = useState(null);
 	const [answerList, setAnswerList] = useState([]);
 	const [sortType, setSortType] = useState('oldest');
+	const [userId, setUserId] = useState(
+		localStorage.getItem('loginmemberid')
+			? JSON.parse(localStorage.getItem('loginmemberid'))
+			: null,
+	);
+
+	// 로그인 상태 받기
+	const { isLogin } = useSelector((state) => state.login);
 
 	// 정렬 리스트
 	const sortOptionList = [
@@ -247,7 +256,7 @@ function Question() {
 							})}
 						</div>
 					</AnswersContainer>
-					<AnswerForm createAnswerHandler={createAnswerHandler} />
+					{userId && <AnswerForm createAnswerHandler={createAnswerHandler} />}
 				</main>
 			</QuestionContainer>
 		)

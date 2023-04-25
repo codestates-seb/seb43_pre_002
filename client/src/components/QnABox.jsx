@@ -33,6 +33,12 @@ const QnABoxContainer = styled.div`
 
 // Qusetion, Answer에 사용되는 Div
 function QnABox({ data, deleteQuestionHandler, deleteAnswerHandler, mode }) {
+	const [userId, setUserId] = useState(
+		localStorage.getItem('loginmemberid')
+			? JSON.parse(localStorage.getItem('loginmemberid'))
+			: null,
+	);
+
 	const deleteButtonHandler = () => {
 		if (window.confirm('삭제하시겠습니까?')) {
 			if (mode === 'question') {
@@ -66,23 +72,26 @@ function QnABox({ data, deleteQuestionHandler, deleteAnswerHandler, mode }) {
 						<div className="function__container">
 							<CopyToClipboard
 								text={window.location.href}
-								onCopy={() => alert('복사에 성공했습니다')}
+								onCopy={() => alert('주소 복사에 성공했습니다')}
 							>
 								<span aria-hidden="true">copy</span>
 							</CopyToClipboard>
-
-							<Link
-								to={`/edit/${
-									mode === 'question'
-										? `question/${data.questionId}`
-										: `answer/${data.answerId}`
-								}`}
-							>
-								<span>edit</span>
-							</Link>
-							<span onClick={deleteButtonHandler} aria-hidden="true">
-								delete
-							</span>
+							{userId === data.memberId && (
+								<>
+									<Link
+										to={`/edit/${
+											mode === 'question'
+												? `question/${data.questionId}`
+												: `answer/${data.answerId}`
+										}`}
+									>
+										<span>edit</span>
+									</Link>
+									<span onClick={deleteButtonHandler} aria-hidden="true">
+										delete
+									</span>
+								</>
+							)}
 						</div>
 						<UserInfoCard data={data} mode={mode} />
 					</div>

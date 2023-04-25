@@ -96,7 +96,11 @@ const Tooltip = styled.div`
 
 // QnABox의 IconMenu
 function IconMenu({ data, mode }) {
-	const memberId = 1;
+	const [userId, setUserId] = useState(
+		localStorage.getItem('loginmemberid')
+			? JSON.parse(localStorage.getItem('loginmemberid'))
+			: null,
+	);
 
 	const [vote, setVote] = useState(
 		mode === 'question' ? data.questionVoteCount : data.answerVoteCount,
@@ -110,7 +114,7 @@ function IconMenu({ data, mode }) {
 		// 질문일 경우
 		if (mode === 'question') {
 			axios
-				.post(`/questions/${targetId}/upvote/${memberId}`, {
+				.post(`/questions/${targetId}/upvote/${userId}`, {
 					headers: {
 						'Content-Type': `application/json`,
 						'ngrok-skip-browser-warning': '69420',
@@ -126,7 +130,7 @@ function IconMenu({ data, mode }) {
 		else {
 			const body = {
 				voteType: 'up',
-				memberId,
+				memberId: userId,
 			};
 			axios
 				.post(`/answers/${data.answerId}/vote`, JSON.stringify(body), {
@@ -148,7 +152,7 @@ function IconMenu({ data, mode }) {
 		// 질문일 경우
 		if (mode === 'question') {
 			axios
-				.post(`/questions/${targetId}/downvote/${memberId}`, {
+				.post(`/questions/${targetId}/downvote/${userId}`, {
 					headers: {
 						'Content-Type': `application/json`,
 						'ngrok-skip-browser-warning': '69420',
@@ -163,7 +167,7 @@ function IconMenu({ data, mode }) {
 		else {
 			const body = {
 				voteType: 'down',
-				memberId,
+				memberId: userId,
 			};
 			axios
 				.post(`/answers/${data.answerId}/vote`, JSON.stringify(body), {
@@ -187,18 +191,18 @@ function IconMenu({ data, mode }) {
 
 	// 답변 채택 기능(백엔드 구현 필요)
 	const isCheckedHadler = () => {
-		setIsChecked(!isChecked);
-		// axios
-		// 	.post(`/answers/${data.answerId}/accept`, {
-		// 		headers: {
-		// 			'Content-Type': `application/json`,
-		// 			'ngrok-skip-browser-warning': '69420',
-		// 		},
-		// 	})
-		// 	.then((res) => {
-		// 		setIsChecked(!isChecked);
-		// 		console.log(res);
-		// 	});
+		// setIsChecked(!isChecked);
+		axios
+			.post(`/answers/${data.answerId}/accept`, {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => {
+				setIsChecked(!isChecked);
+				console.log(res);
+			});
 	};
 
 	return (
@@ -214,7 +218,7 @@ function IconMenu({ data, mode }) {
 				<AiFillCaretDown onClick={voteDownHandler} />
 				<Tooltip>Save this question.</Tooltip>
 			</li>
-			{mode === 'answer' && (
+			{mode === 'answer' && userId === data.memberId && (
 				<li className={isChecked ? 'on' : 'off'}>
 					<FaCheck onClick={isCheckedHadler} />
 				</li>

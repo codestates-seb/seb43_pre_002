@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { dateFormat } from '../utils/dateFormat';
@@ -44,6 +45,12 @@ const UserInfoCardContainer = styled.div`
 
 // 유저의 정보가 담긴 InfoCard
 function UserInfoCard({ data, mode }) {
+	const [userId, setUserId] = useState(
+		localStorage.getItem('loginmemberid')
+			? JSON.parse(localStorage.getItem('loginmemberid'))
+			: null,
+	);
+
 	return (
 		<UserInfoCardContainer>
 			<span>
@@ -54,15 +61,28 @@ function UserInfoCard({ data, mode }) {
 			<div className="bottom__container">
 				{data.memberId && (
 					<UserProfile
-						userName={String(data.memberId)}
+						// userName={String(data.memberId)}
+						userName="username"
 						boxSize="32px"
 						fontSize="13px"
 					/>
 				)}
-
+				<UserProfile
+					// userName={String(data.memberId)}
+					userName="username"
+					boxSize="32px"
+					fontSize="13px"
+				/>
 				<div className="right__container">
-					<Link to="/myprofile">
+					<Link
+						to={
+							userId === data.memberId
+								? `/myprofile/${data.memberId}`
+								: `/userprofile/${data.memberId}`
+						}
+					>
 						<span className="user__name">{data.memberId}</span>
+						<span className="user__name">username</span>
 					</Link>
 				</div>
 			</div>
