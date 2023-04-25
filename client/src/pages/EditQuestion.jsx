@@ -107,8 +107,8 @@ function EditQuestion() {
 			})
 			.then((res) => {
 				const question = res.data;
-				setTitle(question.data.questionTitle);
-				setContent(question.data.questionContent);
+				setTitle(question.questionTitle);
+				setContent(question.questionContent);
 			})
 			.catch((res) => {
 				console.log('에러발생');
@@ -121,14 +121,12 @@ function EditQuestion() {
 			title,
 			content,
 		};
-		axios
-			.patch(`/questions/${targetId}`, JSON.stringify(newQuestion), {
-				headers: {
-					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
-				},
-			})
-			.then((res) => console.log(res.data));
+		axios.patch(`/questions/${targetId}`, JSON.stringify(newQuestion), {
+			headers: {
+				'Content-Type': `application/json`,
+				'ngrok-skip-browser-warning': '69420',
+			},
+		});
 	};
 
 	const titleHandler = (e) => {
