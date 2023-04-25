@@ -97,6 +97,8 @@ function Question() {
 	const [questionData, setQuestionData] = useState(null);
 	const [answerList, setAnswerList] = useState([]);
 	const [sortType, setSortType] = useState('oldest');
+	const [render, setRender] = useState(false);
+
 	const [userId, setUserId] = useState(
 		localStorage.getItem('loginmemberid')
 			? JSON.parse(localStorage.getItem('loginmemberid'))
@@ -144,7 +146,7 @@ function Question() {
 				console.log('에러발생');
 				navigate('/');
 			});
-	}, []);
+	}, [render]);
 
 	// 질문 삭제
 	const deleteQuestionHandler = (data) => {
@@ -170,7 +172,8 @@ function Question() {
 				},
 			})
 			.then((res) => {
-				navigate(0);
+				setRender(!render);
+				// navigate(0);
 			})
 			.catch((res) => console.log(res));
 	};
