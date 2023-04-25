@@ -4,24 +4,30 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import styled, { createGlobalStyle } from 'styled-components';
+import ReactQuill from 'react-quill';
 import MyHeader from '../../components/MyHeader';
+import 'react-quill/dist/quill.snow.css';
 
 function MyEdit() {
 	const [userData, setUserData] = useState(null);
+	const [aboutMe, setAboutMe] = useState('');
 	const { register, handleSubmit, setValue } = useForm();
 	const { member_id } = useParams();
 	const navigate = useNavigate();
 
-	// Define a function to handle form submission
+	const handleAboutMeChange = (value) => {
+		setAboutMe(value);
+	};
+
 	const onSubmit = (data) => {
 		if (!userData) {
 			return;
 		}
 		axios
-			.patch(` http://localhost:3000/data/${member_id}`, {
+			.patch(`http://localhost:3000/member/${member_id}`, {
 				displayName: data.displayName,
 				title: data.title,
-				aboutMe: data.aboutMe,
+				aboutMe,
 				twitterLink: data.twitterLink,
 				blogLink: data.blogLink,
 				websiteLink: data.websiteLink,
@@ -40,9 +46,10 @@ function MyEdit() {
 
 	useEffect(() => {
 		axios
-			.get(` http://localhost:3000/data/${member_id}`)
+			.get(`http://localhost:3000/member/${member_id}`)
 			.then((response) => {
 				setUserData(response.data);
+				setAboutMe(response.data.aboutMe);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -68,7 +75,7 @@ function MyEdit() {
 			<MyHeader />
 			<ContentsColumn>
 				<Category>Edit your profile</Category>
-				<SubTitle>Public infomation</SubTitle>
+				<SubTitle>Public information</SubTitle>
 				{userData && (
 					<EditWrap>
 						<form onSubmit={handleSubmit(onSubmit)}>
@@ -86,49 +93,52 @@ function MyEdit() {
 								placeholder="No title has been set"
 							/>
 							<EditCategory>About me</EditCategory>
-							<Textarea
-								type="text"
-								{...register('aboutMe')}
+							<ReactQuill
+								style={{ height: '200px' }}
 								defaultValue={userData.aboutMe}
+								onChange={handleAboutMeChange}
 								placeholder="Introduce Yourself"
 							/>
-							<EditCategory>Account link</EditCategory>
-							<AccountWrap>
-								<Section>
-									<EditCategory>Twitter link</EditCategory>
-									<AccountInput
-										type="text"
-										{...register('twitterLink')}
-										defaultValue={userData.twitterLink}
-									/>
-									<EditCategory>Blog link</EditCategory>
-									<AccountInput
-										type="text"
-										{...register('blogLink')}
-										defaultValue={userData.blogLink}
-									/>
-									<EditCategory>Website link</EditCategory>
-									<AccountInput
-										type="text"
-										{...register('websiteLink')}
-										defaultValue={userData.websiteLink}
-									/>
-								</Section>
-								<Section>
-									<EditCategory>Github link</EditCategory>
-									<AccountInput
-										type="text"
-										{...register('githubLink')}
-										defaultValue={userData.githubLink}
-									/>
-									<EditCategory>Notion link</EditCategory>
-									<AccountInput
-										type="text"
-										{...register('notionLink')}
-										defaultValue={userData.notionLink}
-									/>
-								</Section>
-							</AccountWrap>
+							<div className="Accountdiv">
+								<EditCategory>Account link</EditCategory>
+								<AccountWrap>
+									<Section>
+										<EditCategory>Twitter link</EditCategory>
+
+										<AccountInput
+											type="text"
+											{...register('twitterLink')}
+											defaultValue={userData.twitterLink}
+										/>
+										<EditCategory>Blog link</EditCategory>
+										<AccountInput
+											type="text"
+											{...register('blogLink')}
+											defaultValue={userData.blogLink}
+										/>
+										<EditCategory>Website link</EditCategory>
+										<AccountInput
+											type="text"
+											{...register('websiteLink')}
+											defaultValue={userData.websiteLink}
+										/>
+									</Section>
+									<Section>
+										<EditCategory>Github link</EditCategory>
+										<AccountInput
+											type="text"
+											{...register('githubLink')}
+											defaultValue={userData.githubLink}
+										/>
+										<EditCategory>Notion link</EditCategory>
+										<AccountInput
+											type="text"
+											{...register('notionLink')}
+											defaultValue={userData.notionLink}
+										/>
+									</Section>
+								</AccountWrap>
+							</div>
 							<PageButtons>
 								<PageButton type="submit">Save</PageButton>
 								<Link to={`/myprofile/${member_id}`}>
@@ -149,6 +159,9 @@ const Wrap = styled.div`
 	flex-direction: column;
 	width: 100%;
 	align-items: center;
+	.Accountdiv {
+		margin-top: 60px;
+	}
 `;
 
 const Category = styled.span`
@@ -158,7 +171,6 @@ const Category = styled.span`
 	border-bottom: 3px solid black;
 `;
 const ContentsColumn = styled.div`
-	margin-top: 20px;
 	display: flex;
 	width: 70vw;
 	flex-direction: column;
@@ -181,14 +193,6 @@ const EditCategory = styled.div`
 
 const Input = styled.input`
 	width: 40%;
-	border: 2px solid var(--line-color);
-	border-radius: 3px;
-	margin-bottom: 20px;
-`;
-
-const Textarea = styled.textarea`
-	width: 90%;
-	height: 20vh;
 	border: 2px solid var(--line-color);
 	border-radius: 3px;
 	margin-bottom: 20px;
@@ -233,6 +237,7 @@ const PageButton = styled.button`
 		color: white;
 	}
 `;
+
 const GlobalStyles = createGlobalStyle`
   #root{
 	  display: flex;

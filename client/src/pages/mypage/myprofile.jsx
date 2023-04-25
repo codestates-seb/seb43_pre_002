@@ -13,7 +13,7 @@ function MyProfile() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios.get(` http://localhost:3000/data`);
+			const result = await axios.get(`http://localhost:3000/member`);
 			setUserData(result.data);
 
 			const articleResult = await axios.get(`http://localhost:3000/question`);
@@ -32,17 +32,26 @@ function MyProfile() {
 		return value === null || value === undefined || value === '';
 	}
 
+	const html = userData[`${member_id - 1}`]?.aboutMe;
+	const plainText = html
+		? new DOMParser().parseFromString(html, 'text/html').body.textContent
+		: null;
+
 	return (
 		<Wrap>
 			<GlobalStyles />
 			<MyHeader />
 			{userData && !isEmpty(userData[`${member_id - 1}`]?.aboutMe) && (
 				<div>
-					<Category>About</Category>
-					<AboutBox>{userData[`${member_id - 1}`]?.aboutMe}</AboutBox>
+					{plainText ? (
+						<>
+							<Category>About</Category>
+							<AboutBox>{plainText}</AboutBox>
+						</>
+					) : null}
 				</div>
 			)}
-			<Post>
+			<Post style={{ marginTop: plainText ? '40px' : '0px' }}>
 				<Category>Top posts</Category>
 				<MyList lists={sortedArticles.slice(0, 10)} />
 			</Post>
