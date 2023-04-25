@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import CommentBox from './CommentBox';
 import DividerLine from './DividerLine';
 import IconList from './IconMenu';
@@ -63,7 +64,13 @@ function QnABox({ data, deleteQuestionHandler, deleteAnswerHandler, mode }) {
 
 					<div className="bottom__container">
 						<div className="function__container">
-							<span>copy</span>
+							<CopyToClipboard
+								text={window.location.href}
+								onCopy={() => alert('복사에 성공했습니다')}
+							>
+								<span aria-hidden="true">copy</span>
+							</CopyToClipboard>
+
 							<Link
 								to={`/edit/${
 									mode === 'question'
@@ -79,7 +86,7 @@ function QnABox({ data, deleteQuestionHandler, deleteAnswerHandler, mode }) {
 						</div>
 						<UserInfoCard data={data} mode={mode} />
 					</div>
-					<CommentBox />
+					{/* <CommentBox answerId={data.answerId} /> */}
 				</div>
 			</QnABoxContainer>
 		</>

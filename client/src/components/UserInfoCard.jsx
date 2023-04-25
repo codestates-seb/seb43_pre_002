@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { dateFormat } from '../utils/dateFormat';
 import UserProfile from './UserProfile';
 
 const UserInfoCardContainer = styled.div`
 	background-color: var(--main-color-lighten);
 	font-size: var(--font-base);
+	color: var(--font-color-gray);
 	display: flex;
 	width: 200px;
 	height: 70px;
@@ -45,10 +47,12 @@ function UserInfoCard({ data, mode }) {
 	return (
 		<UserInfoCardContainer>
 			<span>
-				{mode === 'question' ? data.questionCreatedAt : data.answerCreatedAt}
+				{mode === 'question'
+					? `asked ${dateFormat(new Date(data.questionCreatedAt))}`
+					: `answered ${dateFormat(new Date(data.answerCreatedAt))}`}
 			</span>
 			<div className="bottom__container">
-				{data.member_id && (
+				{data.memberId && (
 					<UserProfile
 						userName={String(data.memberId)}
 						boxSize="32px"
