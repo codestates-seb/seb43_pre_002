@@ -1,5 +1,6 @@
 package pro.stackOverFlow.question.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.member.entity.Member;
@@ -56,10 +57,11 @@ public class Question extends Auditable {
     @JoinColumn(name = "accepted_answer_id")
     private Answer acceptedAnswer;
 
-//    @ManyToOne//(targetEntity = Member.class, cascade = CascadeType.PERSIST)
-//    @Setter
-//    @JoinColumn(name = "MEMBER_ID")
-//    private Member member;
+    @JsonIgnore
+    @ManyToOne
+    @Setter
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     public Answer getAcceptedAnswer() {
         return acceptedAnswer;
@@ -73,6 +75,13 @@ public class Question extends Auditable {
 //    public Member getUser() {
 //        return this.member;
 //    }
+
+    public void addMember(Member member) {
+        this.member = member;
+        if (!member.getQuestions().contains(this)) {
+            member.getQuestions().add(this);
+        }
+    }
 
 
 

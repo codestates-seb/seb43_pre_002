@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.util.Assert;
 import pro.stackOverFlow.member.entity.Member;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -30,10 +31,19 @@ public class MemberDto {
     @AllArgsConstructor
     public static class Patch {
         private long memberId;
-
         private String displayName;
-
+        private String title;
         private String aboutMe;
+        private String websiteLink;
+
+        private String twitterLink;
+
+        private String githubLink;
+
+        private String notionLink;
+
+        private String blogLink;
+
 
 
 
@@ -54,7 +64,17 @@ public class MemberDto {
         private long memberId;
         private String email;
         private String displayName;
+        private String title;
         private String aboutMe;
+        private String websiteLink;
+
+        private String twitterLink;
+
+        private String githubLink;
+
+        private String notionLink;
+
+        private String blogLink;
 
     }
 }
