@@ -2,13 +2,16 @@ package pro.stackOverFlow.member.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pro.stackOverFlow.dto.SingleResponseDto;
 import pro.stackOverFlow.member.dto.MemberDto;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.member.mapper.MemberMapper;
@@ -32,6 +35,7 @@ import java.util.List;
 @RequestMapping("/members")
 @Validated
 @Slf4j
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MemberController {
     private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
@@ -54,13 +58,18 @@ public class MemberController {
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
         Member member = memberMapper.memberPostDtoToMember(requestBody);
 
-
         Member createdMember = memberService.createMember(member);
-        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
-        return ResponseEntity.created(location).build();
+        // Todo : 로그인 된 memberId 가지고 오기 1
+//        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
+
+        // Todo :
+//
+
+        return new ResponseEntity<>(
+                memberMapper.memberToMemberResponseDto(createdMember), HttpStatus.CREATED);
     }
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
@@ -74,35 +83,25 @@ public class MemberController {
                 HttpStatus.OK);
     }
 
-//
-    @GetMapping("/{member-id}")
-    public ResponseEntity getMember(
-            @PathVariable("member-id") @Positive long memberId) {
-        Member member = memberService.findMember(memberId);
-        return new ResponseEntity<>(
-                memberMapper.memberToMemberResponseDto(member)
-                , HttpStatus.OK);
-    }
+//    @CrossOrigin(origins = "*", allowedHeaders = "*")
+@GetMapping("/{member-id}")
+public ResponseEntity getMember(
+        @PathVariable("member-id") @Positive long memberId) {
+    Member member = memberService.findMember(memberId);
+    return new ResponseEntity<>(
+            new SingleResponseDto<>(
+                    memberMapper.memberToMemberMyPageDto(member))
+            , HttpStatus.OK);
+}
 
-//    @GetMapping
-//    public ResponseEntity getMembers(@Positive @RequestParam int page,
-//                                     @Positive @RequestParam int size) {
-//        Page<Member> pageMembers = memberService.findMembers(page - 1, size);
-//        List<Member> members = pageMembers.getContent();
-//        return new ResponseEntity<>(
-//                new MultiResponseDto<>(memberMapper.membersToMemberResponseDtos(members),
-//                        pageMembers),
-//                HttpStatus.OK);
-//    }
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity getMembers() {
         List<Member> members = memberService.findMembers();
         return new ResponseEntity<>(
-                memberMapper.membersToMemberResponseDtos(members),
-                HttpStatus.OK);
+                memberMapper.membersToMemberResponseDtos(members), HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(
             @PathVariable("member-id") @Positive long memberId) {

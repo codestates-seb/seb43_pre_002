@@ -38,8 +38,8 @@ public class MemberService {
     }
 
     public Member createMember(Member member) {
-        Member findMember = memberRepository.findByEmail(member.getEmail());
-        Member.checkExistEmail(findMember);
+//        Member findMember = memberRepository.findByEmail(member.getEmail()).get();
+//        Member.checkExistEmail(findMember);
 
 //        String encryptedPassword = passwordEncoder.encode(member.getPassword());
 //        member.setPassword(encryptedPassword);
@@ -57,7 +57,19 @@ public class MemberService {
                 .ifPresent(name -> findMember.setDisplayName(name));
         Optional.ofNullable(member.getAboutMe())
                 .ifPresent(aboutMe -> findMember.setAboutMe(aboutMe));
-        findMember.setModifiedAt(LocalDateTime.now());
+        Optional.ofNullable(member.getTitle())
+                .ifPresent(title -> findMember.setTitle(title));
+        Optional.ofNullable(member.getWebsiteLink())
+                .ifPresent(link -> findMember.setWebsiteLink(link));
+        Optional.ofNullable(member.getTwitterLink())
+                .ifPresent(link -> findMember.setTwitterLink(link));
+        Optional.ofNullable(member.getGithubLink())
+                .ifPresent(link -> findMember.setGithubLink(link));
+        Optional.ofNullable(member.getNotionLink())
+                .ifPresent(link -> findMember.setNotionLink(link));
+        Optional.ofNullable(member.getBlogLink())
+                .ifPresent(link -> findMember.setBlogLink(link));
+
 
         return memberRepository.save(findMember);
 
@@ -65,7 +77,6 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public Member findMember(long memberId) {
-//        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         return findMember;
@@ -74,11 +85,6 @@ public class MemberService {
     public List<Member> findMembers() {
         return memberRepository.findAll();
     }
-
-//    @Transactional(readOnly = true)
-//    public Page<Member> findMembers(int page, int size) {
-//        return memberRepository.findAll(PageRequest.of(page, size, Sort.by("memberId").descending()));
-//    }
 
 
 

@@ -1,18 +1,24 @@
 package pro.stackOverFlow.question.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.audit.Auditable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import pro.stackOverFlow.audit.Auditable;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@Data
+@Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Question extends Auditable {
 
     @Id
@@ -32,14 +38,19 @@ public class Question extends Auditable {
     private long questionVoteCount;
 
 
-    //------------------------------------------------------------------------------------------------------------------
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<Answer> answers;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<QuestionVote> questionVotes;
 
 
     @OneToOne
     @JoinColumn(name = "accepted_answer_id")
     private Answer acceptedAnswer;
 
-    @ManyToOne//(targetEntity = Member.class, cascade = CascadeType.PERSIST)
+    @JsonIgnore
+    @ManyToOne
     @Setter
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
@@ -53,10 +64,11 @@ public class Question extends Auditable {
     }
 
 
-    public Member getUser() {
-        return this.member;
+    public void addMember(Member member) {
+        this.member = member;
+        if (!member.getQuestions().contains(this)) {
+            member.getQuestions().add(this);
+        }
     }
-
-
 
 }
