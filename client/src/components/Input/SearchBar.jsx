@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { IoIosSearch } from 'react-icons/io';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setSearchTerm } from '../../reducers/searchSlice';
 
 const SearchInputContainer = styled.div`
 	display: flex;
@@ -32,8 +34,9 @@ const SearchInput = styled.input`
 	background-color: transparent;
 `;
 
-function SearchBar({ type, placeholder, setSearchTerm }) {
+function SearchBar({ type, placeholder }) {
 	const [searchInput, setSearchInput] = useState('');
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const InputRef = useRef(null);
 
@@ -47,7 +50,7 @@ function SearchBar({ type, placeholder, setSearchTerm }) {
 
 	const handleSearch = (e) => {
 		if (e.key === 'Enter' && searchInput !== '') {
-			setSearchTerm(searchInput);
+			dispatch(setSearchTerm(searchInput));
 			navigate('/');
 			setTimeout(() => {
 				setSearchInput('');

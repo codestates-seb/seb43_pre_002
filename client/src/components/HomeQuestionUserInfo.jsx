@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 function HomeQuestionUserInfo({ data }) {
@@ -5,9 +6,9 @@ function HomeQuestionUserInfo({ data }) {
 	return (
 		<QuestionUserInfoContainer>
 			<span className="user-icon">😆</span>
-			<a href="www.google.com" className="user-profile">
+			<Link to={`/userprofile/${data.member}`} className="user-profile">
 				{data.member}
-			</a>
+			</Link>
 			<span className="user-updated">{parsedDate}</span>
 		</QuestionUserInfoContainer>
 	);

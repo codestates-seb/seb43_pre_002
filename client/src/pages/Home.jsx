@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import HomeHeader from '../components/HomeHeader';
 import HomeFilter from '../components/HomeFilter';
 import HomeQuestionItem from '../components/HomeQuestionItem';
 import HomeFooter from '../components/HomeFooter';
 import { filterByTerm } from '../utils/filterFunction';
 
-function Home({ searchTerm }) {
+function Home() {
+	const searchTerm = useSelector((state) => state.searchTerm);
 	const [allData, setAllData] = useState([]);
 	const [filteredData, setFilteredData] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
