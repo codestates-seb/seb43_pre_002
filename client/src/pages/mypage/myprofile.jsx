@@ -8,18 +8,18 @@ import MyList from '../../components/MyList';
 
 function MyProfile() {
 	const [userData, setUserData] = useState({});
-	const [articleData, setArticleData] = useState([]);
 	const { member_id } = useParams();
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const result = await axios.get(`http://localhost:3000/member`);
+				const result = await axios.get(`/members/${member_id}`, {
+					headers: {
+						'ngrok-skip-browser-warning': '69420',
+					},
+				});
 				setUserData(result.data);
-
-				const articleResult = await axios.get(`http://localhost:3000/question`);
-				setArticleData(articleResult.data);
 			} catch (error) {
 				console.error(error);
 				navigate('/');
@@ -28,17 +28,17 @@ function MyProfile() {
 		fetchData();
 	}, []);
 
-	const filteredArticles = articleData
-		? articleData.filter((a) => a.memberId === parseInt(member_id, 10))
-		: [];
+	const filteredArticles = userData.questions ? userData.questions : [];
 
-	const sortedArticles = filteredArticles.sort((a, b) => b.answer - a.answer);
+	const sortedArticles = filteredArticles.sort(
+		(a, b) => b.voteCount - a.voteCount,
+	);
 
 	function isEmpty(value) {
 		return value === null || value === undefined || value === '';
 	}
 
-	const html = userData[`${member_id - 1}`]?.aboutMe;
+	const html = userData.aboutMe;
 	const plainText = html
 		? new DOMParser().parseFromString(html, 'text/html').body.textContent
 		: null;
@@ -47,7 +47,7 @@ function MyProfile() {
 		<Wrap>
 			<GlobalStyles />
 			<MyHeader />
-			{userData && !isEmpty(userData[`${member_id - 1}`]?.aboutMe) && (
+			{userData && !isEmpty(userData.aboutMe) && (
 				<div>
 					{plainText ? (
 						<>

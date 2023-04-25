@@ -10,7 +10,6 @@ import DeleteModal from './DeleteModal';
 function MyHeader() {
 	const [isOpen2, setIsOpen2] = useState(false);
 	const [userData, setUserData] = useState({});
-	const [articleData, setArticleData] = useState([]);
 	const { member_id } = useParams();
 	const navigate = useNavigate();
 
@@ -21,13 +20,12 @@ function MyHeader() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const result = await axios.get(
-					`http://localhost:3000/member/${member_id}`,
-				);
+				const result = await axios.get(`/members/${member_id}`, {
+					headers: {
+						'ngrok-skip-browser-warning': '69420',
+					},
+				});
 				setUserData(result.data);
-
-				const articleResult = await axios.get(`http://localhost:3000/question`);
-				setArticleData(articleResult.data);
 			} catch (error) {
 				console.error(error);
 				navigate('/');
@@ -36,13 +34,9 @@ function MyHeader() {
 		fetchData();
 	}, []);
 
-	const filteredArticles = articleData
-		? articleData.filter((a) => a.memberId === parseInt(member_id, 10))
-		: [];
+	const filteredArticles = userData.questions ? userData.questions : [];
 
-	const filteredAnswerd = articleData
-		? articleData.filter((a) => a.answerId === parseInt(member_id, 10))
-		: [];
+	const filteredAnswerd = userData.answers ? userData.answers : [];
 
 	return (
 		<Wrap>

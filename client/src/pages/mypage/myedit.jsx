@@ -24,7 +24,7 @@ function MyEdit() {
 			return;
 		}
 		axios
-			.patch(`http://localhost:3000/member/${member_id}`, {
+			.patch(`/members/${member_id}`, {
 				displayName: data.displayName,
 				title: data.title,
 				aboutMe,
@@ -47,7 +47,11 @@ function MyEdit() {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:3000/member/${member_id}`)
+			.get(`/members/${member_id}`, {
+				headers: {
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
 			.then((response) => {
 				setUserData(response.data);
 				setAboutMe(response.data.aboutMe);

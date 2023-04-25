@@ -1,17 +1,16 @@
 /* eslint-disable camelcase */
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function MyList({ lists }) {
-	const { question_id } = useParams();
 	return (
 		<PostList>
 			{lists.map((list) => (
-				<List key={list.question}>
+				<List key={list.id}>
 					<ListTitle>
-						<Ansewer>{list.answer}</Ansewer>
-						<Link to={`/question/${question_id}`}>
-							<Title href={list.title}>질문 링크, 질문 상세 페이지 이동</Title>
+						<Ansewer>{list.voteCount ?? 0}</Ansewer>
+						<Link to={`/question/${list.questionId}`}>
+							<Title href={list.title}>{list.title}</Title>
 						</Link>
 					</ListTitle>
 					<CreateDate>{list.createdAt.substring(0, 10)}</CreateDate>

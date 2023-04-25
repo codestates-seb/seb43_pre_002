@@ -9,7 +9,7 @@ function DeleteModal({ isOpen, setIsOpen }) {
 
 	const deleteData = async () => {
 		try {
-			await axios.delete(`http://localhost:3000/data/${member_id}`); // 해당 id에 해당하는 문서 삭제
+			await axios.delete(`http://localhost:3000/member/${member_id}`); // 해당 id에 해당하는 문서 삭제
 			alert('문서가 삭제되었습니다.');
 			navigate(`/`);
 		} catch (error) {
