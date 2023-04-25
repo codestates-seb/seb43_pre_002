@@ -12,7 +12,7 @@ function Home() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [limitItems, setLimitItems] = useState(5);
 	const totalDataCount = filteredData.length;
-	localStorage.setItem('loginMemberId', '1');
+
 	useEffect(() => {
 		setFilteredData([...allData]);
 	}, [allData]);
