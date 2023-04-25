@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
+// import CryptoJS from 'crypto-js';
 import { AiFillExclamationCircle } from 'react-icons/ai';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -34,12 +35,24 @@ function LoginForm() {
 	const navigate = useNavigate();
 	const [loginError, setLoginError] = useState(null);
 
-	const onSubmit = async (inputData) => {
+	const onSubmit = (inputData) => {
+		// const cipherPassword = CryptoJS.AES.encrypt(
+		// 	inputData.password,
+		// 	process.env.REACT_APP_SECRET_KEY,
+		// ).toString();
 		const loginInfo = {
 			email: inputData.email,
 			password: inputData.password,
+			// password: cipherPassword, // 서버와 함께 해시화 해야 함
 		};
-		await axios
+		// const bytes = CryptoJS.AES.decrypt(
+		// 	cipherPassword,
+		// 	process.env.REACT_APP_SECRET_KEY,
+		// ).toString(CryptoJS.enc.Utf8);
+		// console.log('입력한 패스워드: ', inputData.password);
+		// console.log('암호화 패스워드: ', cipherPassword);
+		// console.log('복호화 패스워드: ', bytes);
+		axios
 			.post(`/auth/login`, loginInfo) // package.json proxy url 확인
 			.then((response) => {
 				setLoginError(null);
@@ -47,7 +60,7 @@ function LoginForm() {
 				const expiresInSec =
 					parseInt(response.headers['access-token-expiration-minutes'], 10) *
 					60;
-				localStorage.setItem('access_token', accessToken); // 로그아웃 시 removeItem
+				localStorage.setItem('access_token', accessToken);
 				localStorage.setItem(
 					'loginMemberId',
 					JSON.stringify(response.data.memberId),
