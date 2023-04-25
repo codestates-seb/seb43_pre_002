@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import crypto from 'crypto-js';
+// import CryptoJS from 'crypto-js';
 import styled from 'styled-components';
 import axios from 'axios';
+import { AiFillExclamationCircle } from 'react-icons/ai';
+import { useState } from 'react';
 import SignInput from './Input/SignInput';
 import SignButton from './Button/SignButton';
 import Agreement from './Agreement';
@@ -19,10 +21,23 @@ const PasswordText = styled.p`
 	color: #727981;
 `;
 
+const ErrorMessage = styled.p`
+	margin-top: 1px;
+	display: flex;
+	align-items: center;
+	font-size: var(--font-small);
+	color: var(--error-message-color);
+`;
+
+const ErrorIcon = styled(AiFillExclamationCircle)`
+	margin-right: 5px;
+`;
+
 function SignupForm() {
+	const [signupError, setSignupError] = useState(null);
 	const navigate = useNavigate();
 	const onSubmit = (inputData) => {
-		// const cipherPassword = crypto.AES.encrypt(
+		// const cipherPassword = CryptoJS.AES.encrypt(
 		// 	inputData.password,
 		// 	process.env.REACT_APP_SECRET_KEY,
 		// ).toString();
@@ -32,6 +47,14 @@ function SignupForm() {
 			password: inputData.password,
 			// password: cipherPassword, // 서버와 함께 해시화 해야 함
 		};
+		// 복호화 테스트
+		// const bytes = CryptoJS.AES.decrypt(
+		// 	cipherPassword,
+		// 	process.env.REACT_APP_SECRET_KEY,
+		// ).toString(CryptoJS.enc.Utf8);
+		// console.log('입력한 패스워드: ', inputData.password);
+		// console.log('암호화 패스워드: ', cipherPassword);
+		// console.log('복호화 패스워드: ', bytes);
 		axios
 			.post(`/members`, userInfo)
 			.then((response) => {
@@ -39,8 +62,20 @@ function SignupForm() {
 				const { memberId } = response.data;
 				window.localStorage.setItem('signupMemberId', JSON.stringify(memberId)); // 가입한 멤버 memberId를 로컬 스토리지에 저장
 				navigate('/signupsuccess');
+				setSignupError(null);
 			})
-			.catch((error) => console.log(error.message));
+			.catch((error) => {
+				console.log(error.response.status);
+				if (error.response.status === 409) {
+					setSignupError(
+						'이메일이 중복되었습니다. 다른 이메일을 사용해주세요.',
+					);
+				} else {
+					alert(
+						'서버 오류로 불편을 드려 죄송합니다. 잠시 후에 다시 시도해주세요. 😅',
+					);
+				}
+			});
 	};
 
 	const {
@@ -108,6 +143,12 @@ function SignupForm() {
 					error={errors.agreement}
 				/>
 				<SignButton type="submit">Sign up</SignButton>
+				{signupError && (
+					<ErrorMessage>
+						<ErrorIcon />
+						{signupError}
+					</ErrorMessage>
+				)}
 			</form>
 		</FormContainer>
 	);
