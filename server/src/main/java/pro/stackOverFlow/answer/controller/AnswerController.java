@@ -50,6 +50,7 @@ public class AnswerController {
     }
 
 
+
     @GetMapping("/answers/{answer-id}")
     public ResponseEntity getAnswer(@PathVariable("answer-id") long answerId){
 
@@ -80,7 +81,7 @@ public class AnswerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-// ---------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------
 
     @PostMapping("/answers/{answer-id}/vote")
     public ResponseEntity vote(@PathVariable("answer-id") @Positive long answerId,
@@ -106,7 +107,8 @@ public class AnswerController {
     }
 
 
-//-------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------
+
 
     @PostMapping("/answers/{answer-id}/accept/{member-id}")
     public ResponseEntity markAnswerAsAccepted(@PathVariable("answer-id") Long answerId,
@@ -119,7 +121,6 @@ public class AnswerController {
             return new ResponseEntity(new TrueFalseResponseDto(false, e.getMessage()), HttpStatus.OK);
         }
     }
-
 
 
 
