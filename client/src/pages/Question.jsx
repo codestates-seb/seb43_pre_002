@@ -5,6 +5,8 @@ import axios from 'axios';
 import LoginHeader from '../components/Header/LoginHeader';
 import QnABox from '../components/QnABox';
 import AnswerForm from '../components/AnswerForm';
+import { newestAnswer, oldestAnswer } from '../utils/filterFunction';
+import { timeForToday } from '../utils/dateFormat';
 
 const QuestionContainer = styled.div`
 	display: flex;
@@ -93,10 +95,28 @@ function Question() {
 	const { question_id: targetId } = useParams();
 	const [questionData, setQuestionData] = useState(null);
 	const [answerList, setAnswerList] = useState([]);
+	const [sortType, setSortType] = useState('oldest');
+
+	// 정렬 리스트
+	const sortOptionList = [
+		{ value: 'oldest', name: 'oldest first' },
+		{ value: 'newest', name: 'newest first' },
+	];
+
+	// 정렬 기능
+	const sortAnswerList = () => {
+		if (sortType === 'oldest') {
+			return oldestAnswer(answerList);
+		}
+		if (sortType === 'newest') {
+			return newestAnswer(answerList);
+		}
+		return answerList;
+	};
 
 	const navigate = useNavigate();
 
-	// 질문 조회 및 답변 조회(완료)
+	// 질문 조회 및 답변 조회
 	useEffect(() => {
 		axios
 			.get(`/questions/${targetId}`, {
@@ -107,8 +127,9 @@ function Question() {
 			})
 			.then((res) => {
 				const question = res.data;
-				setQuestionData(question.data);
-				setAnswerList(question.data.answers);
+				// console.log(question);
+				setQuestionData(question);
+				setAnswerList(question.answers);
 			})
 			.catch((res) => {
 				console.log('에러발생');
@@ -116,12 +137,18 @@ function Question() {
 			});
 	}, []);
 
-	// 질문 삭제(백엔드 구현 필요)
+	// 질문 삭제
 	const deleteQuestionHandler = (data) => {
-		axios.delete(`/questions/${targetId}`).then((res) => {
-			setQuestionData({});
-			navigate('/');
-		});
+		axios
+			.delete(`/questions/${targetId}`)
+			.then((res) => {
+				setQuestionData({});
+				navigate('/');
+			})
+			.catch((res) => {
+				console.log(res);
+				navigate('/');
+			});
 	};
 
 	// 답변 생성
@@ -135,7 +162,8 @@ function Question() {
 			})
 			.then((res) => {
 				navigate(0);
-			});
+			})
+			.catch((res) => console.log(res));
 	};
 
 	// 답변 삭제
@@ -144,7 +172,8 @@ function Question() {
 			.delete(`/answers/${data.answerId}`)
 			.then((res) =>
 				setAnswerList(answerList.filter((it) => it.answerId !== data.answerId)),
-			);
+			)
+			.catch((res) => console.log(res));
 	};
 
 	return (
@@ -155,7 +184,7 @@ function Question() {
 						<div className="top__container">
 							<span>{questionData.questionTitle}</span>
 
-							<Link to="/myprofile">
+							<Link to="/askquestion">
 								<button type="button">Ask Questions</button>
 							</Link>
 						</div>
@@ -164,13 +193,13 @@ function Question() {
 								<InfoBox>
 									<span className="first__span">Asked</span>
 									<span className="second__span">
-										{questionData.questionCreatedAt}
+										{timeForToday(questionData.questionCreatedAt)}
 									</span>
 								</InfoBox>
 								<InfoBox>
 									<span className="first__span">Modified</span>
 									<span className="second__span">
-										{questionData.questionModifiedAt}
+										{timeForToday(questionData.questionModifiedAt)}
 									</span>
 								</InfoBox>
 								<InfoBox>
@@ -195,14 +224,17 @@ function Question() {
 							<span>{`${answerList.length} Answers`}</span>
 							<div className="filter__container">
 								<span>Sorted by:</span>
-								<select>
-									<option>Date modified (newest first)</option>
-									<option>Date created (oldest first)</option>
+								<select onChange={(e) => setSortType(e.target.value)}>
+									{sortOptionList.map((it) => (
+										<option key={it.value} value={it.value}>
+											{it.name}
+										</option>
+									))}
 								</select>
 							</div>
 						</div>
 						<div>
-							{answerList.map((it) => {
+							{sortAnswerList().map((it) => {
 								return (
 									<QnABox
 										key={it.answerId}
