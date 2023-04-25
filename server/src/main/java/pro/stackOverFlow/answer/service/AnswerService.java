@@ -37,10 +37,12 @@ public class AnswerService {
     @Autowired
     private QuestionService questionService;
 
-    public Answer createAnswer(Answer answer, long questionId) {
-        Question question = questionService.findQuestion(questionId);
+    public Answer createAnswer(Answer answer, Question question, Member member) {
+//        Question question = questionService.findQuestion(questionId);
 //                .orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
         answer.setQuestion(question);
+        answer.setMember(member);
+
         return answerRepository.save(answer);
     }
 
@@ -72,10 +74,13 @@ public class AnswerService {
 
     public void deleteAnswer(long answerId) {
         Answer answer = findVerifiedAnswer(answerId);
+        Question question = answer.getQuestion();
+        question.setAcceptedAnswer(null);
+        questionRepository.save(question);
         answerRepository.delete(answer);
     }
 
-
+//----------------------------------------------------------------------------------------------------------------------
 
     public void setUpVote(long answerId, long userId) {
         memberService.findMember(userId);
@@ -153,7 +158,7 @@ public class AnswerService {
 
     //------------------------------------------------------------------------------------------------------------------
 
-//  답변 채택 부분 로그인 구현되야 테스트 가능
+
 
     public Answer markAnswerAsAccepted(Long answerId, Member user) {
         // 답변 조회
@@ -192,10 +197,11 @@ public class AnswerService {
         // 질문 조회
         Question question = answer.getQuestion();
 
-        // 현재 로그인한 사용자가 질문 작성자가 아닐 경우 예외 발생
-        if (!question.getMember().equals(user)) {
-            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
-        }
+
+//        // 현재 로그인한 사용자가 질문 작성자가 아닐 경우 예외 발생
+//        if (!question.getUser().equals(user)) {
+//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
+//        }
 
         // 채택된 답변인지 확인
         if (!answer.isAccepted()) {

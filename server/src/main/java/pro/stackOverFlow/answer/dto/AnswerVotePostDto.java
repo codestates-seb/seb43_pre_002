@@ -10,9 +10,6 @@ public class AnswerVotePostDto {
     private long memberId;
 
 
-    public String getVoteType() {
-        return voteType;
-    }
 
     public void setVoteType(String voteType) {
         this.voteType = voteType;
