@@ -45,6 +45,11 @@ public interface MemberMapper {
             answerMyPageDto.setAnswerId(answer.getAnswerId());
             answerMyPageDto.setContent(answer.getContent());
             answerMyPageDto.setCreatedAt(answer.getCreatedAt());
+            answerMyPageDto.setQuestionId(answer.getQuestion().getQuestionId());
+
+            //추가
+            answerMyPageDto.setTitle(answer.getQuestion().getTitle());
+            answerMyPageDto.setVoteCount(answer.getQuestion().getQuestionVoteCount());
             return answerMyPageDto;
         }).collect(Collectors.toList());
 

@@ -83,18 +83,4 @@ public class Question extends Auditable {
         }
     }
 
-
-
-    @ManyToOne(targetEntity = Member.class, cascade = CascadeType.PERSIST)
-    @Setter
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
-
-    public void addMember(Member member) {
-        this.member = member;
-        if (!member.getQuestions().contains(this)) {
-            member.getQuestions().add(this);
-        }
-    }
-
 }

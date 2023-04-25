@@ -11,4 +11,7 @@ public class AnswerMyPageDto {
     private long answerId;
     private String content;
     private LocalDateTime createdAt;
+    private long questionId;
+    private String title;
+    private Long voteCount;
 }

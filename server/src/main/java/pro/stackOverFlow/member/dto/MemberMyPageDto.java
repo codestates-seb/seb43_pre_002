@@ -16,6 +16,14 @@ public class MemberMyPageDto {
     private String displayName;
     private String title;
     private String aboutMe;
+    private String websiteLink;
+    private String twitterLink;
+
+    private String githubLink;
+
+    private String notionLink;
+
+    private String blogLink;
     private List<QuestionMyPageDto> questions;
     private List<AnswerMyPageDto> answers;
 }
