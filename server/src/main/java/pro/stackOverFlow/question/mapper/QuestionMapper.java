@@ -3,11 +3,8 @@ package pro.stackOverFlow.question.mapper;
 import org.springframework.stereotype.Component;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.member.entity.Member;
-import pro.stackOverFlow.question.dto.QuestionDto;
-import pro.stackOverFlow.question.dto.QuestionGetAnswerDto;
-import pro.stackOverFlow.question.dto.QuestionGetResponseDto;
+import pro.stackOverFlow.question.dto.*;
 import pro.stackOverFlow.question.entity.Question;
-import pro.stackOverFlow.question.dto.QuestionVoteResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +15,7 @@ public class QuestionMapper {
 
     // Post
     public Question questionPostDtoToQuestion(QuestionDto.Post requestBody/*, Member member*/) {
-        if (requestBody == null
-//                || member == null
-        ) {
+        if (requestBody == null /*|| member == null*/) {
             return null;
         }
         Question question = new Question();
@@ -36,14 +31,14 @@ public class QuestionMapper {
             return null;
         }
 
+        Question question = new Question();
+        question.setQuestionId(requestBody.getQuestionId());
+        question.setTitle(requestBody.getTitle());
+        question.setContent(requestBody.getContent());
+        question.setCreatedAt(requestBody.getQuestionCreatedAt());
+        question.setModifiedAt(requestBody.getQuestionModifiedAt());
 
-        Question.QuestionBuilder question = Question.builder();
-
-        question.questionId(requestBody.getQuestionId());
-        question.title(requestBody.getTitle());
-        question.content(requestBody.getContent());
-
-        return question.build();
+        return question;
     }
 
     // Response
@@ -92,24 +87,22 @@ public class QuestionMapper {
                             .answerId(answer.getAnswerId())
                             .answerCreatedAt(answer.getCreatedAt())
                             .answerContent(answer.getContent())
-                            .answerVoteCount((long) answer.getVoteCount())
-//                            .memberId(answer.getMember().getMemberId())
+                            .answerVoteCount(answer.getVoteCount())
+                            .memberId(answer.getMember().getMemberId())
                             .build();
                 })
                 .collect(Collectors.toList());
     }
 
     public QuestionGetResponseDto questionInfoToQuestionGetResponseDto(Question question, Member member, List<QuestionGetAnswerDto> answers) {
-        if (question == null ||
-//                member == null ||
-                answers == null) {
+        if (question == null || member == null || answers == null) {
             return null;
         }
 
         return QuestionGetResponseDto.builder()
                 .questionId(question.getQuestionId())
-//                .memberId(member.getMemberId())
-//                .email(member.getEmail())
+                .memberId(member.getMemberId())
+                .email(member.getEmail())
                 .questionTitle(question.getTitle())
                 .questionContent(question.getContent())
                 .questionCreatedAt(question.getCreatedAt())

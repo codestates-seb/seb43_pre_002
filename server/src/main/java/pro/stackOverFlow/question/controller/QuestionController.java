@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pro.stackOverFlow.answer.entity.Answer;
+import pro.stackOverFlow.answer.service.AnswerService;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.member.service.MemberService;
 import pro.stackOverFlow.question.dto.QuestionDto;
@@ -15,6 +16,7 @@ import pro.stackOverFlow.question.mapper.QuestionMapper;
 import pro.stackOverFlow.question.service.QuestionService;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -26,6 +28,7 @@ public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
     private final MemberService memberService;
+    private final AnswerService answerService;
 
     //Todo: member-id 임시적으로 추가!! 보안 적용 후 없앨 예정
     //Todo : addMember 메서드 추가!
@@ -66,14 +69,18 @@ public class QuestionController {
         List<QuestionGetAnswerDto> questionGetAnswerDto = questionMapper.answersToQuestionGetAnswerDto(answers);
         Member member = question.getMember();
 
-
         return new ResponseEntity<>(questionMapper.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto), HttpStatus.OK);
     }
 
 
     @GetMapping
-    public ResponseEntity getAllQuestions() {
+    public ResponseEntity<List<Question>> getAllQuestions() {
         List<Question> allQuestions = questionService.findAllQuestions();
+
+        for (Question question : allQuestions) {
+            int answerCount = question.getAnswers().size();
+            question.setAnswerCount(answerCount);
+        }
 
         return new ResponseEntity<>(allQuestions, HttpStatus.OK);
     }

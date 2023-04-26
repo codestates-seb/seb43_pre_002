@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.exception.BusinessLogicException;
@@ -124,4 +125,7 @@ public class QuestionService {
         return questionVoteRepository.save(questionVote);
     }
 
+//    public List<Question> findAllQuestionsWithAnswers() {
+//        return questionRepository.findAllWithAnswers();
+//    }
 }

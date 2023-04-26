@@ -43,11 +43,12 @@ public class Answer extends Auditable {
     @ElementCollection
     public List<Long> downVotedUserId = new ArrayList<>();
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
