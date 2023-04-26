@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import {
+	activeList,
 	newestList,
 	recommendList,
 	unansweredList,
@@ -15,6 +16,9 @@ function HomeFilter({ totalDataCount, allData, setFilteredData }) {
 	const handleRecommend = () => {
 		setFilteredData(recommendList(allData));
 	};
+	const handleActive = () => {
+		setFilteredData(activeList(allData));
+	};
 
 	return (
 		<HomeFilterContainer>
@@ -27,7 +31,11 @@ function HomeFilter({ totalDataCount, allData, setFilteredData }) {
 				>
 					Newest
 				</button>
-				<button className="sort-button active" type="button">
+				<button
+					className="sort-button active"
+					type="button"
+					onClick={handleActive}
+				>
 					Active
 				</button>
 				<button
