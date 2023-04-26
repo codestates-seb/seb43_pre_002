@@ -14,4 +14,5 @@ public class AnswerMyPageDto {
     private long questionId;
     private String title;
     private Long voteCount;
+    private int answerCount;
 }
