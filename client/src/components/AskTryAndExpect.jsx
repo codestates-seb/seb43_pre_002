@@ -68,6 +68,9 @@ const AskTryAndExpectContainer = styled.div`
 	border-radius: 5px;
 	border: 1px solid var(--line-color);
 	margin-right: 2%;
+	@media screen and (max-width: 800px) {
+		width: 100%;
+	}
 	.title {
 		font-size: var(--font-large);
 		font-weight: 700;
@@ -76,6 +79,9 @@ const AskTryAndExpectContainer = styled.div`
 	.descriptor {
 		font-size: var(--font-base);
 		margin-bottom: 0.5%;
+		@media screen and (max-width: 600px) {
+			font-size: 10px;
+		}
 	}
 	.input-container {
 		width: 100%;
@@ -89,7 +95,7 @@ const AskTryAndExpectContainer = styled.div`
 	.next {
 		color: white;
 		background-color: var(--main-color);
-		width: 6%;
+		width: 45px;
 		height: 2em;
 		&:hover {
 			background-color: var(--button-hover-color);

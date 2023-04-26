@@ -9,7 +9,7 @@ export const titleHelperContents = [
 		<h5 className="title">Writing a good title</h5>
 		<div className="descriptor">
 			<div className="descriptor__icon">
-				<FaPencilAlt size={40} />
+				<FaPencilAlt size={35} />
 			</div>
 			<div className="descriptor__contents">
 				<p>Your title should summarize the problem.</p>
@@ -29,7 +29,7 @@ export const detailHelperContents = [
 		<h5 className="title">Introduce the problem</h5>
 		<div className="descriptor">
 			<div className="descriptor__icon">
-				<FaPencilAlt size={40} />
+				<FaPencilAlt size={35} />
 			</div>
 			<div className="descriptor__contents">
 				<p>
@@ -48,7 +48,7 @@ export const tryAndExpectContents = [
 		<h5 className="title">Expect on the problem</h5>
 		<div className="descriptor">
 			<div className="descriptor__icon">
-				<FaPencilAlt size={40} />
+				<FaPencilAlt size={35} />
 			</div>
 			<div className="descriptor__contents">
 				<p>
@@ -67,5 +67,5 @@ export const tryAndExpectContents = [
 			</div>
 		</div>
 	</>,
-	250,
+	280,
 ];

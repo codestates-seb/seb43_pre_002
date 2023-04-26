@@ -30,7 +30,10 @@ const AskQuestionHeaderContainer = styled.div`
 		font-size: var(--font-title-large);
 	}
 	.img-container {
-		width: 50%;
+		@media screen and (max-width: 800px) {
+			display: none;
+		}
+		width: 600px;
 		height: 100%;
 		.ask-page-img {
 			width: 100%;

@@ -47,6 +47,9 @@ const AskDescriptionContainer = styled.div`
 	border: 1px solid var(--main-color);
 	border-radius: 5px;
 	margin-bottom: 1%;
+	@media screen and (max-width: 800px) {
+		width: 100%;
+	}
 	.header {
 		font-size: var(--font-title-small);
 		font-weight: 700;

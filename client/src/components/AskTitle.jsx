@@ -53,6 +53,9 @@ const AskTitleContainer = styled.div`
 	border-radius: 5px;
 	border: 1px solid var(--line-color);
 	margin-right: 2%;
+	@media screen and (max-width: 800px) {
+		width: 100%;
+	}
 	.title {
 		font-size: var(--font-large);
 		font-weight: 700;
@@ -74,7 +77,7 @@ const AskTitleContainer = styled.div`
 	.next {
 		color: white;
 		background-color: var(--main-color);
-		width: 6%;
+		width: 45px;
 		height: 2em;
 		&:hover {
 			background-color: var(--button-hover-color);

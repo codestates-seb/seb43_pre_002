@@ -15,6 +15,9 @@ const AskTitleHelperContainer = styled.div`
 	flex-direction: column;
 	width: 30%;
 	height: ${({ size }) => `${size}px`};
+	@media screen and (max-width: 800px) {
+		display: none;
+	}
 	.title {
 		display: flex;
 		align-items: center;
@@ -39,11 +42,17 @@ const AskTitleHelperContainer = styled.div`
 		p {
 			font-size: var(--font-base);
 			margin: 1em 0;
+			@media screen and (max-width: 1100px) {
+				font-size: var(--font-small);
+			}
 		}
 	}
 	.descriptor__icon {
 		width: 20%;
 		padding: 3% 0 0 3%;
+		@media screen and (max-width: 1100px) {
+			padding: 1% 0 0 1%;
+		}
 	}
 	.descriptor__contents {
 		width: 80%;
