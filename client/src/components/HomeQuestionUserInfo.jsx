@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import UserProfile from './UserProfile';
 
 function HomeQuestionUserInfo({ data, memberId, memberName }) {
 	const date = new Date(data.createdAt);
@@ -7,10 +8,16 @@ function HomeQuestionUserInfo({ data, memberId, memberName }) {
 	const parsedDate = date.toLocaleString('ko-kr');
 	return (
 		<QuestionUserInfoContainer>
-			<span className="user-icon">😆</span>
-			<Link to={`/userprofile/${memberId}`} className="user-profile">
-				{memberName}
-			</Link>
+			<div className="user-container">
+				<UserProfile
+					userName={memberName || 'user'}
+					boxSize="20px"
+					fontSize="8px"
+				/>
+				<Link to={`/userprofile/${memberId}`} className="user-profile">
+					{memberName}
+				</Link>
+			</div>
 			<span className="user-updated">{parsedDate}</span>
 		</QuestionUserInfoContainer>
 	);
@@ -20,9 +27,9 @@ export default HomeQuestionUserInfo;
 
 const QuestionUserInfoContainer = styled.div`
 	display: flex;
-	justify-content: right;
+	justify-content: left;
 	align-items: center;
-	width: 30%;
+	width: 21%;
 	height: 20%;
 	background-color: transparent;
 	position: absolute;
@@ -35,13 +42,21 @@ const QuestionUserInfoContainer = styled.div`
 		margin-right: 7px;
 		font-size: var(--font-base);
 	}
-	.user-profile {
-		color: #3b6fa0; // 전역변수로 바꾸기
-		:hover {
-			color: var(--main-color);
+	.user-container {
+		display: flex;
+		align-items: center;
+		.user-profile {
+			color: #3b6fa0; // 전역변수로 바꾸기
+			margin-left: 2px;
+			:hover {
+				color: var(--main-color);
+			}
 		}
 	}
+
 	.user-updated {
+		position: absolute;
+		right: 0;
 		color: gray;
 	}
 `;

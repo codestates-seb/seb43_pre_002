@@ -33,7 +33,7 @@ const QuestionContentsContainer = styled.div`
 	}
 	.question-body {
 		margin: 0;
-		width: 100%;
+		width: 80%;
 		height: calc(var(--font-base) * 2.95);
 		font-size: var(--font-base);
 		display: -webkit-box;
