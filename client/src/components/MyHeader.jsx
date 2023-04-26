@@ -76,7 +76,7 @@ function MyHeader() {
 }
 
 const Wrap = styled.div`
-	margin-top: 70px;
+	margin-top: 50px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;

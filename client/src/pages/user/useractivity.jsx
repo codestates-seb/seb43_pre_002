@@ -1,37 +1,43 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import UserHeader from '../../components/UserHeader';
 import MyList from '../../components/MyList';
 
 function UserActivity() {
 	const [userData, setUserData] = useState({});
-	const [articleData, setArticleData] = useState([]);
 	const { member_id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios.get(` http://localhost:3000/data`);
-			setUserData(result.data);
-
-			const articleResult = await axios.get(`http://localhost:3000/question`);
-			setArticleData(articleResult.data);
+			try {
+				const result = await axios.get(`/members/${member_id}`, {
+					headers: {
+						'ngrok-skip-browser-warning': '69420',
+					},
+				});
+				setUserData(result.data);
+			} catch (error) {
+				console.error(error);
+				navigate('/');
+			}
 		};
 		fetchData();
 	}, []);
 
-	const filteredArticles = articleData
-		? articleData.filter((a) => a.memberId === parseInt(member_id, 10))
-		: [];
+	const filteredArticles = userData.questions ? userData.questions : [];
 
-	const filteredAnswerd = articleData
-		? articleData.filter((a) => a.answerId === parseInt(member_id, 10))
-		: [];
+	const filteredAnswerd = userData.answers ? userData.answers : [];
 
-	const sortedArticles = filteredArticles.sort((a, b) => b.answer - a.answer);
-	const sortedAnswers = filteredAnswerd.sort((a, b) => b.answer - a.answer);
+	const sortedArticles = filteredArticles.sort(
+		(a, b) => b.voteCount - a.voteCount,
+	);
+	const sortedAnswers = filteredAnswerd.sort(
+		(a, b) => b.voteCount - a.voteCount,
+	);
 
 	return (
 		<Wrap>
@@ -116,7 +122,7 @@ function UserActivity() {
 	);
 }
 const Wrap = styled.div`
-	margin-top: 40px;
+	margin-top: 50px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
