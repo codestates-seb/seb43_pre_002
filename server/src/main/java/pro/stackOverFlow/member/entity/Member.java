@@ -59,12 +59,12 @@ public class Member extends Auditable {
 
     @JsonIgnore
     @Setter
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Question> questions;
 
     @JsonIgnore
     @Setter
-    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Answer> answers;
 
     public Member(Long memberId) {
