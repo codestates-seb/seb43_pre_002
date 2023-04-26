@@ -1,48 +1,63 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import MyHeader from '../../components/MyHeader';
 import MyList from '../../components/MyList';
 
 function MyProfile() {
 	const [userData, setUserData] = useState({});
-	const [articleData, setArticleData] = useState([]);
 	const { member_id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios.get(` http://localhost:3000/data`);
-			setUserData(result.data);
-
-			const articleResult = await axios.get(`http://localhost:3000/question`);
-			setArticleData(articleResult.data);
+			try {
+				const result = await axios.get(`/members/${member_id}`, {
+					headers: {
+						'ngrok-skip-browser-warning': '69420',
+					},
+				});
+				setUserData(result.data);
+			} catch (error) {
+				console.error(error);
+				navigate('/');
+			}
 		};
 		fetchData();
 	}, []);
 
-	const filteredArticles = articleData
-		? articleData.filter((a) => a.memberId === parseInt(member_id, 10))
-		: [];
+	const filteredArticles = userData.questions ? userData.questions : [];
 
-	const sortedArticles = filteredArticles.sort((a, b) => b.answer - a.answer);
+	const sortedArticles = filteredArticles.sort(
+		(a, b) => b.voteCount - a.voteCount,
+	);
 
 	function isEmpty(value) {
 		return value === null || value === undefined || value === '';
 	}
 
+	const html = userData.aboutMe;
+	const plainText = html
+		? new DOMParser().parseFromString(html, 'text/html').body.textContent
+		: null;
+
 	return (
 		<Wrap>
 			<GlobalStyles />
 			<MyHeader />
-			{userData && !isEmpty(userData[`${member_id - 1}`]?.aboutMe) && (
+			{userData && !isEmpty(userData.aboutMe) && (
 				<div>
-					<Category>About</Category>
-					<AboutBox>{userData[`${member_id - 1}`]?.aboutMe}</AboutBox>
+					{plainText ? (
+						<>
+							<Category>About</Category>
+							<AboutBox>{plainText}</AboutBox>
+						</>
+					) : null}
 				</div>
 			)}
-			<Post>
+			<Post style={{ marginTop: plainText ? '40px' : '0px' }}>
 				<Category>Top posts</Category>
 				<MyList lists={sortedArticles.slice(0, 10)} />
 			</Post>
@@ -51,7 +66,7 @@ function MyProfile() {
 }
 
 const Wrap = styled.div`
-	margin-top: 40px;
+	margin-top: 50px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;

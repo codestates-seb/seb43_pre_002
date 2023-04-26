@@ -1,37 +1,43 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import MyHeader from '../../components/MyHeader';
 import MyList from '../../components/MyList';
 
 function MyActivity() {
 	const [userData, setUserData] = useState({});
-	const [articleData, setArticleData] = useState([]);
 	const { member_id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios.get(` http://localhost:3000/data`);
-			setUserData(result.data);
-
-			const articleResult = await axios.get(`http://localhost:3000/question`);
-			setArticleData(articleResult.data);
+			try {
+				const result = await axios.get(`/members/${member_id}`, {
+					headers: {
+						'ngrok-skip-browser-warning': '69420',
+					},
+				});
+				setUserData(result.data);
+			} catch (error) {
+				console.error(error);
+				navigate('/');
+			}
 		};
 		fetchData();
 	}, []);
 
-	const filteredArticles = articleData
-		? articleData.filter((a) => a.memberId === parseInt(member_id, 10))
-		: [];
+	const filteredArticles = userData.questions ? userData.questions : [];
 
-	const filteredAnswerd = articleData
-		? articleData.filter((a) => a.answerId === parseInt(member_id, 10))
-		: [];
+	const filteredAnswerd = userData.answers ? userData.answers : [];
 
-	const sortedArticles = filteredArticles.sort((a, b) => b.answer - a.answer);
-	const sortedAnswers = filteredAnswerd.sort((a, b) => b.answer - a.answer);
+	const sortedArticles = filteredArticles.sort(
+		(a, b) => b.voteCount - a.voteCount,
+	);
+	const sortedAnswers = filteredAnswerd.sort(
+		(a, b) => b.voteCount - a.voteCount,
+	);
 
 	return (
 		<Wrap>
@@ -52,62 +58,32 @@ function MyActivity() {
 				<List>
 					<ListTitle>
 						<Ansewer>twitterLink : </Ansewer>
-						<Title
-							href={
-								userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].twitterLink
-							}
-						>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].twitterLink}
+						<Title href={userData && userData.twitterLink}>
+							{userData && userData.twitterLink}
 						</Title>
 					</ListTitle>
 					<ListTitle>
 						<Ansewer>githubLink : </Ansewer>
-						<Title
-							href={
-								userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].githubLink
-							}
-						>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].githubLink}
+						<Title href={userData && userData.githubLink}>
+							{userData && userData.githubLink}
 						</Title>
 					</ListTitle>
 					<ListTitle>
 						<Ansewer>notionLink : </Ansewer>
-						<Title
-							href={
-								userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].notionLink
-							}
-						>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].notionLink}
+						<Title href={userData && userData.notionLink}>
+							{userData && userData.notionLink}
 						</Title>
 					</ListTitle>
 					<ListTitle>
 						<Ansewer>blogLink : </Ansewer>
-						<Title
-							href={
-								userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].blogLink
-							}
-						>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].blogLink}
+						<Title href={userData && userData.blogLink}>
+							{userData && userData.blogLink}
 						</Title>
 					</ListTitle>
 					<ListTitle>
 						<Ansewer>websiteLink : </Ansewer>
-						<Title
-							href={
-								userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].twitterLink
-							}
-						>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].websiteLink}
+						<Title href={userData && userData.websiteLink}>
+							{userData && userData.websiteLink}
 						</Title>
 					</ListTitle>
 				</List>
@@ -116,7 +92,7 @@ function MyActivity() {
 	);
 }
 const Wrap = styled.div`
-	margin-top: 40px;
+	margin-top: 50px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -169,7 +145,7 @@ const List = styled.ul`
 
 const Title = styled.a`
 	margin-left: 10px;
-	padding: 5px 0;
+	text-align: center;
 	color: var(--main-color);
 	font-size: var(--font-large);
 `;

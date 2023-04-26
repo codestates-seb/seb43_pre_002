@@ -1,40 +1,47 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GlobalStyles from '../styles/GlobalStyles.style';
+import UserProfile from './UserProfile';
 
 function UserHeader() {
 	const [userData, setUserData] = useState({});
-	const [articleData, setArticleData] = useState([]);
 	const { member_id } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await axios.get(`http://localhost:3000/data/${member_id}`);
-			setUserData(result.data);
-
-			const articleResult = await axios.get(`http://localhost:3000/question`);
-			setArticleData(articleResult.data);
+			try {
+				const result = await axios.get(`/members/${member_id}`, {
+					headers: {
+						'ngrok-skip-browser-warning': '69420',
+					},
+				});
+				setUserData(result.data);
+			} catch (error) {
+				console.error(error);
+				navigate('/');
+			}
 		};
 		fetchData();
 	}, []);
 
-	const filteredArticles = articleData
-		? articleData.filter((a) => a.memberId === parseInt(member_id, 10))
-		: [];
+	const filteredArticles = userData.questions ? userData.questions : [];
 
-	const filteredAnswerd = articleData
-		? articleData.filter((a) => a.answerId === parseInt(member_id, 10))
-		: [];
+	const filteredAnswerd = userData.answers ? userData.answers : [];
 
 	return (
 		<Wrap>
 			<GlobalStyles />
 			<ProfileHeader>
 				<Profile>
-					<UserImg>{userData && userData.displayName}</UserImg>
+					<UserProfile
+						userName={String(userData.displayName)}
+						boxSize="100px"
+						fontSize="27px"
+					/>
 					<UserInfo>
 						<Name>{userData && userData.displayName}</Name>
 						<Info>{userData && userData.title}</Info>
@@ -55,6 +62,7 @@ function UserHeader() {
 }
 
 const Wrap = styled.div`
+	margin-top: 50px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -71,20 +79,9 @@ const ProfileHeader = styled.div`
 `;
 
 const Profile = styled.div`
+	padding-top: 20px;
 	display: flex;
 	flex-direction: row;
-`;
-
-const UserImg = styled.div`
-	background-color: var(--main-color);
-	color: white;
-	width: 100px;
-	height: 100px;
-	font-size: var(--font-title-large);
-	font-weight: bold;
-	text-align: center;
-	padding: 35px 0;
-	border-radius: 15px;
 `;
 
 const UserInfo = styled.div`
@@ -111,8 +108,9 @@ const Info = styled.div`
 const PageButtons = styled.div`
 	display: flex;
 	width: 100%;
-	margin-top: 60px;
-	margin-bottom: 50px;
+	margin-top: 70px;
+	margin-bottom: 10px;
+	margin-left: 30%;
 `;
 
 const PageButton = styled.button`
