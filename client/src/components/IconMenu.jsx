@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import {
 	AiFillCaretUp,
@@ -8,6 +8,7 @@ import {
 } from 'react-icons/ai';
 import { MdBookmarkBorder, MdBookmark } from 'react-icons/md';
 import { FaCheck } from 'react-icons/fa';
+import axios from 'axios';
 
 const IconMenuContainer = styled.ul`
 	width: 52px;
@@ -21,6 +22,7 @@ const IconMenuContainer = styled.ul`
 		text-align: center;
 
 		color: var(--font-color-gray);
+
 		> svg {
 			font-size: var(--font-base);
 			width: 36px;
@@ -39,12 +41,10 @@ const IconMenuContainer = styled.ul`
 		width: 18px;
 		height: 18px;
 	}
-
+	.on {
+		color: green;
+	}
 	list-style: none;
-`;
-
-const SelectedIcon = styled(FaCheck)`
-	color: ${(props) => (props.isSelected ? 'green' : `var(--font-color-gray);`)};
 `;
 
 const Tooltip = styled.div`
@@ -95,41 +95,114 @@ const Tooltip = styled.div`
 `;
 
 // QnABox의 IconMenu
-function IconMenu() {
-	const [vote, setVote] = useState(0);
+function IconMenu({ data, mode }) {
+	const [userId, setUserId] = useState(
+		localStorage.getItem('loginmemberid')
+			? JSON.parse(localStorage.getItem('loginmemberid'))
+			: null,
+	);
+
+	const [vote, setVote] = useState(
+		mode === 'question' ? data.questionVoteCount : data.answerVoteCount,
+	);
 	const [isBookmark, setIsBookmark] = useState(false);
-	const [isSelected, setIsSelected] = useState(false);
+	const [isChecked, setIsChecked] = useState(false);
+	const { question_id: targetId } = useParams();
 
-	const postVote = () => {
-		console.log('서버전송');
-	};
-
-	const postBookmark = () => {
-		console.log('서버 전송');
-	};
-
-	const postSelectAnswer = () => {
-		console.log('서버 전송');
-	};
-
+	// 추천 증가 기능
 	const voteUpHandler = () => {
-		setVote(vote + 1);
-		postVote();
+		// 질문일 경우
+		if (mode === 'question') {
+			axios
+				.post(`/questions/${targetId}/upvote/${userId}`, {
+					headers: {
+						'Content-Type': `application/json`,
+						'ngrok-skip-browser-warning': '69420',
+					},
+				})
+				.then((res) => {
+					setVote(vote + 1);
+					// console.log(res.data);
+				})
+				.catch((res) => console.log('투표가 불가합니다.'));
+		}
+		// 답변일 경우
+		else {
+			const body = {
+				voteType: 'up',
+				memberId: userId,
+			};
+			axios
+				.post(`/answers/${data.answerId}/vote`, JSON.stringify(body), {
+					headers: {
+						'Content-Type': `application/json`,
+						'ngrok-skip-browser-warning': '69420',
+					},
+				})
+				.then((res) => {
+					if (res.data.success) {
+						setVote(vote + 1);
+					}
+				});
+		}
 	};
 
+	// 추천 감소 기능
 	const voteDownHandler = () => {
-		setVote(vote - 1);
-		postVote();
+		// 질문일 경우
+		if (mode === 'question') {
+			axios
+				.post(`/questions/${targetId}/downvote/${userId}`, {
+					headers: {
+						'Content-Type': `application/json`,
+						'ngrok-skip-browser-warning': '69420',
+					},
+				})
+				.then((res) => {
+					setVote(vote - 1);
+					// console.log(res.data);
+				})
+				.catch((res) => console.log('투표가 불가합니다.'));
+		} // 답변일 경우
+		else {
+			const body = {
+				voteType: 'down',
+				memberId: userId,
+			};
+			axios
+				.post(`/answers/${data.answerId}/vote`, JSON.stringify(body), {
+					headers: {
+						'Content-Type': `application/json`,
+						'ngrok-skip-browser-warning': '69420',
+					},
+				})
+				.then((res) => {
+					if (res.data.success) {
+						setVote(vote - 1);
+					}
+				});
+		}
 	};
 
-	const isBookmarkHandler = () => {
-		setIsBookmark(!isBookmark);
-		postBookmark();
-	};
+	// const isBookmarkHandler = () => {
+	// 	setIsBookmark(!isBookmark);
+	// 	postBookmark();
+	// };
 
-	const isSelectedHadler = () => {
-		setIsSelected(!isSelected);
-		postSelectAnswer();
+	// 답변 채택 기능(백엔드 구현 필요)
+	const isCheckedHadler = () => {
+		// setIsChecked(!isChecked);
+		axios
+			.post(`/answers/${data.answerId}/accept`, {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => {
+				setIsChecked(!isChecked);
+				console.log(res);
+			});
 	};
 
 	return (
@@ -145,10 +218,12 @@ function IconMenu() {
 				<AiFillCaretDown onClick={voteDownHandler} />
 				<Tooltip>Save this question.</Tooltip>
 			</li>
-			<li>
-				<SelectedIcon isSelected={isSelected} onClick={isSelectedHadler} />
-			</li>
-			<li>
+			{mode === 'answer' && userId === data.memberId && (
+				<li className={isChecked ? 'on' : 'off'}>
+					<FaCheck onClick={isCheckedHadler} />
+				</li>
+			)}
+			{/* <li>
 				{isBookmark ? (
 					<MdBookmarkBorder
 						className="bookmark__icon on"
@@ -159,9 +234,13 @@ function IconMenu() {
 				)}
 
 				<Tooltip>Save this question.</Tooltip>
-			</li>
+			</li> */}
 			<li>
-				<Link to="/timeline/:id">
+				<Link
+					to={`/timeline/${targetId}/${
+						mode === 'question' ? 0 : data.answerId
+					}`}
+				>
 					<AiOutlineFieldTime className="timeline__icon" />
 				</Link>
 				<Tooltip>Show activity on this post.</Tooltip>

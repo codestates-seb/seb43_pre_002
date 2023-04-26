@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import DividerLine from './DividerLine';
@@ -47,10 +48,45 @@ const NewCommentContainer = styled.div`
 `;
 
 // Comment 출력시 사용되는 컴포넌트
-function CommentBox({ commentList }) {
+function CommentBox({ answerId }) {
 	const [isWrite, setIsWrite] = useState(false);
 	const [comments, setComments] = useState([]);
 	const [newComment, setNewComment] = useState('');
+
+	// 댓글 조회(백엔드 구현 필요)
+	useEffect(() => {
+		axios
+			.get(`/comments`, {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => {
+				const totalComments = res.data.data;
+
+				setComments(totalComments.filter((it) => it.answerId === answerId));
+			})
+			.catch((res) => {
+				console.log(res);
+			});
+	}, []);
+
+	// 댓글 생성
+	const createCommentHandler = () => {
+		const body = {
+			content: newComment,
+		};
+		axios
+			.post(`/answers/${answerId}/comment`, JSON.stringify({ ...body }), {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => {})
+			.catch((res) => console.log(res));
+	};
 
 	const commentHandler = (event) => {
 		setNewComment(event.target.value);

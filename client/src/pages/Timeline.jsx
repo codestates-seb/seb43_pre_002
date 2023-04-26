@@ -1,19 +1,21 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import DividerLine from '../components/DividerLine';
+
+import { dateFormat } from '../utils/dateFormat';
 
 const TimelineContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 
 	/* border: black solid 1px; */
-
+	position: absolute;
+	top: 50px;
 	align-items: center;
 	width: 100vw;
 
-	header {
-		width: 100%;
-		background-color: var(--main-color);
-	}
 	main {
 		padding: 24px;
 		display: flex;
@@ -93,64 +95,162 @@ const TimelineContainer = styled.div`
 `;
 
 function Timeline() {
+	const navigate = useNavigate();
+	const { question_id: questionId, answer_id: answerId } = useParams();
+
+	const [question, setQuestion] = useState();
+	const [answer, setAnswer] = useState();
+
+	const removeHTMLTag = (data) => {
+		// 정규식
+		const reg = /<[^>]*>?/g;
+		if (data === undefined) {
+			return data;
+		}
+
+		return data.replace(reg, '');
+	};
+
+	// 질문 조회
+	useEffect(() => {
+		axios
+			.get(`/questions/${questionId}`, {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => {
+				const que = res.data;
+				console.log(que);
+				setQuestion(que);
+			})
+			.catch((err) => navigate('/'));
+	}, []);
+
+	// 답변 조회
+	useEffect(() => {
+		if (Number(answerId) > 0) {
+			axios
+				.get(`/answers/${answerId}`, {
+					headers: {
+						'Content-Type': `application/json`,
+						'ngrok-skip-browser-warning': '69420',
+					},
+				})
+				.then((res) => {
+					const ans = res.data.data;
+					if (ans) {
+						setAnswer(ans);
+						console.log(ans);
+					} else {
+						navigate('/');
+					}
+				})
+				.catch((err) => navigate('/'));
+		}
+	}, []);
+
 	return (
 		<TimelineContainer>
-			<header>헤더</header>
-
-			<main>
-				<div className="sub__header">
-					<h1>
-						Timeline for
-						<span> </span>
-						<span>
-							MSSQL: Merge two tables together using insert statement to match
-							exact values into table 1
-						</span>
-					</h1>
-					<h3>
-						Current License: <span>CC BY-SA 4.0</span>
-					</h3>
-					<DividerLine />
-				</div>
-
-				<div className="select__filter">
-					<span>Event filters</span>
-					<div className="select__box">
-						<div>Hide vote summaires</div>
-						<div>Show vote summaries</div>
+			{question && (
+				<main>
+					<div className="sub__header">
+						<h1>
+							Timeline for
+							<span> </span>
+							<Link to={`/question/${questionId}`}>
+								<span>{question.questionTitle}</span>
+							</Link>
+						</h1>
+						<h3>
+							Current License: <span>CC BY-SA 4.0</span>
+						</h3>
+						<DividerLine />
 					</div>
-				</div>
+					{/* 
+					<div className="select__filter">
+						<span>Event filters</span>
+						<div className="select__box">
+							<div>Hide vote summaires</div>
+							<div>Show vote summaries</div>
+						</div>
+					</div> */}
 
-				<div className="table__container">
-					<div>1 event</div>
+					<div className="table__container">
+						<div>2 event</div>
 
-					<table>
-						<thead>
-							<tr>
-								<th>
-									when <span>toggle format</span>
-								</th>
-								<th> what</th>
-								<th> </th>
-								<th>by</th>
+						<table>
+							<thead>
+								<tr>
+									<th>
+										when <span>toggle format</span>
+									</th>
+									<th> what</th>
+									<th> </th>
+									<th>by</th>
 
-								<th> license</th>
-								<th>comment</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td className="toggle__format">Apr 14 at 3:20</td>
-								<td>history</td>
-								<td>edited</td>
-								<td>user16217248</td>
-								<td>CC BY-SA 4.0</td>
-								<td>added 14 characters in body</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</main>
+									<th> license</th>
+									<th>comment</th>
+								</tr>
+							</thead>
+							<tbody>
+								{Number(answerId) > 0 ? (
+									// 답변결과
+									answer && (
+										<>
+											<tr>
+												<td className="toggle__format">
+													{dateFormat(new Date(answer.modifiedAt))}
+												</td>
+												<td>history</td>
+												<td>edited</td>
+												<td>{answer.memberId}</td>
+												<td>CC BY-SA 4.0</td>
+												<td>{removeHTMLTag(answer.content)}</td>
+											</tr>
+											<tr>
+												<td className="toggle__format">
+													{dateFormat(new Date(answer.createdAt))}
+												</td>
+												<td>history</td>
+												<td>added</td>
+												<td>{answer.memberId}</td>
+												<td>CC BY-SA 4.0</td>
+												<td />
+											</tr>
+										</>
+									)
+								) : (
+									// 질문 결과
+									<>
+										<tr>
+											<td className="toggle__format">
+												{dateFormat(new Date(question.questionModifiedAt))}
+											</td>
+											<td>history</td>
+											<td>edited</td>
+											<td>{question.memberId}</td>
+											<td>CC BY-SA 4.0</td>
+											<td>{removeHTMLTag(question.questionContent)}</td>
+										</tr>
+										<tr>
+											<td className="toggle__format">
+												{dateFormat(new Date(question.questionCreatedAt))}
+											</td>
+											<td>history</td>
+											<td>added</td>
+											<td>{question.memberId}</td>
+											<td>CC BY-SA 4.0</td>
+											<td />
+										</tr>
+									</>
+								)}
+							</tbody>
+						</table>
+					</div>
+				</main>
+			)}
 		</TimelineContainer>
 	);
 }

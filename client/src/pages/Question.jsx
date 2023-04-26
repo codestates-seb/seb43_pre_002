@@ -2,9 +2,12 @@ import styled from 'styled-components';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import LoginHeader from '../components/Header/LoginHeader';
 import QnABox from '../components/QnABox';
 import AnswerForm from '../components/AnswerForm';
+import { newestAnswer, oldestAnswer } from '../utils/filterFunction';
+import { timeForToday } from '../utils/dateFormat';
 
 const QuestionContainer = styled.div`
 	display: flex;
@@ -90,138 +93,110 @@ const AnswersContainer = styled.div`
 `;
 
 function Question() {
-	// const apiUrl = 'https://caa6-183-97-142-84.ngrok-free.app/questions/1';
 	const { question_id: targetId } = useParams();
 	const [questionData, setQuestionData] = useState(null);
 	const [answerList, setAnswerList] = useState([]);
+	const [sortType, setSortType] = useState('oldest');
+	const [render, setRender] = useState(false);
+
+	const [userId, setUserId] = useState(
+		localStorage.getItem('loginmemberid')
+			? JSON.parse(localStorage.getItem('loginmemberid'))
+			: null,
+	);
+
+	// 로그인 상태 받기
+	const { isLogin } = useSelector((state) => state.login);
+
+	// 정렬 리스트
+	const sortOptionList = [
+		{ value: 'oldest', name: 'oldest first' },
+		{ value: 'newest', name: 'newest first' },
+	];
+
+	// 정렬 기능
+	const sortAnswerList = () => {
+		if (sortType === 'oldest') {
+			return oldestAnswer(answerList);
+		}
+		if (sortType === 'newest') {
+			return newestAnswer(answerList);
+		}
+		return answerList;
+	};
 
 	const navigate = useNavigate();
 
-	// 질문 조회
+	// 질문 조회 및 답변 조회
 	useEffect(() => {
-		axios.get('http://localhost:3001/questions').then((res) => {
-			const questions = res.data;
-			const target = questions.find(
-				(it) => it.question_id === Number(targetId),
-			);
-
-			if (target) {
-				setQuestionData(target);
-			} else {
-				navigate('/');
-			}
-		});
-		// axios.get(apiUrl).then((res) => console.log(res));
-		//	axios.get(`/questions/1`).then((res) => console.log(res));
-
-		// axios
-		// 	.get('/answers/1', {
-		// 		headers: {
-		// 			'Content-Type': `application/json`,
-		// 			'ngrok-skip-browser-warning': '69420',
-		// 		},
-		// 	})
-		// 	.then((res) => console.log(res.data));
-	}, [answerList]);
-
-	// 질문 수정
-	const updateQuestionHandler = (data) => {
 		axios
-			.put(
-				`http://localhost:3001/questions${data.id}`,
-				{ ...data },
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
+			.get(`/questions/${targetId}`, {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
 				},
-			)
-			.then((res) => setQuestionData(data));
-	};
+			})
+			.then((res) => {
+				const question = res.data;
+				// console.log(question);
+				setQuestionData(question);
+				setAnswerList(question.answers);
+			})
+			.catch((res) => {
+				console.log('에러발생');
+				navigate('/');
+			});
+	}, [render]);
 
 	// 질문 삭제
 	const deleteQuestionHandler = (data) => {
-		axios.delete(`http://localhost:3001/questions/${data.id}`).then((res) => {
-			setQuestionData({});
-			navigate('/');
-		});
+		axios
+			.delete(`/questions/${targetId}`)
+			.then((res) => {
+				setQuestionData({});
+				navigate('/');
+			})
+			.catch((res) => {
+				console.log(res);
+				navigate('/');
+			});
 	};
-
-	// 답변 조회
-	useEffect(() => {
-		axios.get('http://localhost:3001/answers').then((res) => {
-			const answers = res.data;
-			const targetAnswer = answers.filter(
-				(it) => it.question_id === Number(targetId),
-			);
-			if (targetAnswer) {
-				setAnswerList(targetAnswer);
-			}
-		});
-	}, []);
 
 	// 답변 생성
 	const createAnswerHandler = (data) => {
 		axios
-			.post(
-				'http://localhost:3001/answers',
-				{
-					...data,
-					id: answerList[answerList.length - 1].answer_id + 1,
-					answer_id: answerList[answerList.length - 1].answer_id + 1,
+			.post(`/questions/${targetId}/answers`, JSON.stringify({ ...data }), {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
 				},
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				},
-			)
+			})
 			.then((res) => {
-				setAnswerList([...answerList, res.data]);
-			});
-	};
-
-	// 답변 수정
-	const updateAnswerHandler = (data) => {
-		axios
-			.put(
-				`http://localhost:3001/answers${data.id}`,
-				{ ...data },
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				},
-			)
-			.then((res) =>
-				setAnswerList(
-					answerList.map((it) => (it.answer_id === data.answer_id ? data : it)),
-				),
-			);
+				setRender(!render);
+				// navigate(0);
+			})
+			.catch((res) => console.log(res));
 	};
 
 	// 답변 삭제
 	const deleteAnswerHandler = (data) => {
 		axios
-			.delete(`http://localhost:3001/answers/${data.id}`)
+			.delete(`/answers/${data.answerId}`)
 			.then((res) =>
-				setAnswerList(
-					answerList.filter((it) => it.answer_id !== data.answer_id),
-				),
-			);
+				setAnswerList(answerList.filter((it) => it.answerId !== data.answerId)),
+			)
+			.catch((res) => console.log(res));
 	};
 
 	return (
 		questionData && (
 			<QuestionContainer>
-				<LoginHeader />
-
 				<main>
 					<TitleContainer>
 						<div className="top__container">
-							<span>{questionData.title}</span>
+							<span>{questionData.questionTitle}</span>
 
-							<Link to="/myprofile">
+							<Link to="/askquestion">
 								<button type="button">Ask Questions</button>
 							</Link>
 						</div>
@@ -230,25 +205,27 @@ function Question() {
 								<InfoBox>
 									<span className="first__span">Asked</span>
 									<span className="second__span">
-										{questionData.created_at}
+										{timeForToday(questionData.questionCreatedAt)}
 									</span>
 								</InfoBox>
 								<InfoBox>
 									<span className="first__span">Modified</span>
 									<span className="second__span">
-										{questionData.modified_at}
+										{timeForToday(questionData.questionModifiedAt)}
 									</span>
 								</InfoBox>
 								<InfoBox>
 									<span className="first__span">Viewed</span>
-									<span className="second__span">8times</span>
+									<span className="second__span">
+										{questionData.questionViewCount}
+									</span>
 								</InfoBox>
 							</div>
 						</div>
 					</TitleContainer>
 
 					<QnABox
-						questionData={questionData}
+						data={questionData}
 						deleteQuestionHandler={deleteQuestionHandler}
 						deleteAnswerHandler={deleteAnswerHandler}
 						mode="question"
@@ -259,26 +236,30 @@ function Question() {
 							<span>{`${answerList.length} Answers`}</span>
 							<div className="filter__container">
 								<span>Sorted by:</span>
-								<select>
-									<option>Date modified (newest first)</option>
-									<option>Date created (oldest first)</option>
+								<select onChange={(e) => setSortType(e.target.value)}>
+									{sortOptionList.map((it) => (
+										<option key={it.value} value={it.value}>
+											{it.name}
+										</option>
+									))}
 								</select>
 							</div>
 						</div>
 						<div>
-							{answerList.map((it) => (
-								<QnABox
-									key={it.id}
-									// key={it.answer_id}
-									questionData={it}
-									deleteQuestionHandler={deleteQuestionHandler}
-									deleteAnswerHandler={deleteAnswerHandler}
-									mode="answer"
-								/>
-							))}
+							{sortAnswerList().map((it) => {
+								return (
+									<QnABox
+										key={it.answerId}
+										data={it}
+										deleteQuestionHandler={deleteQuestionHandler}
+										deleteAnswerHandler={deleteAnswerHandler}
+										mode="answer"
+									/>
+								);
+							})}
 						</div>
 					</AnswersContainer>
-					<AnswerForm createAnswerHandler={createAnswerHandler} />
+					{userId && <AnswerForm createAnswerHandler={createAnswerHandler} />}
 				</main>
 			</QuestionContainer>
 		)

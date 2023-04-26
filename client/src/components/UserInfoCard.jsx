@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { dateFormat } from '../utils/dateFormat';
 import UserProfile from './UserProfile';
 
 const UserInfoCardContainer = styled.div`
 	background-color: var(--main-color-lighten);
 	font-size: var(--font-base);
+	color: var(--font-color-gray);
 	display: flex;
 	width: 200px;
 	height: 70px;
@@ -41,28 +44,46 @@ const UserInfoCardContainer = styled.div`
 `;
 
 // 유저의 정보가 담긴 InfoCard
-function UserInfoCard({ questionData }) {
+function UserInfoCard({ data, mode }) {
+	const [userId, setUserId] = useState(
+		localStorage.getItem('loginmemberid')
+			? JSON.parse(localStorage.getItem('loginmemberid'))
+			: null,
+	);
+
 	return (
 		<UserInfoCardContainer>
-			<span>{questionData.created_at}</span>
+			<span>
+				{mode === 'question'
+					? `asked ${dateFormat(new Date(data.questionCreatedAt))}`
+					: `answered ${dateFormat(new Date(data.answerCreatedAt))}`}
+			</span>
 			<div className="bottom__container">
-				{questionData.member_id && (
+				{data.memberId && (
 					<UserProfile
-						userName={String(questionData.member_id)}
+						// userName={String(data.memberId)}
+						userName="username"
 						boxSize="32px"
 						fontSize="13px"
 					/>
 				)}
-
+				<UserProfile
+					// userName={String(data.memberId)}
+					userName="username"
+					boxSize="32px"
+					fontSize="13px"
+				/>
 				<div className="right__container">
-					<Link to="/myprofile">
-						<span className="user__name">{questionData.author}</span>
+					<Link
+						to={
+							userId === data.memberId
+								? `/myprofile/${data.memberId}`
+								: `/userprofile/${data.memberId}`
+						}
+					>
+						<span className="user__name">{data.memberId}</span>
+						<span className="user__name">username</span>
 					</Link>
-					<div className="user__activity">
-						<span> 1149</span>
-						<span> 5</span>
-						<span> 11</span>
-					</div>
 				</div>
 			</div>
 		</UserInfoCardContainer>

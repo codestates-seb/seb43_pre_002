@@ -1,12 +1,11 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import LoginHeader from '../components/Header/LoginHeader';
 
-const EditQuestionContainer = styled.div`
+const EditAnswerContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	position: absolute;
@@ -53,15 +52,6 @@ const EditQnABox = styled.form`
 	}
 `;
 
-const TitleContainer = styled.div`
-	padding-bottom: 15px;
-	display: flex;
-	flex-direction: column;
-	input {
-		height: 30px;
-		padding: 8px;
-	}
-`;
 const BodyContainer = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -90,28 +80,50 @@ const PreviewContainer = styled.div`
 	border: black solid 1px;
 `;
 
-function EditQnA() {
+function EditAnswer() {
 	const navigate = useNavigate();
+	const { answer_id: targetId } = useParams();
 
-	const [title, setTitle] = useState('');
-	const [body, setBody] = useState('');
+	const [content, setContent] = useState('');
 
-	const editQuestion = () => {
-		const newQuestion = {
-			title,
-			body,
+	// 정보 조회
+	useEffect(() => {
+		axios
+			.get(`/answers/${targetId}`, {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => {
+				const answer = res.data;
+				setContent(answer.data.content);
+			})
+			.catch((res) => {
+				console.log('에러발생');
+				navigate('/');
+			});
+	}, []);
+
+	const editAnswer = () => {
+		const newAnswer = {
+			content,
 		};
-		console.log(newQuestion);
+		axios
+			.patch(`/answers/${targetId}`, JSON.stringify(newAnswer), {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => console.log(res.data));
 	};
 
-	const titleHandler = (e) => {
-		setTitle(e.target.value);
-	};
 	// 글 수정 버튼 클릭시 서버로 전달
 	const editHandler = (event) => {
 		event.preventDefault();
 		if (window.confirm('글을 수정하시겠습니까?')) {
-			editQuestion();
+			editAnswer();
 			alert('수정하였습니다.');
 			navigate(-1, { replace: true });
 		} else {
@@ -125,17 +137,12 @@ function EditQnA() {
 	};
 
 	return (
-		<EditQuestionContainer>
-			<LoginHeader />
+		<EditAnswerContainer>
 			<main>
 				<EditQnABox>
-					<TitleContainer>
-						<span>Title</span>
-						<input value={title} onChange={titleHandler} />
-					</TitleContainer>
 					<BodyContainer>
 						<span>Body</span>
-						<ReactQuill theme="snow" value={body} onChange={setBody} />
+						<ReactQuill theme="snow" value={content} onChange={setContent} />
 					</BodyContainer>
 
 					{/* <PreviewContainer dangerouslySetInnerHTML={{ __html: body }} /> */}
@@ -149,8 +156,8 @@ function EditQnA() {
 					</div>
 				</EditQnABox>
 			</main>
-		</EditQuestionContainer>
+		</EditAnswerContainer>
 	);
 }
 
-export default EditQnA;
+export default EditAnswer;
