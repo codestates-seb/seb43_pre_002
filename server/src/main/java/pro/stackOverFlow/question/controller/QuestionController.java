@@ -1,13 +1,11 @@
 package pro.stackOverFlow.question.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pro.stackOverFlow.answer.entity.Answer;
-import pro.stackOverFlow.answer.service.AnswerService;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.member.service.MemberService;
 import pro.stackOverFlow.question.dto.QuestionDto;
@@ -16,51 +14,39 @@ import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.question.mapper.QuestionMapper;
 import pro.stackOverFlow.question.service.QuestionService;
 
-import javax.persistence.JoinColumn;
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
 @Validated
 @RequestMapping("/questions")
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*", methods = RequestMethod.GET)
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
     private final MemberService memberService;
-    private final AnswerService answerService;
-
-    //Todo: member-id 임시적으로 추가!! 보안 적용 후 없앨 예정
-    //Todo : addMember 메서드 추가!
 
     @PostMapping("/{member-id}")
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody,
                                        @PathVariable("member-id") long memberId) {
-//        Member member = memberService.findMember(memberId);
-//        Question question = questionService.createQuestion(questionMapperIm.questionPostDtoToQuestion(requestBody, member));
 
-
-        Question question = questionMapper.questionPostDtoToQuestion(requestBody);
         Member member = memberService.findMember(memberId);
-        question.addMember(member);
+        Question question = questionMapper.questionPostDtoToQuestion(requestBody, member);
 
         Question createdQuestion = questionService.createQuestion(question);
 
-        return new ResponseEntity<>(
-                createdQuestion, HttpStatus.CREATED);
+        return new ResponseEntity<>(question, HttpStatus.CREATED);
     }
 
-    @PatchMapping("/{question-id}")
-    public ResponseEntity patchQuestion(Long memberId,
+    @PatchMapping("/{question-id}/{member-id}")
+    public ResponseEntity patchQuestion(@PathVariable("member-id") Long memberId,
                                         @Valid @RequestBody QuestionDto.Patch requestBody,
                                         @PathVariable("question-id") long questionId) {
-        requestBody.setQuestionId(questionId);
-        Question question = questionService.updateQuestion(questionMapper.questionPatchDtoToQuestion(requestBody));
+        Question findQuestion = questionService.findQuestion(questionId);
+        Member member = memberService.findMember(memberId);
+        Question question = questionMapper.questionPatchDtoToQuestion(requestBody, findQuestion, member);
 
-        return new ResponseEntity<>(questionMapper.questionToQuestionResponse(question), HttpStatus.OK);
-
+        return new ResponseEntity<>(question, HttpStatus.OK);
     }
 
     @GetMapping("/{question-id}")
