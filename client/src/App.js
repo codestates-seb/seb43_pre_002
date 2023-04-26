@@ -1,5 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setIsLogin } from './reducers/loginSlice';
 import GlobalStyles from './styles/GlobalStyles.style';
 import MyEdit from './pages/mypage/myedit';
 import MyProfile from './pages/mypage/myprofile';
@@ -18,14 +21,20 @@ import EditAnswer from './pages/EditAnswer';
 import Timeline from './pages/Timeline';
 
 function App() {
-	const [isLogin, setIsLogin] = useState(false);
-	const [searchTerm, setSearchTerm] = useState('');
+	const dispatch = useDispatch();
 
-	// 로그인 상태, (memberId) 전역상태로 관리
+	useEffect(() => {
+		const accessToken = localStorage.getItem('access_token');
+
+		// 요청 헤더에 액세스토큰 값 설정 및 인가 시 로그인 상태 유지
+		axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+		dispatch(setIsLogin(true));
+	}, []);
+
 	return (
 		<BrowserRouter>
 			<GlobalStyles />
-			<LoginHeader isLogin={isLogin} setIsLogin={setIsLogin} />
+			<LoginHeader />
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/question/:question_id" element={<Question />} />

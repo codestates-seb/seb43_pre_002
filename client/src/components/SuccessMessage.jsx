@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SignButton from './Button/SignButton';
 
 const MessageContainer = styled.div`
@@ -26,18 +26,20 @@ const MessageContainer = styled.div`
 function SuccessMessage() {
 	const [currentEmail, setCurrentEmail] = useState('');
 	const memberId = JSON.parse(window.localStorage.getItem('signupMemberId'));
-	axios
-		.get(`/members/${memberId}`, {
-			headers: {
-				'Content-Type': 'application/json',
-				'ngrok-skip-browser-warning': '69420',
-			},
-		})
-		.then((res) => {
-			// console.log(res);
-			const { email } = res.data;
-			setCurrentEmail(email);
-		});
+	useEffect(() => {
+		axios
+			.get(`/members/${memberId}`, {
+				headers: {
+					'Content-Type': 'application/json',
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => {
+				// console.log(res);
+				const { email } = res.data;
+				setCurrentEmail(email);
+			});
+	}, []);
 
 	return (
 		<MessageContainer>

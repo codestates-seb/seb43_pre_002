@@ -26,8 +26,11 @@ const ButtonWrapper = styled.div`
 `;
 
 function OAuthButton({ buttonText }) {
+	const buttonClick = () => {
+		alert('서비스 준비중입니다 😅');
+	};
 	return (
-		<ButtonWrapper>
+		<ButtonWrapper onClick={() => buttonClick()}>
 			<img
 				src={`${process.env.PUBLIC_URL}/assets/google_logo_icon.png`}
 				alt=""

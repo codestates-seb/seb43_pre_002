@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectIsLogin } from '../../reducers/loginSlice';
+import { setSearchTerm } from '../../reducers/searchSlice';
 import SearchBar from '../Input/SearchBar';
 import Logo from './Logo';
 import AuthButtons from './AuthButtons';
@@ -17,7 +20,7 @@ const Header = styled.header`
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 1;
+	z-index: 10;
 `;
 
 const HeaderContainer = styled.div`
@@ -28,24 +31,17 @@ const HeaderContainer = styled.div`
 	margin: 0 auto;
 `;
 
-function LoginHeader({ isLogin, setIsLogin, searchTerm, setSearchTerm }) {
+function LoginHeader() {
+	const dispatch = useDispatch();
+	const isLogin = useSelector(selectIsLogin);
 	return (
 		<Header>
 			<HeaderContainer>
-				<Link to="/" onClick={() => setSearchTerm('')}>
+				<Link to="/" onClick={() => dispatch(setSearchTerm(''))}>
 					<Logo />
 				</Link>
-				<SearchBar
-					type="text"
-					placeholder="검색어를 입력하세요."
-					searchTerm={searchTerm}
-					setSearchTerm={setSearchTerm}
-				/>
-				{isLogin ? (
-					<UserActionButtons setIsLogin={setIsLogin} />
-				) : (
-					<AuthButtons />
-				)}
+				<SearchBar type="text" placeholder="검색어를 입력하세요." />
+				{isLogin === true ? <UserActionButtons /> : <AuthButtons />}
 			</HeaderContainer>
 		</Header>
 	);
