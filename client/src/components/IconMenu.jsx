@@ -107,7 +107,9 @@ function IconMenu({ data, mode }) {
 	);
 
 	const [isBookmark, setIsBookmark] = useState(false);
-	const [isChecked, setIsChecked] = useState(false);
+	const [isChecked, setIsChecked] = useState(
+		mode === 'answer' && data.answerAccepted,
+	);
 	const [question, setQuestion] = useState();
 	const { question_id: targetId } = useParams();
 
@@ -215,7 +217,8 @@ function IconMenu({ data, mode }) {
 			.then((res) => {
 				setIsChecked(!isChecked);
 				console.log(res);
-			});
+			})
+			.catch((err) => console.log('답변 채택 오류'));
 	};
 
 	return (
@@ -232,11 +235,11 @@ function IconMenu({ data, mode }) {
 				<Tooltip>Save this question.</Tooltip>
 			</li>
 			{/*  질문의 작성자와 유저가 일치하는 답변만 보여줌 */}
-			{/* {question && question.memberId === userId && mode === 'answer' && (
+			{question && question.memberId === userId && mode === 'answer' && (
 				<li className={isChecked ? 'on' : 'off'}>
 					<FaCheck onClick={isCheckedHadler} />
 				</li>
-			)} */}
+			)}
 			{/* <li>
 				{isBookmark ? (
 					<MdBookmarkBorder

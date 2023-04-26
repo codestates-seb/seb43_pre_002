@@ -92,6 +92,11 @@ const PreviewContainer = styled.div`
 function EditQuestion() {
 	const navigate = useNavigate();
 	const { question_id: targetId } = useParams();
+	const [userId, setUserId] = useState(
+		localStorage.getItem('loginMemberId')
+			? JSON.parse(localStorage.getItem('loginMemberId'))
+			: null,
+	);
 
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
@@ -120,11 +125,13 @@ function EditQuestion() {
 			title,
 			content,
 		};
-		axios.patch(`/questions/${targetId}`, JSON.stringify(newQuestion), {
-			headers: {
-				'Content-Type': `application/json`,
-			},
-		});
+		axios
+			.patch(`/questions/${targetId}/${userId}`, JSON.stringify(newQuestion), {
+				headers: {
+					'Content-Type': `application/json`,
+				},
+			})
+			.then((res) => console.log(res).catch((err) => console.log(err)));
 	};
 
 	const titleHandler = (e) => {

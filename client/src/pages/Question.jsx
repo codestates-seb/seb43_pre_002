@@ -95,7 +95,7 @@ const AnswersContainer = styled.div`
 function Question() {
 	const { question_id: targetId } = useParams();
 	const [questionData, setQuestionData] = useState(null);
-	const [answerList, setAnswerList] = useState([]);
+	const [answerList, setAnswerList] = useState(null);
 	const [sortType, setSortType] = useState('oldest');
 	const [render, setRender] = useState(false);
 
@@ -137,14 +137,15 @@ function Question() {
 			})
 			.then((res) => {
 				const question = res.data;
-				// console.log(question);
+				console.log('질문불러오기');
+				console.log(question);
 				setQuestionData(question);
 				setAnswerList(question.answers);
 			})
 			.catch((res) => {
 				console.log(res);
 				console.log('에러발생');
-				// navigate('/');
+				navigate('/');
 			});
 	}, [render]);
 
@@ -235,34 +236,38 @@ function Question() {
 						mode="question"
 					/>
 
-					<AnswersContainer>
-						<div className="answers__header">
-							<span>{`${answerList.length} Answers`}</span>
-							<div className="filter__container">
-								<span>Sorted by:</span>
-								<select onChange={(e) => setSortType(e.target.value)}>
-									{sortOptionList.map((it) => (
-										<option key={it.value} value={it.value}>
-											{it.name}
-										</option>
-									))}
-								</select>
+					{answerList && (
+						<AnswersContainer>
+							<div className="answers__header">
+								<span>{`${answerList.length} ${
+									answerList.length <= 1 ? 'Answer' : 'Answers'
+								}`}</span>
+								<div className="filter__container">
+									<span>Sorted by:</span>
+									<select onChange={(e) => setSortType(e.target.value)}>
+										{sortOptionList.map((it) => (
+											<option key={it.value} value={it.value}>
+												{it.name}
+											</option>
+										))}
+									</select>
+								</div>
 							</div>
-						</div>
-						<div>
-							{sortAnswerList().map((it) => {
-								return (
-									<QnABox
-										key={it.answerId}
-										data={it}
-										deleteQuestionHandler={deleteQuestionHandler}
-										deleteAnswerHandler={deleteAnswerHandler}
-										mode="answer"
-									/>
-								);
-							})}
-						</div>
-					</AnswersContainer>
+							<div>
+								{sortAnswerList().map((it) => {
+									return (
+										<QnABox
+											key={it.answerId}
+											data={it}
+											deleteQuestionHandler={deleteQuestionHandler}
+											deleteAnswerHandler={deleteAnswerHandler}
+											mode="answer"
+										/>
+									);
+								})}
+							</div>
+						</AnswersContainer>
+					)}
 					{userId && <AnswerForm createAnswerHandler={createAnswerHandler} />}
 				</main>
 			</QuestionContainer>
