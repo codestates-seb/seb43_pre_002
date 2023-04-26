@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import {
 	activeList,
 	newestList,
@@ -7,17 +8,28 @@ import {
 } from '../utils/filterFunction';
 
 function HomeFilter({ totalDataCount, allData, setFilteredData }) {
+	const initialActiveButton = {
+		newest: false,
+		active: false,
+		recommend: false,
+		unanswered: false,
+	};
+	const [isActiveButton, setIsActiveButton] = useState(initialActiveButton);
 	const handleNewest = () => {
 		setFilteredData(newestList(allData));
-	};
-	const handleUnanswered = () => {
-		setFilteredData(unansweredList(allData));
-	};
-	const handleRecommend = () => {
-		setFilteredData(recommendList(allData));
+		setIsActiveButton({ ...initialActiveButton, newest: true });
 	};
 	const handleActive = () => {
 		setFilteredData(activeList(allData));
+		setIsActiveButton({ ...initialActiveButton, active: true });
+	};
+	const handleRecommend = () => {
+		setFilteredData(recommendList(allData));
+		setIsActiveButton({ ...initialActiveButton, recommend: true });
+	};
+	const handleUnanswered = () => {
+		setFilteredData(unansweredList(allData));
+		setIsActiveButton({ ...initialActiveButton, unanswered: true });
 	};
 
 	return (
@@ -25,28 +37,36 @@ function HomeFilter({ totalDataCount, allData, setFilteredData }) {
 			<span className="total">{totalDataCount} questions</span>
 			<div>
 				<button
-					className="sort-button newest"
+					className={`sort-button newest ${
+						isActiveButton.newest ? 'active-button' : ''
+					}`}
 					type="button"
 					onClick={handleNewest}
 				>
 					Newest
 				</button>
 				<button
-					className="sort-button active"
+					className={`sort-button active ${
+						isActiveButton.active ? 'active-button' : ''
+					}`}
 					type="button"
 					onClick={handleActive}
 				>
 					Active
 				</button>
 				<button
-					className="sort-button recommend"
+					className={`sort-button recommend ${
+						isActiveButton.recommend ? 'active-button' : ''
+					}`}
 					type="button"
 					onClick={handleRecommend}
 				>
 					Recommend
 				</button>
 				<button
-					className="sort-button unanswered"
+					className={`sort-button unanswered ${
+						isActiveButton.unanswered ? 'active-button' : ''
+					}`}
 					type="button"
 					onClick={handleUnanswered}
 				>
@@ -80,6 +100,10 @@ const HomeFilterContainer = styled.div`
 		&:hover {
 			background-color: var(--line-color);
 		}
+	}
+	.active-button {
+		color: white;
+		background-color: #f48224;
 	}
 	.newest {
 		border-radius: 5px 0 0 5px;
