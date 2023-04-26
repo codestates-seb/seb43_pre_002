@@ -17,14 +17,16 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable {
+    
+    ZoneId seoulZoneId = ZoneId.of("Asia/Seoul");
 
     @Getter
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now().plusHours(9);
+    private LocalDateTime createdAt = LocalDateTime.now(seoulZoneId);
 
     @Getter
     @Setter
     @Column(name = "last_modified_at")
-    protected LocalDateTime modifiedAt = LocalDateTime.now().plusHours(9);
+    protected LocalDateTime modifiedAt = LocalDateTime.now(seoulZoneId);
 
 }
