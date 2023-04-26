@@ -32,17 +32,18 @@ public class AnswerController {
     private QuestionService questionService;
 
 
-    @PostMapping("/questions/{question-id}/answers")
+    @PostMapping("/questions/{question-id}/answers/{member-id}")
     public ResponseEntity postAnswer(@PathVariable("question-id") long questionId,
+                                     @PathVariable("member-id") long memberId,
                                      @Valid @RequestBody AnswerPostDto answerPostDto) {
 
         long memberId = 1;
 
         Answer answer = answerMapper.answerPostDtoToAnswer(answerPostDto);
-        Question question = questionService.findQuestion(questionId);
+        //추가
         Member member = memberService.findMember(memberId);
-
-        Answer createdAnswer = answerService.createAnswer(answer, question, member);
+        answer.addMember(member);
+        Answer createdAnswer = answerService.createAnswer(answer, questionId);
 
         AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(createdAnswer);
 

@@ -93,7 +93,7 @@ public class QuestionMapper {
                             .answerCreatedAt(answer.getCreatedAt())
                             .answerContent(answer.getContent())
                             .answerVoteCount((long) answer.getVoteCount())
-//                            .memberId(answer.getMember().getMemberId())
+                            .memberId(answer.getMember().getMemberId())
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -101,15 +101,15 @@ public class QuestionMapper {
 
     public QuestionGetResponseDto questionInfoToQuestionGetResponseDto(Question question, Member member, List<QuestionGetAnswerDto> answers) {
         if (question == null ||
-//                member == null ||
+                member == null ||
                 answers == null) {
             return null;
         }
 
         return QuestionGetResponseDto.builder()
                 .questionId(question.getQuestionId())
-//                .memberId(member.getMemberId())
-//                .email(member.getEmail())
+                .memberId(member.getMemberId())
+                .email(member.getEmail())
                 .questionTitle(question.getTitle())
                 .questionContent(question.getContent())
                 .questionCreatedAt(question.getCreatedAt())
