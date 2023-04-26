@@ -37,13 +37,12 @@ public class AnswerController {
                                      @PathVariable("member-id") long memberId,
                                      @Valid @RequestBody AnswerPostDto answerPostDto) {
 
-        long memberId = 1;
-
         Answer answer = answerMapper.answerPostDtoToAnswer(answerPostDto);
         //추가
         Member member = memberService.findMember(memberId);
+        Question question = questionService.findQuestion(questionId);
         answer.addMember(member);
-        Answer createdAnswer = answerService.createAnswer(answer, questionId);
+        Answer createdAnswer = answerService.createAnswer(answer, question, member);
 
         AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(createdAnswer);
 
