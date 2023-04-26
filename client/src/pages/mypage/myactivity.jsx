@@ -145,7 +145,7 @@ const List = styled.ul`
 
 const Title = styled.a`
 	margin-left: 10px;
-	padding: 5px 0;
+	text-align: center;
 	color: var(--main-color);
 	font-size: var(--font-large);
 `;

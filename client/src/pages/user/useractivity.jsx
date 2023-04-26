@@ -58,62 +58,32 @@ function UserActivity() {
 				<List>
 					<ListTitle>
 						<Ansewer>twitterLink : </Ansewer>
-						<Title
-							href={
-								userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].twitterLink
-							}
-						>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].twitterLink}
+						<Title href={userData && userData.twitterLink}>
+							{userData && userData.twitterLink}
 						</Title>
 					</ListTitle>
 					<ListTitle>
 						<Ansewer>githubLink : </Ansewer>
-						<Title
-							href={
-								userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].githubLink
-							}
-						>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].githubLink}
+						<Title href={userData && userData.githubLink}>
+							{userData && userData.githubLink}
 						</Title>
 					</ListTitle>
 					<ListTitle>
 						<Ansewer>notionLink : </Ansewer>
-						<Title
-							href={
-								userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].notionLink
-							}
-						>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].notionLink}
+						<Title href={userData && userData.notionLink}>
+							{userData && userData.notionLink}
 						</Title>
 					</ListTitle>
 					<ListTitle>
 						<Ansewer>blogLink : </Ansewer>
-						<Title
-							href={
-								userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].blogLink
-							}
-						>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].blogLink}
+						<Title href={userData && userData.blogLink}>
+							{userData && userData.blogLink}
 						</Title>
 					</ListTitle>
 					<ListTitle>
 						<Ansewer>websiteLink : </Ansewer>
-						<Title
-							href={
-								userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].twitterLink
-							}
-						>
-							{userData[`${member_id - 1}`] &&
-								userData[`${member_id - 1}`].websiteLink}
+						<Title href={userData && userData.websiteLink}>
+							{userData && userData.websiteLink}
 						</Title>
 					</ListTitle>
 				</List>

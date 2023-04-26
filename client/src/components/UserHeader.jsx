@@ -4,6 +4,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GlobalStyles from '../styles/GlobalStyles.style';
+import UserProfile from './UserProfile';
 
 function UserHeader() {
 	const [userData, setUserData] = useState({});
@@ -36,7 +37,11 @@ function UserHeader() {
 			<GlobalStyles />
 			<ProfileHeader>
 				<Profile>
-					<UserImg>{userData && userData.displayName}</UserImg>
+					<UserProfile
+						userName={String(userData.displayName)}
+						boxSize="100px"
+						fontSize="27px"
+					/>
 					<UserInfo>
 						<Name>{userData && userData.displayName}</Name>
 						<Info>{userData && userData.title}</Info>
@@ -77,18 +82,6 @@ const Profile = styled.div`
 	padding-top: 20px;
 	display: flex;
 	flex-direction: row;
-`;
-
-const UserImg = styled.div`
-	background-color: var(--main-color);
-	color: white;
-	width: 100px;
-	height: 100px;
-	font-size: var(--font-title-large);
-	font-weight: bold;
-	text-align: center;
-	padding: 35px 0;
-	border-radius: 15px;
 `;
 
 const UserInfo = styled.div`
