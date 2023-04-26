@@ -13,7 +13,7 @@
 
 |Frontend (팀장)|Frontend|Frontend|Frontend|
 | :---: | :---: | :---: | :---: |
-| <img src="./image/seulgi.jpeg" width=150px alt="슬기"/> | <img src="./image/suhyun.png" width=150px alt="수현"/> | <img src="./image/yunhwan.png" width=150px alt="윤환"/> |<img src="./image/jiwon.png" width=150px alt="지원"/> |
+| <img src="./image/seulgi1.png" width=150px alt="슬기"/> | <img src="./image/suhyun1.png" width=150px alt="수현"/> | <img src="./image/yunhwan1.png" width=150px alt="윤환"/> |<img src="./image/jiwon1.png" width=150px alt="지원"/> |
 |[유슬기](https://github.com/Seulgi-Yoo)|[김수현](https://github.com/kimsh322)|[박윤환](https://github.com/yunhwan98)|[박지원](https://github.com/zi0ne)|
 
 
