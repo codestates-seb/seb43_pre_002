@@ -7,6 +7,7 @@ import AskTitleBox from '../components/AskTitleBox';
 import AskDetailBox from '../components/AskDetailBox';
 import AskTryAndExpectBox from '../components/AskTryAndExpectBox';
 import AskSubmit from '../components/AskSubmit';
+import AskSubmitModal from '../components/AskSubmitModal';
 
 function AskQuestion() {
 	const initialIsNext = {
@@ -16,8 +17,16 @@ function AskQuestion() {
 	};
 	const { register, handleSubmit, setValue, watch } = useForm();
 	const [isNext, setIsNext] = useState(initialIsNext);
-	// 데이터 잘나오나 확인용 함수
-	const onSubmit = (data) => console.log(data);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [submitData, setSubmitData] = useState({});
+	const onSubmit = (data) => {
+		setIsModalOpen(true);
+		const body = {
+			title: data.title,
+			content: `${data.detail}</br>${data.tryAndExpect}`,
+		};
+		setSubmitData(body);
+	};
 	return (
 		<NewQuestionContainer onSubmit={handleSubmit(onSubmit)}>
 			<NewQuestionHeader />
@@ -43,6 +52,11 @@ function AskQuestion() {
 				watch={watch}
 			/>
 			<AskSubmit isNext={isNext} />
+			<AskSubmitModal
+				isOpen={isModalOpen}
+				setIsOpen={setIsModalOpen}
+				submitData={submitData}
+			/>
 		</NewQuestionContainer>
 	);
 }
@@ -53,6 +67,7 @@ const NewQuestionContainer = styled.form`
 	display: flex;
 	flex-direction: column;
 	width: 99vw;
+	height: 180%;
 	background-color: #f8f9f9; // 이미지 색깔
 	padding: 0 8%;
 	margin-top: 50px;

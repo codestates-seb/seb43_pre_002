@@ -24,12 +24,7 @@ function App() {
 	return (
 		<BrowserRouter>
 			<GlobalStyles />
-			<LoginHeader
-				isLogin={isLogin}
-				setIsLogin={setIsLogin}
-				searchTerm={searchTerm}
-				setSearchTerm={setSearchTerm}
-			/>
+			<LoginHeader />
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/question/:question_id" element={<Question />} />
