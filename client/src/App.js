@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { setIsLogin } from './reducers/loginSlice';
 import GlobalStyles from './styles/GlobalStyles.style';
 import MyEdit from './pages/mypage/myedit';
 import MyProfile from './pages/mypage/myprofile';
@@ -21,14 +19,12 @@ import EditAnswer from './pages/EditAnswer';
 import Timeline from './pages/Timeline';
 
 function App() {
-	const dispatch = useDispatch();
-
 	useEffect(() => {
 		const accessToken = localStorage.getItem('access_token');
 
 		// 요청 헤더에 액세스토큰 값 설정 및 인가 시 로그인 상태 유지
 		axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-		dispatch(setIsLogin(true));
+		axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 	}, []);
 
 	return (

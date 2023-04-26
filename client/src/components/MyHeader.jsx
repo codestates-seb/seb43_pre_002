@@ -21,11 +21,7 @@ function MyHeader() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const result = await axios.get(`/members/${member_id}`, {
-					headers: {
-						'ngrok-skip-browser-warning': '69420',
-					},
-				});
+				const result = await axios.get(`/members/${member_id}`);
 				setUserData(result.data);
 			} catch (error) {
 				console.error(error);
@@ -59,7 +55,7 @@ function MyHeader() {
 					<ButtonEdit type="button">
 						<FaPencilAlt size={13} />
 						<Link to={`/myedit/${member_id}`}>
-							<Span>Exit Profile</Span>
+							<Span>Edit Profile</Span>
 						</Link>
 					</ButtonEdit>
 					<ButtonDelete type="button" onClick={handleClick2}>

@@ -21,6 +21,7 @@ const AnswerFormContainer = styled.form`
 		background-color: var(--main-color);
 		color: white;
 		border: none;
+		cursor: pointer;
 	}
 
 	.ql-container {

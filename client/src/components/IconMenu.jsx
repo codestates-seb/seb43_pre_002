@@ -117,7 +117,6 @@ function IconMenu({ data, mode }) {
 				.post(`/questions/${targetId}/upvote/${userId}`, {
 					headers: {
 						'Content-Type': `application/json`,
-						'ngrok-skip-browser-warning': '69420',
 					},
 				})
 				.then((res) => {
@@ -136,7 +135,6 @@ function IconMenu({ data, mode }) {
 				.post(`/answers/${data.answerId}/vote`, JSON.stringify(body), {
 					headers: {
 						'Content-Type': `application/json`,
-						'ngrok-skip-browser-warning': '69420',
 					},
 				})
 				.then((res) => {
@@ -155,7 +153,6 @@ function IconMenu({ data, mode }) {
 				.post(`/questions/${targetId}/downvote/${userId}`, {
 					headers: {
 						'Content-Type': `application/json`,
-						'ngrok-skip-browser-warning': '69420',
 					},
 				})
 				.then((res) => {
@@ -173,7 +170,6 @@ function IconMenu({ data, mode }) {
 				.post(`/answers/${data.answerId}/vote`, JSON.stringify(body), {
 					headers: {
 						'Content-Type': `application/json`,
-						'ngrok-skip-browser-warning': '69420',
 					},
 				})
 				.then((res) => {
@@ -196,7 +192,6 @@ function IconMenu({ data, mode }) {
 			.post(`/answers/${data.answerId}/accept`, {
 				headers: {
 					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
 				},
 			})
 			.then((res) => {

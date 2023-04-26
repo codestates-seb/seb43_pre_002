@@ -16,7 +16,6 @@ function AskSubmitModal({ isOpen, setIsOpen, submitData }) {
 			.post(`/questions/${memberId}`, JSON.stringify(submitData), {
 				headers: {
 					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
 				},
 			})
 			.then(() => setResultText('제출 완료되었습니다.'))

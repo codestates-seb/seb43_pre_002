@@ -117,7 +117,6 @@ function Timeline() {
 			.get(`/questions/${questionId}`, {
 				headers: {
 					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
 				},
 			})
 			.then((res) => {
@@ -135,7 +134,6 @@ function Timeline() {
 				.get(`/answers/${answerId}`, {
 					headers: {
 						'Content-Type': `application/json`,
-						'ngrok-skip-browser-warning': '69420',
 					},
 				})
 				.then((res) => {

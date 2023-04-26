@@ -14,11 +14,7 @@ function UserHeader() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const result = await axios.get(`/members/${member_id}`, {
-					headers: {
-						'ngrok-skip-browser-warning': '69420',
-					},
-				});
+				const result = await axios.get(`/members/${member_id}`);
 				setUserData(result.data);
 			} catch (error) {
 				console.error(error);

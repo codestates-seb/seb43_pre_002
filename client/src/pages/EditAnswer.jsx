@@ -92,7 +92,6 @@ function EditAnswer() {
 			.get(`/answers/${targetId}`, {
 				headers: {
 					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
 				},
 			})
 			.then((res) => {
@@ -113,7 +112,6 @@ function EditAnswer() {
 			.patch(`/answers/${targetId}`, JSON.stringify(newAnswer), {
 				headers: {
 					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
 				},
 			})
 			.then((res) => console.log(res.data));

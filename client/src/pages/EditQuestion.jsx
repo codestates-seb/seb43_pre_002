@@ -102,7 +102,6 @@ function EditQuestion() {
 			.get(`/questions/${targetId}`, {
 				headers: {
 					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
 				},
 			})
 			.then((res) => {
@@ -124,7 +123,6 @@ function EditQuestion() {
 		axios.patch(`/questions/${targetId}`, JSON.stringify(newQuestion), {
 			headers: {
 				'Content-Type': `application/json`,
-				'ngrok-skip-browser-warning': '69420',
 			},
 		});
 	};

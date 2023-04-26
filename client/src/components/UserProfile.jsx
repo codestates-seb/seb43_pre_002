@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const UserProfileBox = styled.div`
@@ -9,7 +8,7 @@ const UserProfileBox = styled.div`
 	height: ${({ boxSize }) => boxSize};
 	border-radius: 5px;
 	box-shadow: inset 0px 2px 0px rgba(255, 255, 255, 0.25);
-	background-color: ${({ bgColor }) => bgColor};
+	background-color: #9370db;
 `;
 
 const UserProfileText = styled.span`
@@ -20,38 +19,8 @@ const UserProfileText = styled.span`
 `;
 
 function UserProfile({ userName, boxSize, fontSize }) {
-	const [color, setColor] = useState('var(--main-color)');
-	const getRandomColor = () => {
-		const colors = [
-			'#ff7f50',
-			'#87cefa',
-			'#da70d6',
-			'#6495ed',
-			'#ff69b4',
-			'#ba55d3',
-			'#cd5c5c',
-			'#ffb6c1',
-			'#ffa07a',
-			'#ffdab9',
-			'#ffa500',
-			'#9370db',
-			'#ffc0cb',
-			'#ff69b4',
-			'#ff1493',
-			'#ba55d3',
-			'#1e90ff',
-			'#8b008b',
-		];
-		const randomIndex = Math.floor(Math.random() * colors.length);
-		return colors[randomIndex];
-	};
-	useEffect(() => {
-		const bgColor = getRandomColor();
-		setColor(bgColor);
-	}, []);
-
 	return (
-		<UserProfileBox bgColor={color} boxSize={boxSize}>
+		<UserProfileBox boxSize={boxSize}>
 			<UserProfileText fontSize={fontSize}>
 				{userName.substring(0, 4)}
 			</UserProfileText>

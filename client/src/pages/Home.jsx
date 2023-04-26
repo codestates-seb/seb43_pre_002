@@ -19,12 +19,14 @@ function Home() {
 
 	useEffect(() => {
 		axios
-			.get('/questions', {
-				headers: {
-					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
+			.get(
+				'http://ec2-13-209-76-120.ap-northeast-2.compute.amazonaws.com:8080/questions',
+				{
+					headers: {
+						'Content-Type': `application/json`,
+					},
 				},
-			})
+			)
 			.then((res) => {
 				setAllData(res.data.reverse());
 			})

@@ -49,6 +49,7 @@ const TitleContainer = styled.div`
 			width: 100px;
 			height: 45px;
 			border: none;
+			cursor: pointer;
 		}
 	}
 
@@ -100,8 +101,8 @@ function Question() {
 	const [render, setRender] = useState(false);
 
 	const [userId, setUserId] = useState(
-		localStorage.getItem('loginmemberid')
-			? JSON.parse(localStorage.getItem('loginmemberid'))
+		localStorage.getItem('loginMemberId')
+			? JSON.parse(localStorage.getItem('loginMemberId'))
 			: null,
 	);
 
@@ -129,11 +130,11 @@ function Question() {
 
 	// 질문 조회 및 답변 조회
 	useEffect(() => {
+		console.log(userId);
 		axios
 			.get(`/questions/${targetId}`, {
 				headers: {
 					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
 				},
 			})
 			.then((res) => {
@@ -168,7 +169,6 @@ function Question() {
 			.post(`/questions/${targetId}/answers`, JSON.stringify({ ...data }), {
 				headers: {
 					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
 				},
 			})
 			.then((res) => {
@@ -259,7 +259,7 @@ function Question() {
 							})}
 						</div>
 					</AnswersContainer>
-					{userId && <AnswerForm createAnswerHandler={createAnswerHandler} />}
+					<AnswerForm createAnswerHandler={createAnswerHandler} />
 				</main>
 			</QuestionContainer>
 		)

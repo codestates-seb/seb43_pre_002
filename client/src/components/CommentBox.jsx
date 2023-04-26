@@ -59,7 +59,6 @@ function CommentBox({ answerId }) {
 			.get(`/comments`, {
 				headers: {
 					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
 				},
 			})
 			.then((res) => {
@@ -81,7 +80,6 @@ function CommentBox({ answerId }) {
 			.post(`/answers/${answerId}/comment`, JSON.stringify({ ...body }), {
 				headers: {
 					'Content-Type': `application/json`,
-					'ngrok-skip-browser-warning': '69420',
 				},
 			})
 			.then((res) => {})
