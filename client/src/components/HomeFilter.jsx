@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
 	activeList,
 	newestList,
@@ -8,6 +9,7 @@ import {
 } from '../utils/filterFunction';
 
 function HomeFilter({ totalDataCount, allData, setFilteredData }) {
+	const { searchTerm } = useSelector((state) => state.search);
 	const initialActiveButton = {
 		newest: false,
 		active: false,
@@ -16,19 +18,19 @@ function HomeFilter({ totalDataCount, allData, setFilteredData }) {
 	};
 	const [isActiveButton, setIsActiveButton] = useState(initialActiveButton);
 	const handleNewest = () => {
-		setFilteredData(newestList(allData));
+		setFilteredData(newestList(allData, searchTerm));
 		setIsActiveButton({ ...initialActiveButton, newest: true });
 	};
 	const handleActive = () => {
-		setFilteredData(activeList(allData));
+		setFilteredData(activeList(allData, searchTerm));
 		setIsActiveButton({ ...initialActiveButton, active: true });
 	};
 	const handleRecommend = () => {
-		setFilteredData(recommendList(allData));
+		setFilteredData(recommendList(allData, searchTerm));
 		setIsActiveButton({ ...initialActiveButton, recommend: true });
 	};
 	const handleUnanswered = () => {
-		setFilteredData(unansweredList(allData));
+		setFilteredData(unansweredList(allData, searchTerm));
 		setIsActiveButton({ ...initialActiveButton, unanswered: true });
 	};
 

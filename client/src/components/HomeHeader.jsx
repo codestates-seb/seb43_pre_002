@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function HomeHeader() {
 	const { isLogin } = useSelector((state) => state.login);
+	const { searchTerm } = useSelector((state) => state.search);
 	const navigate = useNavigate();
 	const handleClick = () => {
 		if (!isLogin) {
@@ -14,7 +15,9 @@ function HomeHeader() {
 	};
 	return (
 		<HomeHeaderContainer>
-			<h2 className="all">All Questions</h2>
+			<h2 className="all">
+				{searchTerm ? `${searchTerm} 검색결과` : 'All Questions'}
+			</h2>
 			<button className="ask-question" type="button" onClick={handleClick}>
 				Ask Questions
 			</button>
