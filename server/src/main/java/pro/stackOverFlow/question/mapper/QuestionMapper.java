@@ -6,74 +6,38 @@ import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.question.dto.*;
 import pro.stackOverFlow.question.entity.Question;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class QuestionMapper {
 
-    // Post
-    public Question questionPostDtoToQuestion(QuestionDto.Post requestBody/*, Member member*/) {
-        if (requestBody == null /*|| member == null*/) {
+    public Question questionPostDtoToQuestion(QuestionDto.Post requestBody, Member member) {
+        if (requestBody == null || member == null) {
             return null;
         }
         Question question = new Question();
         question.setTitle(requestBody.getTitle());
         question.setContent(requestBody.getContent());
-//        question.setMember(member);
-        return question;
-    }
-
-    // patch
-    public Question questionPatchDtoToQuestion(QuestionDto.Patch requestBody) {
-        if (requestBody == null) {
-            return null;
-        }
-
-        Question question = new Question();
-        question.setQuestionId(requestBody.getQuestionId());
-        question.setTitle(requestBody.getTitle());
-        question.setContent(requestBody.getContent());
-        question.setCreatedAt(requestBody.getQuestionCreatedAt());
-        question.setModifiedAt(requestBody.getQuestionModifiedAt());
+        question.setMember(member);
 
         return question;
     }
 
-    // Response
-    public QuestionDto.Response questionToQuestionResponse(Question question) {
-        if (question == null) {
+
+    public Question questionPatchDtoToQuestion(QuestionDto.Patch requestBody, Question question, Member member) {
+        if (requestBody == null || question == null || member == null) {
             return null;
         }
-
-        long questionId = 0L;
-        String title = null;
-        String content = null;
-        long viewCount = 0;
-
-        if (question.getQuestionId() != null) {
-            questionId = question.getQuestionId();
+        if (question.getMember().getMemberId().equals(member.getMemberId())) {
+            if (requestBody.getTitle() != null) {
+                question.setTitle(requestBody.getTitle());
+            }
+            if (requestBody.getContent() != null) {
+                question.setContent(requestBody.getContent());
+            }
         }
-        title = question.getTitle();
-        content = question.getContent();
-        viewCount = question.getViewCount();
-
-        return new QuestionDto.Response(questionId, title, content, viewCount);
-    }
-
-    // get all
-    public List<QuestionDto.Response> questionsToQuestionResponses(List<Question> questions) {
-        if (questions == null) {
-            return null;
-        }
-
-        List<QuestionDto.Response> list = new ArrayList<QuestionDto.Response>(questions.size());
-        for (Question question : questions) {
-            list.add(questionToQuestionResponse(question));
-        }
-
-        return list;
+        return question;
     }
 
     public List<QuestionGetAnswerDto> answersToQuestionGetAnswerDto(List<Answer> answers) {
@@ -86,9 +50,11 @@ public class QuestionMapper {
                     return QuestionGetAnswerDto.builder()
                             .answerId(answer.getAnswerId())
                             .answerCreatedAt(answer.getCreatedAt())
+                            .answerModifiedAt(answer.getModifiedAt())
                             .answerContent(answer.getContent())
                             .answerVoteCount(answer.getVoteCount())
                             .memberId(answer.getMember().getMemberId())
+                            .answerAccepted(answer.isAccepted())
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -96,7 +62,6 @@ public class QuestionMapper {
 
     public QuestionGetResponseDto questionInfoToQuestionGetResponseDto(Question question, Member member, List<QuestionGetAnswerDto> answers) {
         if (question == null || member == null || answers == null) {
-
             return null;
         }
 

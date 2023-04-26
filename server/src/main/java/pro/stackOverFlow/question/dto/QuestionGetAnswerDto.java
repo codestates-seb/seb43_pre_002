@@ -10,8 +10,9 @@ import java.time.LocalDateTime;
 public class QuestionGetAnswerDto {
     private Long answerId;
     private LocalDateTime answerCreatedAt;
+    private LocalDateTime answerModifiedAt;
     private String answerContent;
     private Long answerVoteCount;
     private Long memberId;
-
+    private boolean answerAccepted;
 }

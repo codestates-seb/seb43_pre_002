@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.exception.BusinessLogicException;
@@ -27,64 +26,37 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final QuestionVoteRepository questionVoteRepository;
 
-    // create
     public Question createQuestion(Question question) {
         return questionRepository.save(question);
     }
 
-    // read
     public Question findQuestion(Long questionId) {
         Question question = findVerifiedQuestion(questionId);
         return questionRepository.save(question);
-    }
-
-    // 전체 조회
-    public Page<Question> findQuestions(int page, int size) {
-        return questionRepository.findAll(PageRequest.of(page, size,
-                Sort.by("questionId").descending()));
-    }
-
-    public Page<Question> findAllQuestions(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("questionId").descending());
-        return questionRepository.findAll(pageable);
     }
 
     public List<Question> findAllQuestions() {
         return questionRepository.findAll();
     }
 
-    // update
     public Question updateQuestion(Question question) {
         return questionRepository.save(question);
     }
-
-    // delete
-//    public void deleteQuestion(Long memberId, Long questionId) {
-//        Question question = findVerifiedQuestion(questionId);
-//        Long findMemberId = question.getMember().getMemberId();
-//        if (!memberId.equals(findMemberId)) {
-//            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
-//        }
-//        questionRepository.delete(question);
-//    }
 
     public void deleteQuestion(Long questionId) {
         Question question = findVerifiedQuestion(questionId);
         questionRepository.delete(question);
     }
 
-    // question 있는지 검증
     private Question findVerifiedQuestion(Long questionId) {
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         return optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
     }
 
-    // 조회수 카운트
     public void addViewCount(Question question) {
         question.setViewCount(question.getViewCount() + 1);
     }
 
-    // vote
     public void upVote(Member member, Question question) {
         QuestionVote questionVote = findQuestionVote(member, question);
 
@@ -125,7 +97,4 @@ public class QuestionService {
         return questionVoteRepository.save(questionVote);
     }
 
-//    public List<Question> findAllQuestionsWithAnswers() {
-//        return questionRepository.findAllWithAnswers();
-//    }
 }

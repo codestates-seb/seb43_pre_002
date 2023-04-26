@@ -11,6 +11,7 @@ import lombok.Setter;
 import pro.stackOverFlow.audit.Auditable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = false)
@@ -32,13 +33,13 @@ public class Question extends Auditable {
     private String content;
 
     @Column(nullable = false)
-    private long viewCount; // 조회수
+    private long viewCount;
 
     @Column(nullable = false)
     private long questionVoteCount;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<Answer> answers;
+    private List<Answer> answers = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
@@ -63,13 +64,13 @@ public class Question extends Auditable {
         this.acceptedAnswer = acceptedAnswer;
     }
 
-
     public void addMember(Member member) {
         this.member = member;
         if (!member.getQuestions().contains(this)) {
             member.getQuestions().add(this);
         }
     }
+
     @Column(nullable = false)
     private int answerCount;
     public void setAnswerCount(int answerCount) {
