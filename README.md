@@ -18,9 +18,10 @@
 
 
 <br/>
+
 ### 🌅 Back-end
 
-|Frontend (팀장)|Frontend|Frontend|Frontend|
+|Backend (팀장)|Backend|Backend|Backend|
 | :---: | :---: | :---: | :---: |
 | <img src="./image/Sangrae.png" width=150px alt="상래"/> | <img src="./image/Yusun.png" width=150px alt="유선"/> | <img src="./image/Seungho.png" width=150px alt="승호"/> |
 |[김상래](https://github.com/ksr0818)|[노유선](https://github.com/YUSUNRO)|[정승호](https://github.com/1111jsh)|
