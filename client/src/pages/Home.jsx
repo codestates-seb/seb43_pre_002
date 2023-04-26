@@ -1,27 +1,42 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import HomeHeader from '../components/HomeHeader';
 import HomeFilter from '../components/HomeFilter';
 import HomeQuestionItem from '../components/HomeQuestionItem';
 import HomeFooter from '../components/HomeFooter';
+import { filterByTerm } from '../utils/filterFunction';
 
 function Home() {
+	const { searchTerm } = useSelector((state) => state.search);
 	const [allData, setAllData] = useState([]);
-	const [filteredData, setFilteredData] = useState([...allData]);
+	const [filteredData, setFilteredData] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [limitItems, setLimitItems] = useState(5);
+	const [isFailGet, setIsFailGet] = useState(false);
 	const totalDataCount = filteredData.length;
 
 	useEffect(() => {
-		setFilteredData([...allData]);
-	}, [allData]);
+		axios
+			.get('/questions', {
+				headers: {
+					'Content-Type': `application/json`,
+					'ngrok-skip-browser-warning': '69420',
+				},
+			})
+			.then((res) => {
+				setAllData(res.data.reverse());
+			})
+			.catch(() => {
+				setIsFailGet(true);
+			});
+	}, []);
 
 	useEffect(() => {
-		axios
-			.get('http://localhost:3001/datas')
-			.then((res) => setAllData(res.data));
-	}, []);
+		setFilteredData(filterByTerm(allData, searchTerm));
+	}, [allData, searchTerm]);
+
 	const currentPageData = filteredData.slice(
 		(currentPage - 1) * limitItems,
 		currentPage * limitItems,
@@ -35,9 +50,13 @@ function Home() {
 				allData={allData}
 				setFilteredData={setFilteredData}
 			/>
-			{currentPageData.map((el) => (
-				<HomeQuestionItem key={el.id} data={el} />
-			))}
+			{isFailGet ? (
+				<p className="fail-get-text">서버 상태가 원활하지 않습니다.</p>
+			) : (
+				currentPageData.map((el) => (
+					<HomeQuestionItem key={el.questionId} data={el} />
+				))
+			)}
 			<HomeFooter
 				totalDataCount={totalDataCount}
 				currentPage={currentPage}
@@ -55,5 +74,15 @@ const HomeContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	background-color: white;
-	width: 98vw;
+	width: 100vw;
+	margin-top: 50px;
+	overflow-y: scroll;
+	.fail-get-text {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 150px;
+		width: 80%;
+		border-top: 1px solid var(--line-color);
+	}
 `;

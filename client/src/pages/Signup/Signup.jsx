@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import OAuthButton from '../../components/Button/OAuthButton';
 import JoinDescription from '../../components/JoinDescription';
 import SignupForm from '../../components/SignupForm';
-import LoginHeader from '../../components/Header/LoginHeader';
 
 const SignupContainer = styled.div`
 	display: flex;
@@ -34,7 +33,6 @@ const LoginLink = styled.div`
 function Signup() {
 	return (
 		<SignupContainer>
-			<LoginHeader />
 			<JoinDescription />
 			<SignupWrapper>
 				<OAuthButton type="button" buttonText="Sign up with Google" />

@@ -18,11 +18,13 @@ import Timeline from './pages/Timeline';
 
 function App() {
 	const [isLogin, setIsLogin] = useState(false);
+	const [searchTerm, setSearchTerm] = useState('');
+
 	// 로그인 상태, (memberId) 전역상태로 관리
 	return (
 		<BrowserRouter>
 			<GlobalStyles />
-			<LoginHeader isLogin={isLogin} setIsLogin={setIsLogin} />
+			<LoginHeader />
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/question/:question_id" element={<Question />} />

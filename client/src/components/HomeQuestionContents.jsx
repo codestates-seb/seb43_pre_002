@@ -1,13 +1,14 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 function HomeQuestionContents({ data }) {
 	// html에서 텍스트 추출
-	const previewBody = data.bodyHTML.replace(/(<([^>]+)>)/gi, '').trim();
+	const previewBody = data.content.replace(/(<([^>]+)>)/gi, '').trim();
 	return (
 		<QuestionContentsContainer>
-			<a href="/" className="question-header">
+			<Link to={`/question/${data.questionId}`} className="question-header">
 				<span>{data.title}</span>
-			</a>
+			</Link>
 			<p className="question-body">{previewBody}</p>
 		</QuestionContentsContainer>
 	);
@@ -22,7 +23,7 @@ const QuestionContentsContainer = styled.div`
 	width: 80%;
 	padding: 0 2%;
 	.question-header {
-		margin: -3% 0 2% 0;
+		margin: 1.5% 0 2% 0;
 		font-size: var(--font-title-small);
 		font-weight: 700;
 		color: var(--button-hover-color);

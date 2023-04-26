@@ -28,15 +28,24 @@ const HeaderContainer = styled.div`
 	margin: 0 auto;
 `;
 
-function LoginHeader({ isLogin }) {
+function LoginHeader({ isLogin, setIsLogin, searchTerm, setSearchTerm }) {
 	return (
 		<Header>
 			<HeaderContainer>
-				<Link to="/">
+				<Link to="/" onClick={() => setSearchTerm('')}>
 					<Logo />
 				</Link>
-				<SearchBar type="text" placeholder="검색어를 입력하세요." />
-				{isLogin ? <UserActionButtons /> : <AuthButtons />}
+				<SearchBar
+					type="text"
+					placeholder="검색어를 입력하세요."
+					searchTerm={searchTerm}
+					setSearchTerm={setSearchTerm}
+				/>
+				{isLogin ? (
+					<UserActionButtons setIsLogin={setIsLogin} />
+				) : (
+					<AuthButtons />
+				)}
 			</HeaderContainer>
 		</Header>
 	);

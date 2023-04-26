@@ -70,4 +70,5 @@ const NewQuestionContainer = styled.form`
 	height: 180%;
 	background-color: #f8f9f9; // 이미지 색깔
 	padding: 0 8%;
+	margin-top: 50px;
 `;

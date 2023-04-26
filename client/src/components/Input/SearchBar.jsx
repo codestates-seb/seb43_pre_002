@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { IoIosSearch } from 'react-icons/io';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setSearchTerm } from '../../reducers/searchSlice';
 
 const SearchInputContainer = styled.div`
 	display: flex;
@@ -32,16 +35,40 @@ const SearchInput = styled.input`
 `;
 
 function SearchBar({ type, placeholder }) {
+	const [searchInput, setSearchInput] = useState('');
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const InputRef = useRef(null);
 
 	const handleSearchClick = () => {
 		InputRef.current.focus();
 	};
 
+	const handleInputChange = (e) => {
+		setSearchInput(e.target.value.trim());
+	};
+
+	const handleSearch = (e) => {
+		if (e.key === 'Enter' && searchInput !== '') {
+			dispatch(setSearchTerm(searchInput));
+			navigate('/');
+			setTimeout(() => {
+				setSearchInput('');
+			}, 100);
+		}
+	};
+
 	return (
 		<SearchInputContainer onClick={handleSearchClick}>
 			<SearchIcon />
-			<SearchInput type={type} placeholder={placeholder} ref={InputRef} />
+			<SearchInput
+				type={type}
+				placeholder={placeholder}
+				ref={InputRef}
+				value={searchInput}
+				onChange={handleInputChange}
+				onKeyUp={handleSearch}
+			/>
 		</SearchInputContainer>
 	);
 }
