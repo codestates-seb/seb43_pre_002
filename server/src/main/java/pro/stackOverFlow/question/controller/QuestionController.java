@@ -33,7 +33,7 @@ public class QuestionController {
         Member member = memberService.findMember(memberId);
         Question question = questionMapper.questionPostDtoToQuestion(requestBody, member);
 
-        Question createdQuestion = questionService.createQuestion(question);
+        questionService.createQuestion(question);
 
         return new ResponseEntity<>(question, HttpStatus.CREATED);
     }
@@ -45,6 +45,7 @@ public class QuestionController {
         Question findQuestion = questionService.findQuestion(questionId);
         Member member = memberService.findMember(memberId);
         Question question = questionMapper.questionPatchDtoToQuestion(requestBody, findQuestion, member);
+        questionService.updateQuestion(question);
 
         return new ResponseEntity<>(question, HttpStatus.OK);
     }

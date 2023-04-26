@@ -18,13 +18,13 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable {
 
-    @CreatedDate
+    @Getter
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now().plusHours(9);
 
     @Getter
     @Setter
     @Column(name = "last_modified_at")
-    protected LocalDateTime modifiedAt = LocalDateTime.now();
+    protected LocalDateTime modifiedAt = LocalDateTime.now().plusHours(9);
 
 }
