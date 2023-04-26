@@ -3,12 +3,16 @@ import HomeQuestionInfo from './HomeQuestionInfo';
 import HomeQuestionUserInfo from './HomeQuestionUserInfo';
 import HomeQuestionContents from './HomeQuestionContents';
 
-function HomeQuestionItem({ data }) {
+function HomeQuestionItem({ data, memberId, memberName }) {
 	return (
 		<QuestionItemContainer>
 			<HomeQuestionInfo data={data} />
 			<HomeQuestionContents data={data} />
-			<HomeQuestionUserInfo data={data} />
+			<HomeQuestionUserInfo
+				data={data}
+				memberId={memberId}
+				memberName={memberName}
+			/>
 		</QuestionItemContainer>
 	);
 }

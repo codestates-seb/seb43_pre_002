@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-function HomeQuestionUserInfo({ data }) {
+function HomeQuestionUserInfo({ data, memberId, memberName }) {
 	const date = new Date(data.createdAt);
 	date.setHours(date.getHours() + 9);
 	const parsedDate = date.toLocaleString('ko-kr');
 	return (
 		<QuestionUserInfoContainer>
 			<span className="user-icon">😆</span>
-			<Link to={`/userprofile/${data.member}`} className="user-profile">
-				{data.member}
+			<Link to={`/userprofile/${memberId}`} className="user-profile">
+				{memberName}
 			</Link>
 			<span className="user-updated">{parsedDate}</span>
 		</QuestionUserInfoContainer>
