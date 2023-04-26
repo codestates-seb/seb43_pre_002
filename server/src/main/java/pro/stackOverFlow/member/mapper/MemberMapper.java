@@ -62,39 +62,43 @@ public interface MemberMapper {
         memberMyPageDto.setBlogLink(member.getBlogLink());
 
 
-        List<Answer> answerList = member.getAnswers();
-
-        List<AnswerMyPageDto> answerMyPageDtoList = answerList.stream().map(answer ->{
-            AnswerMyPageDto answerMyPageDto = new AnswerMyPageDto();
-            answerMyPageDto.setAnswerId(answer.getAnswerId());
-            answerMyPageDto.setContent(answer.getContent());
-            answerMyPageDto.setCreatedAt(answer.getCreatedAt());
-            answerMyPageDto.setQuestionId(answer.getQuestion().getQuestionId());
-
-            //추가
-            answerMyPageDto.setTitle(answer.getQuestion().getTitle());
-            answerMyPageDto.setVoteCount(answer.getQuestion().getQuestionVoteCount());
-            return answerMyPageDto;
-        }).collect(Collectors.toList());
-
-        memberMyPageDto.setAnswers(answerMyPageDtoList);
+        for (Question question :member.getQuestions()) {
+            int answerCount = question.getAnswers().size();
+            question.setAnswerCount(answerCount);
+        }
 
         List<Question> questionList = member.getQuestions();
-
         List<QuestionMyPageDto> questionMyPageDtoList = questionList.stream().map(question ->{
             QuestionMyPageDto questionMyPageDto = new QuestionMyPageDto();
             questionMyPageDto.setQuestionId(question.getQuestionId());
             questionMyPageDto.setTitle(question.getTitle());
             questionMyPageDto.setContent(question.getContent());
             questionMyPageDto.setCreatedAt(question.getMember().getCreatedAt());
-            questionMyPageDto.setVoteCount(question.getQuestionVoteCount());
-            questionMyPageDto.setViewCount(question.getViewCount());
-
-//            questionMyPageDto.setVoteCount(question.getQuestionVoteCount());
-//            questionMyPageDto.setVoteCount(question.getViewCount());
+            questionMyPageDto.setAnswerCount(question.getAnswerCount());
 
             return questionMyPageDto;
         }).collect(Collectors.toList());
+
+
+        for (Answer answer :member.getAnswers()) {
+            int answerCount = answer.getQuestion().getAnswers().size();
+            answer.getQuestion().setAnswerCount(answerCount);
+        }
+
+        List<Answer> answerList = member.getAnswers();
+        List<AnswerMyPageDto> answerMyPageDtoList = answerList.stream().map(answer ->{
+            AnswerMyPageDto answerMyPageDto = new AnswerMyPageDto();
+            answerMyPageDto.setAnswerId(answer.getAnswerId());
+            answerMyPageDto.setContent(answer.getContent());
+            answerMyPageDto.setCreatedAt(answer.getCreatedAt());
+            answerMyPageDto.setQuestionId(answer.getQuestion().getQuestionId());
+            answerMyPageDto.setTitle(answer.getQuestion().getTitle());
+            answerMyPageDto.setVoteCount(answer.getQuestion().getQuestionVoteCount());
+            answerMyPageDto.setAnswerCount(answer.getQuestion().getAnswerCount());
+            return answerMyPageDto;
+        }).collect(Collectors.toList());
+
+        memberMyPageDto.setAnswers(answerMyPageDtoList);
 
         memberMyPageDto.setQuestions(questionMyPageDtoList);
 
