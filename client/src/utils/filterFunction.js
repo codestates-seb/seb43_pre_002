@@ -35,7 +35,7 @@ export const recommendList = (arr) => {
 
 export const unansweredList = (arr) => {
 	const newArr = JSON.parse(JSON.stringify(arr));
-	return newArr.filter((el) => !el.answer);
+	return newArr.filter((el) => !el.answerCount);
 };
 
 export const newestAnswer = (arr) => {
