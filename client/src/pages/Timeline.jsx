@@ -137,7 +137,7 @@ function Timeline() {
 					},
 				})
 				.then((res) => {
-					const ans = res.data.data;
+					const ans = res.data;
 					if (ans) {
 						setAnswer(ans);
 						console.log(ans);

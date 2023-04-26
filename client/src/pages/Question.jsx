@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import LoginHeader from '../components/Header/LoginHeader';
 import QnABox from '../components/QnABox';
 import AnswerForm from '../components/AnswerForm';
 import { newestAnswer, oldestAnswer } from '../utils/filterFunction';
@@ -130,7 +129,6 @@ function Question() {
 
 	// 질문 조회 및 답변 조회
 	useEffect(() => {
-		console.log(userId);
 		axios
 			.get(`/questions/${targetId}`, {
 				headers: {
@@ -144,8 +142,9 @@ function Question() {
 				setAnswerList(question.answers);
 			})
 			.catch((res) => {
+				console.log(res);
 				console.log('에러발생');
-				navigate('/');
+				// navigate('/');
 			});
 	}, [render]);
 
@@ -166,13 +165,18 @@ function Question() {
 	// 답변 생성
 	const createAnswerHandler = (data) => {
 		axios
-			.post(`/questions/${targetId}/answers`, JSON.stringify({ ...data }), {
-				headers: {
-					'Content-Type': `application/json`,
+			.post(
+				`/questions/${targetId}/answers/${userId}`,
+				JSON.stringify({ ...data }),
+				{
+					headers: {
+						'Content-Type': `application/json`,
+					},
 				},
-			})
+			)
 			.then((res) => {
 				setRender(!render);
+				console.log(res);
 				// navigate(0);
 			})
 			.catch((res) => console.log(res));
@@ -259,7 +263,7 @@ function Question() {
 							})}
 						</div>
 					</AnswersContainer>
-					<AnswerForm createAnswerHandler={createAnswerHandler} />
+					{userId && <AnswerForm createAnswerHandler={createAnswerHandler} />}
 				</main>
 			</QuestionContainer>
 		)

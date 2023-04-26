@@ -34,8 +34,8 @@ const QnABoxContainer = styled.div`
 // Qusetion, Answer에 사용되는 Div
 function QnABox({ data, deleteQuestionHandler, deleteAnswerHandler, mode }) {
 	const [userId, setUserId] = useState(
-		localStorage.getItem('loginmemberid')
-			? JSON.parse(localStorage.getItem('loginmemberid'))
+		localStorage.getItem('loginMemberId')
+			? JSON.parse(localStorage.getItem('loginMemberId'))
 			: null,
 	);
 

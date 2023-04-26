@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { dateFormat } from '../utils/dateFormat';
@@ -46,47 +47,60 @@ const UserInfoCardContainer = styled.div`
 // 유저의 정보가 담긴 InfoCard
 function UserInfoCard({ data, mode }) {
 	const [userId, setUserId] = useState(
-		localStorage.getItem('loginmemberid')
-			? JSON.parse(localStorage.getItem('loginmemberid'))
+		localStorage.getItem('loginMemberId')
+			? JSON.parse(localStorage.getItem('loginMemberId'))
 			: null,
 	);
+	const [memberInfo, setMemberInfo] = useState();
+
+	// 회원정보 조회
+	useEffect(() => {
+		axios
+			.get(`/members/${data.memberId}`, {
+				headers: {
+					'Content-Type': `application/json`,
+				},
+			})
+			.then((res) => {
+				const info = res.data;
+				setMemberInfo(info);
+			})
+			.catch((res) => {
+				console.log(res);
+			});
+	}, []);
 
 	return (
-		<UserInfoCardContainer>
-			<span>
-				{mode === 'question'
-					? `asked ${dateFormat(new Date(data.questionCreatedAt))}`
-					: `answered ${dateFormat(new Date(data.answerCreatedAt))}`}
-			</span>
-			<div className="bottom__container">
-				{data.memberId && (
-					<UserProfile
-						// userName={String(data.memberId)}
-						userName="username"
-						boxSize="32px"
-						fontSize="13px"
-					/>
-				)}
-				<UserProfile
-					// userName={String(data.memberId)}
-					userName="username"
-					boxSize="32px"
-					fontSize="13px"
-				/>
-				<div className="right__container">
-					<Link
-						to={
-							userId === data.memberId
-								? `/myprofile/${data.memberId}`
-								: `/userprofile/${data.memberId}`
-						}
-					>
-						<span className="user__name">{data.memberId}</span>
-						<span className="user__name">username</span>
-					</Link>
+		memberInfo && (
+			<UserInfoCardContainer>
+				<span>
+					{mode === 'question'
+						? `asked ${dateFormat(new Date(data.questionCreatedAt))}`
+						: `answered ${dateFormat(new Date(data.answerCreatedAt))}`}
+				</span>
+				<div className="bottom__container">
+					{data.memberId && (
+						<UserProfile
+							userName={memberInfo.displayName}
+							boxSize="32px"
+							fontSize="13px"
+						/>
+					)}
+
+					<div className="right__container">
+						<Link
+							to={
+								userId === data.memberId
+									? `/myprofile/${data.memberId}`
+									: `/userprofile/${data.memberId}`
+							}
+						>
+							<span className="user__name">{memberInfo.displayName}</span>
+						</Link>
+					</div>
 				</div>
-			</div>
-		</UserInfoCardContainer>
+			</UserInfoCardContainer>
+		)
 	);
 }
 export default UserInfoCard;
