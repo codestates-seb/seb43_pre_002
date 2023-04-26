@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setIsLogin } from './reducers/loginSlice';
@@ -23,25 +23,11 @@ function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const loginMemberId = localStorage.getItem('loginMemberId');
 		const accessToken = localStorage.getItem('access_token');
-		const expiresIn = localStorage.getItem('expires_in');
 
-		if (accessToken && loginMemberId && expiresIn) {
-			// 현재 시간을 초(second) 단위로 계산
-			const now = Math.floor(Date.now() / 1000);
-
-			// 만료 시간이 지났다면 로그아웃 처리
-			if (now >= parseInt(expiresIn, 10)) {
-				localStorage.removeItem('access_token');
-				localStorage.removeItem('loginMemberId');
-				localStorage.removeItem('expires_in');
-				dispatch(setIsLogin(false));
-				return;
-			}
-			axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-			dispatch(setIsLogin(true));
-		}
+		// 요청 헤더에 액세스토큰 값 설정 및 인가 시 로그인 상태 유지
+		axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+		dispatch(setIsLogin(true));
 	}, []);
 
 	return (
