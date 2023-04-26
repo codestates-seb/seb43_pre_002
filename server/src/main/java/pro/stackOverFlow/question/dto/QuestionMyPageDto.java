@@ -12,7 +12,5 @@ public class QuestionMyPageDto {
     private String title;
     private String content;
     private LocalDateTime createdAt;
-    private Long ViewCount;
-    private Long VoteCount;
-
+    private int answerCount;
 }
