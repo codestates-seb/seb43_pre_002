@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 function HomeQuestionUserInfo({ data }) {
-	const parsedDate = new Date(data.createdAt).toLocaleString('ko-kr');
+	const date = new Date(data.createdAt);
+	date.setHours(date.getHours() + 9);
+	const parsedDate = date.toLocaleString('ko-kr');
 	return (
 		<QuestionUserInfoContainer>
 			<span className="user-icon">😆</span>
