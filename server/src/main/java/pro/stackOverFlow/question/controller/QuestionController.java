@@ -1,5 +1,6 @@
 package pro.stackOverFlow.question.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.question.mapper.QuestionMapper;
 import pro.stackOverFlow.question.service.QuestionService;
 
+import javax.persistence.JoinColumn;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
@@ -71,7 +73,6 @@ public class QuestionController {
 
         return new ResponseEntity<>(questionMapper.questionInfoToQuestionGetResponseDto(question, member, questionGetAnswerDto), HttpStatus.OK);
     }
-
 
     @GetMapping
     public ResponseEntity<List<Question>> getAllQuestions() {

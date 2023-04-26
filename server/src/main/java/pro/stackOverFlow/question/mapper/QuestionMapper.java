@@ -96,6 +96,7 @@ public class QuestionMapper {
 
     public QuestionGetResponseDto questionInfoToQuestionGetResponseDto(Question question, Member member, List<QuestionGetAnswerDto> answers) {
         if (question == null || member == null || answers == null) {
+
             return null;
         }
 

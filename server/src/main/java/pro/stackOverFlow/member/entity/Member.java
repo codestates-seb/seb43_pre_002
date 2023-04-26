@@ -10,13 +10,16 @@ import pro.stackOverFlow.question.entity.Question;
 import pro.stackOverFlow.question.entity.QuestionVote;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
+@Builder
 public class Member extends Auditable {
 
     @Id
@@ -56,16 +59,20 @@ public class Member extends Auditable {
 
     @JsonIgnore
     @Setter
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Question> questions;
 
     @JsonIgnore
     @Setter
-    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Answer> answers;
 
     public Member(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public Member(String email) {
+        this.email = email;
     }
 
 

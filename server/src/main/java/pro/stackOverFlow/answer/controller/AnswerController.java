@@ -9,11 +9,13 @@ import pro.stackOverFlow.answer.dto.*;
 import pro.stackOverFlow.answer.entity.Answer;
 import pro.stackOverFlow.answer.mapper.AnswerMapper;
 import pro.stackOverFlow.answer.service.AnswerService;
-import pro.stackOverFlow.dto.SingleResponseDto;
+//import pro.stackOverFlow.dto.SingleResponseDto;
 import pro.stackOverFlow.exception.BusinessLogicException;
 import pro.stackOverFlow.exception.ResourceNotFoundException;
 import pro.stackOverFlow.member.entity.Member;
 import pro.stackOverFlow.member.service.MemberService;
+import pro.stackOverFlow.question.entity.Question;
+import pro.stackOverFlow.question.service.QuestionService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -26,21 +28,29 @@ public class AnswerController {
     private AnswerMapper answerMapper;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private QuestionService questionService;
+
 
     @PostMapping("/questions/{question-id}/answers/{member-id}")
-    public ResponseEntity postAnswer(@PathVariable("member-id") long memberId,
-                                     @PathVariable("question-id") long questionId,
+    public ResponseEntity postAnswer(@PathVariable("question-id") long questionId,
+                                     @PathVariable("member-id") long memberId,
                                      @Valid @RequestBody AnswerPostDto answerPostDto) {
+
+        long memberId = 1;
 
         Answer answer = answerMapper.answerPostDtoToAnswer(answerPostDto);
         //추가
         Member member = memberService.findMember(memberId);
         answer.addMember(member);
         Answer createdAnswer = answerService.createAnswer(answer, questionId);
+
         AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(createdAnswer);
 
-        return new ResponseEntity<>(new SingleResponseDto<>(responseDto), HttpStatus.CREATED);
+        return new ResponseEntity(responseDto, HttpStatus.CREATED);
+      
     }
+
 
 
     @GetMapping("/answers/{answer-id}")
@@ -49,7 +59,7 @@ public class AnswerController {
         Answer foundAnswer = answerService.findAnswer(answerId);
         AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(foundAnswer);
 
-        return new ResponseEntity<>(new SingleResponseDto<>(responseDto), HttpStatus.OK);
+        return ResponseEntity.ok(responseDto);
     }
 
 
@@ -73,7 +83,7 @@ public class AnswerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-// ---------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------
 
     @PostMapping("/answers/{answer-id}/vote")
     public ResponseEntity vote(@PathVariable("answer-id") @Positive long answerId,
@@ -99,7 +109,8 @@ public class AnswerController {
     }
 
 
-//----------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------
+
 
     @PostMapping("/answers/{answer-id}/accept/{member-id}")
     public ResponseEntity markAnswerAsAccepted(@PathVariable("answer-id") Long answerId,
