@@ -67,6 +67,7 @@ function Home() {
 
 	useEffect(() => {
 		setFilteredData(filterByTerm(allData, searchTerm));
+		setCurrentPage(1);
 	}, [allData, searchTerm]);
 
 	useEffect(() => {

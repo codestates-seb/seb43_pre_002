@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
 	activeList,
@@ -17,6 +17,9 @@ function HomeFilter({ totalDataCount, allData, setFilteredData }) {
 		unanswered: false,
 	};
 	const [isActiveButton, setIsActiveButton] = useState(initialActiveButton);
+	useEffect(() => {
+		setIsActiveButton(initialActiveButton);
+	}, [searchTerm]);
 	const handleNewest = () => {
 		setFilteredData(newestList(allData, searchTerm));
 		setIsActiveButton({ ...initialActiveButton, newest: true });
