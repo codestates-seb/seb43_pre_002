@@ -54,7 +54,7 @@ public class AnswerController {
 
 
     @GetMapping("/answers/{answer-id}")
-    public ResponseEntity getAnswer(@PathVariable("answer-id") long answerId){
+    public ResponseEntity getAnswer(@PathVariable("answer-id") long answerId) {
 
         Answer foundAnswer = answerService.findAnswer(answerId);
         AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(foundAnswer);
@@ -65,7 +65,7 @@ public class AnswerController {
 
     @PatchMapping("/answers/{answer-id}")
     public ResponseEntity updateAnswer(@PathVariable("answer-id") long answerId,
-                                     @Valid @RequestBody AnswerPatchDto answerPatchDto) {
+                                       @Valid @RequestBody AnswerPatchDto answerPatchDto) {
 
         Answer updatedAnswer = answerService.updateAnswer(answerId, answerPatchDto);
         AnswerResponseDto responseDto = answerMapper.answerToAnswerResponseDto(updatedAnswer);
@@ -92,13 +92,13 @@ public class AnswerController {
         if (voteDto.getVoteType().equals("up")) {
             try {
                 answerService.setUpVote(answerId, voteDto.getMemberId());
-            } catch(BusinessLogicException e) {
+            } catch (BusinessLogicException e) {
                 return new ResponseEntity(new VoteResponseDto(false, answerService.getVoteCount(answerId), e.getMessage()), HttpStatus.OK);
             }
         } else if (voteDto.getVoteType().equals("down")) {
             try {
                 answerService.setDownVote(answerId, voteDto.getMemberId());
-            } catch(BusinessLogicException e) {
+            } catch (BusinessLogicException e) {
                 return new ResponseEntity(new VoteResponseDto(false, answerService.getVoteCount(answerId), e.getMessage()), HttpStatus.OK);
             }
         } else {
@@ -125,9 +125,6 @@ public class AnswerController {
     }
 
 
-
-
-
 //    @PostMapping("/answers/{answer-id}/accept")
 //    public ResponseEntity markAnswerAsAccepted(@PathVariable("answer-id") Long answerId,
 //                                               Authentication authentication) {
@@ -150,7 +147,6 @@ public class AnswerController {
 //            return new ResponseEntity(new TrueFalseResponseDto(false, e.getMessage()), HttpStatus.OK);
 //        }
 //    }
-
 
 
 }

@@ -20,15 +20,14 @@ public class QuestionDto {
     }
 
     @Getter
+    @Setter
     public static class Patch {
         private long questionId;
         @NotBlank
         private String title;
         private String content;
-
-        public void setQuestionId(long questionId) {
-            this.questionId = questionId;
-        }
+        private LocalDateTime questionCreatedAt;
+        private LocalDateTime questionModifiedAt;
     }
 
     @Getter

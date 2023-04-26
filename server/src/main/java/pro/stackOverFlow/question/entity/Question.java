@@ -37,10 +37,10 @@ public class Question extends Auditable {
     @Column(nullable = false)
     private long questionVoteCount;
 
-
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answers;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<QuestionVote> questionVotes;
 
@@ -69,6 +69,11 @@ public class Question extends Auditable {
         if (!member.getQuestions().contains(this)) {
             member.getQuestions().add(this);
         }
+    }
+    @Column(nullable = false)
+    private int answerCount;
+    public void setAnswerCount(int answerCount) {
+        this.answerCount = answerCount;
     }
 
 }

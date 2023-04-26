@@ -21,8 +21,8 @@ import pro.stackOverFlow.question.service.QuestionService;
 
 import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
-
 
 
 @Transactional
@@ -57,10 +57,9 @@ public class AnswerService {
     }
 
 
-
-    public Answer findAnswer(long answerId){
+    public Answer findAnswer(long answerId) {
         Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
-        Answer findAnswer = optionalAnswer.orElseThrow(()-> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+        Answer findAnswer = optionalAnswer.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
         return findAnswer;
     }
 
@@ -79,6 +78,7 @@ public class AnswerService {
         questionRepository.save(question);
         answerRepository.delete(answer);
     }
+
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -137,7 +137,7 @@ public class AnswerService {
         return voteCount;
     }
 
-    public enum VoteStatus{
+    public enum VoteStatus {
         ALREADY_UP_VOTED(1, "already upVoted"),
         NONE(2, "none"),
         ALREADY_DOWN_VOTED(3, "already downVoted");
@@ -153,7 +153,6 @@ public class AnswerService {
             this.message = message;
         }
     }
-
 
 
     //------------------------------------------------------------------------------------------------------------------
