@@ -18,11 +18,22 @@ const UserProfileText = styled.span`
 	color: #fff;
 `;
 
+const getUserName = (str) => {
+	const check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+	let userName = '';
+	if (check.test(str)) {
+		userName = str.substring(0, 3);
+	} else {
+		userName = str.substring(0, 4);
+	}
+	return userName;
+};
+
 function UserProfile({ userName, boxSize, fontSize }) {
 	return (
 		<UserProfileBox boxSize={boxSize}>
 			<UserProfileText fontSize={fontSize}>
-				{userName.substring(0, 4)}
+				{getUserName(userName)}
 			</UserProfileText>
 		</UserProfileBox>
 	);
