@@ -29,18 +29,18 @@
 <br />
 
 ## Demo
-|회원가입|회원가입성공|로그인|
+|회원가입|회원가입성공|로그인/로그아웃|
 | :---: | :---: | :---: |
-|<img src="./image/Signup.png" width="300px">|<img src="./image/success.png" width="300px">|<img src="./image/login.png" width="300px">|
+|<img src="./image/Signup.png" width="400px">|<img src="./image/success.png" width="400px">|<img src="./image/login.png" width="400px">|
 |이메일 형식의 아이디와 패스워드를 사용자가 직접 입력하여 가입한다. <br /> 회원 가입 시 별도 이메일 인증 과정은 생략한다. <br /> 이미 가입되어 있는 이메일로는 회원 가입이 불가능하다. <br /> Sign up 버튼 클릭시  Display name, Email, Password 입력 받는 창이 나타난다. <br /> - Display name, Email, Password는 필수값이다. <br /> - Email 형식 (aaa@aaa.aaa) 충족 여부 확인 <br /> - Password는 알파벳과 숫자가 1개 이상, 총 8자 이상|가입 성공 시 로그인 화면으로 이동할 수 있는 버튼이 있는 회원 가입 성공 페이지로 이동한다. <br /> 이메일 주소와 함께 회원 가입 성공 메시지를 띄운다|회원은 이메일과 비밀번호로 로그인을 할 수 있다. <br /> - 로그인 성공시 질문 목록 페이지로 이동하고, 실패시 에러 메시지 출력 <br /> - 로그인 성공 시 헤더의 버튼이 변경된다. <br /> - 변경된 헤더의 로그아웃 버튼 클릭 시 로그아웃된 후 홈 화면으로 이동한다.|
 |질문작성|질문수정|답변수정|
-|<img src="" width="300px">|<img src="" width="300px">|<img src="" width="300px">|
+|<img src="" width="400px">|<img src="" width="400px">|<img src="" width="400px">|
 ||||
 |마이프로필|마이액티비티|프로필수정|
-|<img src="" width="300px">|<img src="" width="300px">|<img src="" width="300px">|
+|<img src="" width="400px">|<img src="" width="400px">|<img src="" width="400px">|
 ||||
 |유저프로필|유저액티비티|
-|<img src="" width="300px">|<img src="" width="300px">|
+|<img src="" width="400px">|<img src="" width="400px">|
 ||||
 
 <br />
