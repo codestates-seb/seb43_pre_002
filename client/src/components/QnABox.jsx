@@ -85,6 +85,7 @@ function QnABox({ data, deleteQuestionHandler, deleteAnswerHandler, mode }) {
 												? `question/${data.questionId}`
 												: `answer/${data.answerId}`
 										}`}
+										state={data}
 									>
 										<span>edit</span>
 									</Link>

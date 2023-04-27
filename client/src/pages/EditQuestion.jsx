@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useState, useEffect } from 'react';
@@ -96,6 +96,7 @@ const PreviewContainer = styled.div`
 
 function EditQuestion() {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const { question_id: targetId } = useParams();
 	const [userId, setUserId] = useState(
 		sessionStorage.getItem('loginMemberId')
@@ -108,21 +109,9 @@ function EditQuestion() {
 
 	// 정보 조회
 	useEffect(() => {
-		axios
-			.get(`/questions/${targetId}`, {
-				headers: {
-					'Content-Type': `application/json`,
-				},
-			})
-			.then((res) => {
-				const question = res.data;
-				setTitle(question.questionTitle);
-				setContent(question.questionContent);
-			})
-			.catch((res) => {
-				console.log('에러발생');
-				navigate('/');
-			});
+		const question = location.state;
+		setTitle(question.questionTitle);
+		setContent(question.questionContent);
 	}, []);
 
 	const editQuestion = () => {
@@ -130,13 +119,15 @@ function EditQuestion() {
 			title,
 			content,
 		};
-		axios
-			.patch(`/questions/${targetId}/${userId}`, JSON.stringify(newQuestion), {
+		axios.patch(
+			`/questions/${targetId}/${userId}`,
+			JSON.stringify(newQuestion),
+			{
 				headers: {
 					'Content-Type': `application/json`,
 				},
-			})
-			.then((res) => console.log(res).catch((err) => console.log(err)));
+			},
+		);
 	};
 
 	const titleHandler = (e) => {

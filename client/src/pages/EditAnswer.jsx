@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useState, useEffect } from 'react';
@@ -88,26 +88,13 @@ const PreviewContainer = styled.div`
 function EditAnswer() {
 	const navigate = useNavigate();
 	const { answer_id: targetId } = useParams();
-
+	const location = useLocation();
 	const [content, setContent] = useState('');
 
 	// 정보 조회
 	useEffect(() => {
-		axios
-			.get(`/answers/${targetId}`, {
-				headers: {
-					'Content-Type': `application/json`,
-				},
-			})
-			.then((res) => {
-				const answer = res.data;
-				setContent(answer.content);
-			})
-			.catch((err) => {
-				console.log(err);
-				console.log('에러발생');
-				// navigate('/');
-			});
+		const answer = location.state;
+		setContent(answer.answerContent);
 	}, []);
 
 	const editAnswer = () => {
