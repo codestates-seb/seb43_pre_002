@@ -30,6 +30,7 @@
 
 ## Demo
 |회원가입|회원가입성공|로그인|
+| :---: | :---: | :---: |
 |<img src="./image/Signup.png" width="300px">|<img src="./image/success.png" width="300px">|<img src="./image/login.png" width="300px">|
 |<img src="" width="300px">|<img src="" width="300px">|<img src="" width="300px">|
 |질문작성|질문수정|답변수정|
