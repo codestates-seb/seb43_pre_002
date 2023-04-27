@@ -234,12 +234,13 @@ function IconMenu({ data, mode }) {
 				<AiFillCaretDown onClick={voteDownHandler} />
 				<Tooltip>Save this question.</Tooltip>
 			</li>
-			{/*  질문의 작성자와 유저가 일치하는 답변만 보여줌 */}
+
+			{/* 질문의 작성자와 유저가 일치하는 답변만 보여줌
 			{question && question.memberId === userId && mode === 'answer' && (
 				<li className={isChecked ? 'on' : 'off'}>
 					<FaCheck onClick={isCheckedHadler} />
 				</li>
-			)}
+			)} */}
 			{/* <li>
 				{isBookmark ? (
 					<MdBookmarkBorder
