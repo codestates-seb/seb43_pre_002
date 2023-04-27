@@ -43,9 +43,13 @@ const QuestionsPerPageContainer = styled.div`
 	display: flex;
 	justify-content: right;
 	align-items: center;
-	width: 30%;
+	width: 250px;
 	position: absolute;
 	right: 2%;
+	@media screen and (max-width: 600px) {
+		right: 2%;
+		bottom: 0;
+	}
 	.question-counts {
 		font-size: var(--font-large);
 		width: 30px;

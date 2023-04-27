@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import UserProfile from './UserProfile';
+import { timeForToday } from '../utils/dateFormat';
 
 function HomeQuestionUserInfo({ data, memberId, memberName }) {
 	const date = new Date(data.createdAt);
-	date.setHours(date.getHours() + 9);
-	const parsedDate = date.toLocaleString('ko-kr');
+	// const parsedDate = date.toLocaleString('ko-kr');
+	const parsedDate = timeForToday(date);
 	return (
 		<QuestionUserInfoContainer>
 			<div className="user-container">
@@ -27,9 +28,9 @@ export default HomeQuestionUserInfo;
 
 const QuestionUserInfoContainer = styled.div`
 	display: flex;
-	justify-content: left;
+	justify-content: right;
 	align-items: center;
-	width: 21%;
+	width: 230px;
 	height: 20%;
 	background-color: transparent;
 	position: absolute;
@@ -46,8 +47,8 @@ const QuestionUserInfoContainer = styled.div`
 		display: flex;
 		align-items: center;
 		.user-profile {
-			color: #3b6fa0; // 전역변수로 바꾸기
-			margin-left: 2px;
+			color: var(--button-hover-color);
+			margin-left: 5px;
 			:hover {
 				color: var(--main-color);
 			}
@@ -55,8 +56,6 @@ const QuestionUserInfoContainer = styled.div`
 	}
 
 	.user-updated {
-		position: absolute;
-		right: 0;
 		color: gray;
 	}
 `;

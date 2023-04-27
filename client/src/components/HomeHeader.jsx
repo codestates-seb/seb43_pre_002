@@ -41,7 +41,7 @@ const HomeHeaderContainer = styled.header`
 	.ask-question {
 		color: white;
 		background-color: var(--main-color);
-		width: 11%;
+		width: 140px;
 		height: 3em;
 		font-size: var(--font-large);
 		border: 1px inset var(--line-color);

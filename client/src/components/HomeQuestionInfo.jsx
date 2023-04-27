@@ -27,5 +27,10 @@ const QuestionInfoContainer = styled.div`
 		font-size: var(--font-large);
 		width: 100px;
 		margin-bottom: 5%;
+		@media screen and (max-width: 800px) {
+			justify-content: left;
+			width: 60px;
+			font-size: var(--font-base);
+		}
 	}
 `;
