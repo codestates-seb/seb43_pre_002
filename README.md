@@ -26,7 +26,20 @@
 | <img src="./image/Sangrae.png" width=150px alt="상래"/> | <img src="./image/Yusun.png" width=150px alt="유선"/> | <img src="./image/Seungho.png" width=150px alt="승호"/> |
 |[김상래](https://github.com/ksr0818)|[노유선](https://github.com/YUSUNRO)|[정승호](https://github.com/1111jsh)|
 
+<br />
 
+## Demo
+|회원가입|로그인|로그아웃|
+|------|---|---|
+|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|
+|질문페이지|상세페이지|검색페이지|
+|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|
+|질문작성|질문수정|답변수정|
+|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|
+|마이프로필|마이액티비티|프로필수정|
+|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|
+|유저프로필|유저액티비티|
+|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|
 ## ⚙ Tech Stack
 ### 🌅 Front-end
 <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=white"> <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=black"> <img src="https://img.shields.io/badge/reactrouter-CA4245?style=for-the-badge&logo=ReactRouter&logoColor=white"> <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"> <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"> <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white"> <img src="https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white">
