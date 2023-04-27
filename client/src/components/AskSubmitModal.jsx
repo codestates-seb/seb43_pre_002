@@ -11,7 +11,7 @@ function AskSubmitModal({ isOpen, setIsOpen, submitData }) {
 		setIsOpen(false);
 	};
 	const postData = () => {
-		const memberId = localStorage.getItem('loginMemberId');
+		const memberId = sessionStorage.getItem('loginMemberId');
 		axios
 			.post(`/questions/${memberId}`, JSON.stringify(submitData), {
 				headers: {

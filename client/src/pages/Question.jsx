@@ -100,8 +100,8 @@ function Question() {
 	const [render, setRender] = useState(false);
 
 	const [userId, setUserId] = useState(
-		localStorage.getItem('loginMemberId')
-			? JSON.parse(localStorage.getItem('loginMemberId'))
+		sessionStorage.getItem('loginMemberId')
+			? JSON.parse(sessionStorage.getItem('loginMemberId'))
 			: null,
 	);
 

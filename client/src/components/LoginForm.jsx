@@ -61,7 +61,7 @@ function LoginForm() {
 					parseInt(response.headers['access-token-expiration-minutes'], 10) *
 					60;
 				localStorage.setItem('access_token', accessToken);
-				localStorage.setItem(
+				sessionStorage.setItem(
 					'loginMemberId',
 					JSON.stringify(response.data.memberId),
 				); // 로그인한 멤버 memberId를 로컬 스토리지에 저장

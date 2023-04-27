@@ -97,8 +97,8 @@ const Tooltip = styled.div`
 // QnABox의 IconMenu
 function IconMenu({ data, mode }) {
 	const [userId, setUserId] = useState(
-		localStorage.getItem('loginMemberId')
-			? JSON.parse(localStorage.getItem('loginMemberId'))
+		sessionStorage.getItem('loginMemberId')
+			? JSON.parse(sessionStorage.getItem('loginMemberId'))
 			: null,
 	);
 

@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	isLogin: !!localStorage.getItem('loginMemberId'),
+	isLogin: !!sessionStorage.getItem('loginMemberId'),
 };
 
 export const loginSlice = createSlice({
@@ -12,7 +12,7 @@ export const loginSlice = createSlice({
 		setIsLogin: (state, action) => {
 			state.isLogin = action.payload;
 			if (!action.payload) {
-				localStorage.removeItem('loginMemberId');
+				sessionStorage.removeItem('loginMemberId');
 			}
 		},
 	},

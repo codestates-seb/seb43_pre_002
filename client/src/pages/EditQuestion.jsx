@@ -93,8 +93,8 @@ function EditQuestion() {
 	const navigate = useNavigate();
 	const { question_id: targetId } = useParams();
 	const [userId, setUserId] = useState(
-		localStorage.getItem('loginMemberId')
-			? JSON.parse(localStorage.getItem('loginMemberId'))
+		sessionStorage.getItem('loginMemberId')
+			? JSON.parse(sessionStorage.getItem('loginMemberId'))
 			: null,
 	);
 

@@ -35,7 +35,7 @@ function UserActionButtons() {
 	const dispatch = useDispatch();
 
 	const [userDisplayName, setUserDisplayName] = useState('');
-	const memberId = localStorage.getItem('loginMemberId');
+	const memberId = sessionStorage.getItem('loginMemberId');
 
 	useEffect(() => {
 		axios
@@ -60,7 +60,7 @@ function UserActionButtons() {
 		navigate('/');
 		setUserDisplayName('');
 		// 로컬스토리지의 유저 정보, 토큰, 토큰 유효기간 삭제
-		localStorage.removeItem('loginMemberId');
+		sessionStorage.removeItem('loginMemberId');
 		localStorage.removeItem('access_token');
 		localStorage.removeItem('expires_in');
 	};

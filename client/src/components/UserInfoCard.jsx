@@ -47,8 +47,8 @@ const UserInfoCardContainer = styled.div`
 // 유저의 정보가 담긴 InfoCard
 function UserInfoCard({ data, mode }) {
 	const [userId, setUserId] = useState(
-		localStorage.getItem('loginMemberId')
-			? JSON.parse(localStorage.getItem('loginMemberId'))
+		sessionStorage.getItem('loginMemberId')
+			? JSON.parse(sessionStorage.getItem('loginMemberId'))
 			: null,
 	);
 	const [memberInfo, setMemberInfo] = useState();
