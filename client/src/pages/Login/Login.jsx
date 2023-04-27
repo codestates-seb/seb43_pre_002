@@ -8,7 +8,7 @@ const LoginContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	min-height: 620.531px;
-	height: 100%;
+	height: 100vh;
 	width: 100vw;
 	background-color: var(--base-color);
 `;
