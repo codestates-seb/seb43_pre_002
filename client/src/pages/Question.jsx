@@ -42,13 +42,18 @@ const TitleContainer = styled.div`
 			font-size: var(--font-title-large);
 		}
 		button {
-			background-color: var(--main-color);
-			font-size: var(--font-base);
 			color: white;
-			width: 100px;
-			height: 45px;
-			border: none;
+			background-color: var(--main-color);
+			width: 140px;
+			height: 3em;
+			font-size: var(--font-large);
+			border: 1px inset var(--line-color);
+			border-radius: 5px;
+			padding: 0;
 			cursor: pointer;
+			&:hover {
+				background-color: var(--button-hover-color);
+			}
 		}
 	}
 
@@ -137,14 +142,10 @@ function Question() {
 			})
 			.then((res) => {
 				const question = res.data;
-				console.log('질문불러오기');
-				console.log(question);
 				setQuestionData(question);
 				setAnswerList(question.answers);
 			})
 			.catch((res) => {
-				console.log(res);
-				console.log('에러발생');
 				navigate('/');
 			});
 	}, [render]);
@@ -158,7 +159,6 @@ function Question() {
 				navigate('/');
 			})
 			.catch((res) => {
-				console.log(res);
 				navigate('/');
 			});
 	};
@@ -177,10 +177,7 @@ function Question() {
 			)
 			.then((res) => {
 				setRender(!render);
-				console.log(res);
-				// navigate(0);
-			})
-			.catch((res) => console.log(res));
+			});
 	};
 
 	// 답변 삭제
@@ -189,8 +186,7 @@ function Question() {
 			.delete(`/answers/${data.answerId}`)
 			.then((res) =>
 				setAnswerList(answerList.filter((it) => it.answerId !== data.answerId)),
-			)
-			.catch((res) => console.log(res));
+			);
 	};
 
 	return (
@@ -200,8 +196,7 @@ function Question() {
 					<TitleContainer>
 						<div className="top__container">
 							<span>{questionData.questionTitle}</span>
-
-							<Link to="/askquestion">
+							<Link to={`${isLogin ? '/askquestion' : '/login'}`}>
 								<button type="button">Ask Questions</button>
 							</Link>
 						</div>
