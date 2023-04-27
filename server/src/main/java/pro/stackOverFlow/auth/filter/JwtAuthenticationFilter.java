@@ -31,7 +31,6 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
-//    private final CryptoJSDecryptor cryptoJSDecryptor;
 
     @Value("${decrypt.key}")
     String KEY;
@@ -39,7 +38,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
-//        this.cryptoJSDecryptor = cryptoJSDecryptor;
     }
 
     @SneakyThrows
@@ -52,49 +50,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
         return authenticationManager.authenticate(authenticationToken);
-
-// Todo : 비밀번호 복호화
-//        String key = "aaaa1111";
-//
-//
-//        String decryptedText = null;
-//
-//        ScriptEngineManager factory = new ScriptEngineManager();
-//        ScriptEngine engine = factory.getEngineByName("JavaScript");
-//        engine.eval("var ciphertext = '" + loginDto.getPassword() + "';");
-//        engine.eval("var key = '" + key + "';");
-//        engine.eval("var plaintext = CryptoJS.AES.decrypt(ciphertext, key).toString(CryptoJS.enc.Utf8);");
-//        decryptedText = engine.get("plaintext").toString();
-//
-//        loginDto.setPassword(decryptedText);
-
-
-        //Todo : 비밀번호 복호화 !!
-//        @Value("${decrypt.key}")
-//         String KEY = "mysecetkey12345";
-
-//        String secretKey = System.getenv("");
-
-//         시크릿 키를 바이트 배열로 변환
-//        byte[] keyBytes = KEY.getBytes(StandardCharsets.UTF_8);
-//
-//        // SecretKeySpec 인스턴스 생성
-//        SecretKeySpec secretKeySpec = new SecretKeySpec(keyBytes, "AES");
-//
-//        // Cipher 인스턴스 초기화
-//        Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
-//        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-//
-//        // 복호화할 암호문
-//        String encryptedText = loginDto.getPassword();
-//
-//        // Base64 디코딩 후 암호문 복호화
-//        byte[] encryptedBytes = Base64.getDecoder().decode(encryptedText);
-//        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
-//
-//        // 복호화된 평문 출력
-//        String decryptedText = new String(decryptedBytes, StandardCharsets.UTF_8);
-//        loginDto.setPassword(decryptedText);
 
 
     }
