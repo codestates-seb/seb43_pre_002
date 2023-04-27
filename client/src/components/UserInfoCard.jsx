@@ -83,7 +83,7 @@ function UserInfoCard({ data, mode }) {
 						<UserProfile
 							userName={memberInfo.displayName}
 							boxSize="32px"
-							fontSize="13px"
+							fontSize="11px"
 						/>
 					)}
 
