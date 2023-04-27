@@ -23,6 +23,7 @@ const QnABoxContainer = styled.div`
 			span {
 				color: var(--line-color);
 				margin: 0.2rem;
+				cursor: pointer;
 			}
 		}
 	}
