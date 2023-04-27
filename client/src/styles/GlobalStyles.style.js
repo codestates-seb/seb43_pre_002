@@ -7,13 +7,19 @@ const GlobalStyles = createGlobalStyle`
         --main-color: #508CC3;
         --line-color: #D9D9D9;
         --base-color:#F1F2F3;
-        --main-color-lighten: #D9E9F7;
-        
+        --main-color-lighten: #D9E9F7;   
+        --font-color-gray: #BABFC3;
+        --modal-color: #E5F3FF;
+        --button-hover-color: #3B6FA0;
+        --error-message-color: #CB2A2A;
+
         --font-title-large: 27px;
         --font-title-small: 17px;
         --font-large: 15px;
         --font-base: 13px;
         --font-small: 11px;
+        --font-icon-size: 21px;
+
     }
 
     ${reset}
@@ -25,15 +31,11 @@ const GlobalStyles = createGlobalStyle`
         text-decoration: none;
         color: inherit;
     }
-    html, body, #root {
-        height: 100%;
-    }
     html,
     body,
     body > div { /* the react root */
         margin: 0;
         padding: 0;
-        height: 100%;
     }
     body {
         font-family: 'Noto Sans KR', sans-serif;
