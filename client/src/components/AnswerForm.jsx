@@ -15,13 +15,18 @@ const AnswerFormContainer = styled.form`
 		height: 100px;
 	}
 	button {
-		margin: 10px 0px;
-		width: 130px;
-		height: 40px;
-		background-color: var(--main-color);
 		color: white;
-		border: none;
+		background-color: var(--main-color);
+		width: 140px;
+		height: 3em;
+		font-size: var(--font-large);
+		border: 1px inset var(--line-color);
+		border-radius: 5px;
+		padding: 0;
 		cursor: pointer;
+		&:hover {
+			background-color: var(--button-hover-color);
+		}
 	}
 
 	.ql-container {
