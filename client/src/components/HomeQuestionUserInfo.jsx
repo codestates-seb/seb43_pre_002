@@ -12,8 +12,8 @@ function HomeQuestionUserInfo({ data, memberId, memberName }) {
 			<div className="user-container">
 				<UserProfile
 					userName={memberName || 'user'}
-					boxSize="20px"
-					fontSize="8px"
+					boxSize="28px"
+					fontSize="10px"
 				/>
 				<Link to={`/userprofile/${memberId}`} className="user-profile">
 					{memberName}
