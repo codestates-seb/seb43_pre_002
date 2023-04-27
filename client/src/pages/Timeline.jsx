@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import DividerLine from '../components/DividerLine';
 
@@ -96,6 +96,7 @@ const TimelineContainer = styled.div`
 
 function Timeline() {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const { question_id: questionId, answer_id: answerId } = useParams();
 
 	const [question, setQuestion] = useState();
@@ -111,69 +112,34 @@ function Timeline() {
 		return data.replace(reg, '');
 	};
 
-	// 질문 조회
-	useEffect(() => {
-		axios
-			.get(`/questions/${questionId}`, {
-				headers: {
-					'Content-Type': `application/json`,
-				},
-			})
-			.then((res) => {
-				const que = res.data;
-				console.log(que);
-				setQuestion(que);
-			})
-			.catch((err) => navigate('/'));
-	}, []);
-
-	// 답변 조회
+	// Link로 받은 상태 저장
 	useEffect(() => {
 		if (Number(answerId) > 0) {
-			axios
-				.get(`/answers/${answerId}`, {
-					headers: {
-						'Content-Type': `application/json`,
-					},
-				})
-				.then((res) => {
-					const ans = res.data;
-					if (ans) {
-						setAnswer(ans);
-						console.log(ans);
-					} else {
-						navigate('/');
-					}
-				})
-				.catch((err) => navigate('/'));
+			setAnswer(location.state);
+		} else {
+			setQuestion(location.state);
 		}
 	}, []);
 
 	return (
 		<TimelineContainer>
-			{question && (
+			{(question || answer) && (
 				<main>
-					<div className="sub__header">
-						<h1>
-							Timeline for
-							<span> </span>
-							<Link to={`/question/${questionId}`}>
-								<span>{question.questionTitle}</span>
-							</Link>
-						</h1>
-						<h3>
-							Current License: <span>CC BY-SA 4.0</span>
-						</h3>
-						<DividerLine />
-					</div>
-					{/* 
-					<div className="select__filter">
-						<span>Event filters</span>
-						<div className="select__box">
-							<div>Hide vote summaires</div>
-							<div>Show vote summaries</div>
+					{question && (
+						<div className="sub__header">
+							<h1>
+								Timeline for
+								<span> </span>
+								<Link to={`/question/${questionId}`}>
+									<span>{question.questionTitle}</span>
+								</Link>
+							</h1>
+							<h3>
+								Current License: <span>CC BY-SA 4.0</span>
+							</h3>
+							<DividerLine />
 						</div>
-					</div> */}
+					)}
 
 					<div className="table__container">
 						<div>2 event</div>
@@ -199,7 +165,7 @@ function Timeline() {
 										<>
 											<tr>
 												<td className="toggle__format">
-													{dateFormat(new Date(answer.modifiedAt))}
+													{dateFormat(new Date(answer.answerModifiedAt))}
 												</td>
 												<td>history</td>
 												<td>edited</td>
@@ -209,7 +175,7 @@ function Timeline() {
 											</tr>
 											<tr>
 												<td className="toggle__format">
-													{dateFormat(new Date(answer.createdAt))}
+													{dateFormat(new Date(answer.answerCreatedAt))}
 												</td>
 												<td>history</td>
 												<td>added</td>

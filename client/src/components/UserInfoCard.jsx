@@ -64,9 +64,6 @@ function UserInfoCard({ data, mode }) {
 			.then((res) => {
 				const info = res.data;
 				setMemberInfo(info);
-			})
-			.catch((res) => {
-				console.log(res);
 			});
 	}, []);
 

@@ -110,24 +110,8 @@ function IconMenu({ data, mode }) {
 	const [isChecked, setIsChecked] = useState(
 		mode === 'answer' && data.answerAccepted,
 	);
-	const [question, setQuestion] = useState();
-	const { question_id: targetId } = useParams();
 
-	// 질문 정보 받기
-	useEffect(() => {
-		axios
-			.get(`/questions/${targetId}`, {
-				headers: {
-					'Content-Type': `application/json`,
-				},
-			})
-			.then((res) => {
-				setQuestion(res.data);
-			})
-			.catch((res) => {
-				console.log('에러발생');
-			});
-	}, []);
+	const { question_id: targetId } = useParams();
 
 	// 추천 증가 기능
 	const voteUpHandler = () => {
@@ -141,7 +125,6 @@ function IconMenu({ data, mode }) {
 				})
 				.then((res) => {
 					setVote(vote + 1);
-					// console.log(res.data);
 				})
 				.catch((res) => console.log('투표가 불가합니다.'));
 		}
@@ -177,7 +160,6 @@ function IconMenu({ data, mode }) {
 				})
 				.then((res) => {
 					setVote(vote - 1);
-					// console.log(res.data);
 				})
 				.catch((res) => console.log('투표가 불가합니다.'));
 		} // 답변일 경우
@@ -206,20 +188,20 @@ function IconMenu({ data, mode }) {
 	// };
 
 	// 답변 채택 기능(백엔드 구현 필요)
-	const isCheckedHadler = () => {
-		// setIsChecked(!isChecked);
-		axios
-			.post(`/answers/${data.answerId}/accept`, {
-				headers: {
-					'Content-Type': `application/json`,
-				},
-			})
-			.then((res) => {
-				setIsChecked(!isChecked);
-				console.log(res);
-			})
-			.catch((err) => console.log('답변 채택 오류'));
-	};
+	// const isCheckedHadler = () => {
+	// 	// setIsChecked(!isChecked);
+	// 	axios
+	// 		.post(`/answers/${data.answerId}/accept`, {
+	// 			headers: {
+	// 				'Content-Type': `application/json`,
+	// 			},
+	// 		})
+	// 		.then((res) => {
+	// 			setIsChecked(!isChecked);
+	// 			// console.log(res);
+	// 		})
+	// 		.catch((err) => console.log('답변 채택 오류'));
+	// };
 
 	return (
 		<IconMenuContainer>
@@ -258,6 +240,7 @@ function IconMenu({ data, mode }) {
 					to={`/timeline/${targetId}/${
 						mode === 'question' ? 0 : data.answerId
 					}`}
+					state={data}
 				>
 					<AiOutlineFieldTime className="timeline__icon" />
 				</Link>
