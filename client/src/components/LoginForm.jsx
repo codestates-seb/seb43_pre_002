@@ -71,9 +71,15 @@ function LoginForm() {
 				navigate(`/`);
 			})
 			.catch((error) => {
-				setLoginError(
-					'로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.',
-				);
+				if (error.code === 'ECONNREFUSED') {
+					setLoginError(
+						'서버 오류로 불편을 드려 죄송합니다. 잠시 후 다시 시도해주세요.',
+					);
+				} else {
+					setLoginError(
+						'로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.',
+					);
+				}
 				console.log(error);
 			});
 	};
