@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	AiFillCaretUp,
 	AiFillCaretDown,
@@ -22,7 +22,7 @@ const IconMenuContainer = styled.ul`
 		text-align: center;
 
 		color: var(--font-color-gray);
-
+		cursor: pointer;
 		> svg {
 			font-size: var(--font-base);
 			width: 36px;
@@ -97,17 +97,37 @@ const Tooltip = styled.div`
 // QnABox의 IconMenu
 function IconMenu({ data, mode }) {
 	const [userId, setUserId] = useState(
-		localStorage.getItem('loginmemberid')
-			? JSON.parse(localStorage.getItem('loginmemberid'))
+		localStorage.getItem('loginMemberId')
+			? JSON.parse(localStorage.getItem('loginMemberId'))
 			: null,
 	);
 
 	const [vote, setVote] = useState(
 		mode === 'question' ? data.questionVoteCount : data.answerVoteCount,
 	);
+
 	const [isBookmark, setIsBookmark] = useState(false);
-	const [isChecked, setIsChecked] = useState(false);
+	const [isChecked, setIsChecked] = useState(
+		mode === 'answer' && data.answerAccepted,
+	);
+	const [question, setQuestion] = useState();
 	const { question_id: targetId } = useParams();
+
+	// 질문 정보 받기
+	useEffect(() => {
+		axios
+			.get(`/questions/${targetId}`, {
+				headers: {
+					'Content-Type': `application/json`,
+				},
+			})
+			.then((res) => {
+				setQuestion(res.data);
+			})
+			.catch((res) => {
+				console.log('에러발생');
+			});
+	}, []);
 
 	// 추천 증가 기능
 	const voteUpHandler = () => {
@@ -197,7 +217,8 @@ function IconMenu({ data, mode }) {
 			.then((res) => {
 				setIsChecked(!isChecked);
 				console.log(res);
-			});
+			})
+			.catch((err) => console.log('답변 채택 오류'));
 	};
 
 	return (
@@ -213,11 +234,13 @@ function IconMenu({ data, mode }) {
 				<AiFillCaretDown onClick={voteDownHandler} />
 				<Tooltip>Save this question.</Tooltip>
 			</li>
-			{mode === 'answer' && userId === data.memberId && (
+
+			{/* 질문의 작성자와 유저가 일치하는 답변만 보여줌
+			{question && question.memberId === userId && mode === 'answer' && (
 				<li className={isChecked ? 'on' : 'off'}>
 					<FaCheck onClick={isCheckedHadler} />
 				</li>
-			)}
+			)} */}
 			{/* <li>
 				{isBookmark ? (
 					<MdBookmarkBorder

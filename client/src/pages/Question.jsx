@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import LoginHeader from '../components/Header/LoginHeader';
 import QnABox from '../components/QnABox';
 import AnswerForm from '../components/AnswerForm';
 import { newestAnswer, oldestAnswer } from '../utils/filterFunction';
@@ -96,7 +95,7 @@ const AnswersContainer = styled.div`
 function Question() {
 	const { question_id: targetId } = useParams();
 	const [questionData, setQuestionData] = useState(null);
-	const [answerList, setAnswerList] = useState([]);
+	const [answerList, setAnswerList] = useState(null);
 	const [sortType, setSortType] = useState('oldest');
 	const [render, setRender] = useState(false);
 
@@ -130,7 +129,6 @@ function Question() {
 
 	// 질문 조회 및 답변 조회
 	useEffect(() => {
-		console.log(userId);
 		axios
 			.get(`/questions/${targetId}`, {
 				headers: {
@@ -139,11 +137,13 @@ function Question() {
 			})
 			.then((res) => {
 				const question = res.data;
-				// console.log(question);
+				console.log('질문불러오기');
+				console.log(question);
 				setQuestionData(question);
 				setAnswerList(question.answers);
 			})
 			.catch((res) => {
+				console.log(res);
 				console.log('에러발생');
 				navigate('/');
 			});
@@ -166,13 +166,18 @@ function Question() {
 	// 답변 생성
 	const createAnswerHandler = (data) => {
 		axios
-			.post(`/questions/${targetId}/answers`, JSON.stringify({ ...data }), {
-				headers: {
-					'Content-Type': `application/json`,
+			.post(
+				`/questions/${targetId}/answers/${userId}`,
+				JSON.stringify({ ...data }),
+				{
+					headers: {
+						'Content-Type': `application/json`,
+					},
 				},
-			})
+			)
 			.then((res) => {
 				setRender(!render);
+				console.log(res);
 				// navigate(0);
 			})
 			.catch((res) => console.log(res));
@@ -231,35 +236,39 @@ function Question() {
 						mode="question"
 					/>
 
-					<AnswersContainer>
-						<div className="answers__header">
-							<span>{`${answerList.length} Answers`}</span>
-							<div className="filter__container">
-								<span>Sorted by:</span>
-								<select onChange={(e) => setSortType(e.target.value)}>
-									{sortOptionList.map((it) => (
-										<option key={it.value} value={it.value}>
-											{it.name}
-										</option>
-									))}
-								</select>
+					{answerList && (
+						<AnswersContainer>
+							<div className="answers__header">
+								<span>{`${answerList.length} ${
+									answerList.length <= 1 ? 'Answer' : 'Answers'
+								}`}</span>
+								<div className="filter__container">
+									<span>Sorted by:</span>
+									<select onChange={(e) => setSortType(e.target.value)}>
+										{sortOptionList.map((it) => (
+											<option key={it.value} value={it.value}>
+												{it.name}
+											</option>
+										))}
+									</select>
+								</div>
 							</div>
-						</div>
-						<div>
-							{sortAnswerList().map((it) => {
-								return (
-									<QnABox
-										key={it.answerId}
-										data={it}
-										deleteQuestionHandler={deleteQuestionHandler}
-										deleteAnswerHandler={deleteAnswerHandler}
-										mode="answer"
-									/>
-								);
-							})}
-						</div>
-					</AnswersContainer>
-					<AnswerForm createAnswerHandler={createAnswerHandler} />
+							<div>
+								{sortAnswerList().map((it) => {
+									return (
+										<QnABox
+											key={it.answerId}
+											data={it}
+											deleteQuestionHandler={deleteQuestionHandler}
+											deleteAnswerHandler={deleteAnswerHandler}
+											mode="answer"
+										/>
+									);
+								})}
+							</div>
+						</AnswersContainer>
+					)}
+					{userId && <AnswerForm createAnswerHandler={createAnswerHandler} />}
 				</main>
 			</QuestionContainer>
 		)

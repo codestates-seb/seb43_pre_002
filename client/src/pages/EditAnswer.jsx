@@ -96,11 +96,12 @@ function EditAnswer() {
 			})
 			.then((res) => {
 				const answer = res.data;
-				setContent(answer.data.content);
+				setContent(answer.content);
 			})
-			.catch((res) => {
+			.catch((err) => {
+				console.log(err);
 				console.log('에러발생');
-				navigate('/');
+				// navigate('/');
 			});
 	}, []);
 
